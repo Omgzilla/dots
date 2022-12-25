@@ -1,0 +1,5 @@
+# ignore following
+*.DS_Store
+.config/nvim/snapshots
+.config/nvim/plugin
+.config/tmux/plugins
