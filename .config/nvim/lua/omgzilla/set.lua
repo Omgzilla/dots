@@ -23,9 +23,9 @@ local set = {
     errorbells = false,         -- sound durring an error
     cursorline = false,         -- highlight the current line
 
-    tabstop = 4,                -- insert 4 spaces for a tab
-    softtabstop = 4,
-    shiftwidth = 4,             -- the number of spaces inserted for each indentation
+    tabstop = 2,                -- insert 2 spaces for a tab
+    softtabstop = 2,
+    shiftwidth = 2,             -- the number of spaces inserted for each indentation
     expandtab = true,           -- convert tabs to spaces
     smartindent = true,
     autoindent = true,
@@ -33,7 +33,7 @@ local set = {
     splitbelow = true,          -- force all horizontal splits to go below current window
     splitright = true,          -- force all vertical splits to go to the right of current window
 
-    wrap = false,               -- display lines as one long line
+    wrap = true,                -- cut lines if window size is to small
 
     swapfile = false,           -- creates a swapfile
     backup = false,             -- creates a backup file
@@ -57,7 +57,7 @@ local set = {
     cmdheight = 1,              -- Give more space for displaying messages.
     updatetime = 50,            -- Having longer updatetime (default is 4000ms = 4s) leads to longer noticable delays and poor user experience
     lazyredraw = true,          -- Don't redraw while executing macros (good performance config)
-    colorcolumn = "80",
+    colorcolumn = "100",
 }
 
 -- vim.g.loaded_netrw = 1

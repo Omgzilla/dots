@@ -48,7 +48,7 @@ return packer.startup(function(use)
   use "nvim-lua/popup.nvim" -- Enables Popup's
 
   -- Dashboard
-  use "glepnir/dashboard-nvim"
+  --use "glepnir/dashboard-nvim"
 
   -- Fuzzy Finder and File Browser
   use {
