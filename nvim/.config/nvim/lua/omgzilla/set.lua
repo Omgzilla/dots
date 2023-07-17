@@ -33,7 +33,7 @@ local set = {
     splitbelow = true,          -- force all horizontal splits to go below current window
     splitright = true,          -- force all vertical splits to go to the right of current window
 
-    wrap = true,                -- cut lines if window size is to small
+    wrap = false,               -- display lines as one long line
 
     swapfile = false,           -- creates a swapfile
     backup = false,             -- creates a backup file
@@ -57,7 +57,7 @@ local set = {
     cmdheight = 1,              -- Give more space for displaying messages.
     updatetime = 50,            -- Having longer updatetime (default is 4000ms = 4s) leads to longer noticable delays and poor user experience
     lazyredraw = true,          -- Don't redraw while executing macros (good performance config)
-    colorcolumn = "100",
+    colorcolumn = "80",
 }
 
 -- vim.g.loaded_netrw = 1
