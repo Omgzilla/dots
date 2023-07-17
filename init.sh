@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CURRENT_DIR="$PWD"
+CURRENT_DIR=`pwd`
 USER="/home/$USER"
 USER_CONFIG="/home/$USER/.config"
 
@@ -15,7 +15,7 @@ read OPTION
 
 case $OPTION in
     1)
-        for DIR  in .config/*; do
+        for DIR in $USER_CONFIG/*; do
             if [[ -d $USER/$DIR ]]; then
                 echo "$DIR already exist" 
                 echo "Do you want to replace it?"
@@ -62,14 +62,14 @@ case $OPTION in
         ;;
     5)
         if [[ -d $USER_CONFIG/terminator ]]; then
-            echo "Tmux directory already exist in .config"
+            echo "Terminator directory already exist in .config"
         else
             ln -s -v $USER_CONFIG/terminator/.config/terminator $USER_CONFIG
         fi
         ;;
     6)
         if [[ -d $USER_CONFIG/vifm ]]; then
-            echo "Tmux directory already exist in .config"
+            echo "vifm directory already exist in .config"
         else
             ln -s -v $USER_CONFIG/vifm/.config/vifm $USER_CONFIG
         fi

@@ -18,6 +18,12 @@ alias sv="sudo nvim"
 alias code="codium"
 alias aplay="asciinema play -s 2.5"
 alias arec="asciinema rec"
+# Git
+alias gs="git status"
+alias gc="git commit -m" # Commit changes
+alias gco="git checkout" # List branches
+alias gcb="git checkout -b" # Checkout new branch
+alias glb="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate" # List branches
 # Juju
 alias wjs="watch -n 1 -c juju status --color"
 alias wjsr="watch -n 1 -c juju status --color --relations"

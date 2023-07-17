@@ -33,7 +33,7 @@ local set = {
     splitbelow = true,          -- force all horizontal splits to go below current window
     splitright = true,          -- force all vertical splits to go to the right of current window
 
-    wrap = false,               -- display lines as one long line
+    wrap = true,                -- False=display lines as one long line
 
     swapfile = false,           -- creates a swapfile
     backup = false,             -- creates a backup file
