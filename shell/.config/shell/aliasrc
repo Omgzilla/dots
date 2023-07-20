@@ -1,8 +1,11 @@
 # System
 alias ls="ls --color=auto"
-alias l="ls -l --color=auto"
+alias l="ls -lC --color=auto"
 alias ll="ls -al --color=auto"
+alias la="ls -A --color=auto"
 alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --coolor=auto"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"

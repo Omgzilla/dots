@@ -1,4 +1,5 @@
 [global_config]
+  geometry_hinting = True
   title_hide_sizetext = True
   title_transmit_fg_color = "#f8f8f2"
   title_transmit_bg_color = "#44475a"

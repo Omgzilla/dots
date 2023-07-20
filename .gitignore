@@ -3,3 +3,4 @@
 nvim/.config/nvim/plugin
 nvim/.config/nvim/snapshots
 tmux/.config/tmux/plugins
+vifm/.config/vifm/vifminfo.json
