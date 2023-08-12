@@ -3,4 +3,8 @@
 nvim/.config/nvim/plugin
 nvim/.config/nvim/snapshots
 tmux/.config/tmux/plugins
+vifm/.config/vifm/vifm-help.txt
 vifm/.config/vifm/vifminfo.json
+zsh/.config/.zsh_sessions
+zsh/.config/.zcompdump
+zsh/.config/.zsh_history
