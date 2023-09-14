@@ -39,9 +39,10 @@ alias zrc='nvim ~/.config/zsh/.zshrc'
 alias aliasrc='nvim ~/.config/shell/aliasrc'
 # Git
 alias gs="git status"
-alias gc="git commit -m" # Commit changes
+alias gc="git commit -m '$1'" # Commit changes
 alias gco="git checkout" # List branches
 alias gcb="git checkout -b" # Checkout new branch
+alias gf="git fetch"
 alias glb="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate" # List branches
 alias gp="git push origin main"
 # Permissions
@@ -51,6 +52,8 @@ alias 644='chmod 644'
 alias 755='chmod 755'
 alias 775='chmod 775'
 alias ux='chmod u+x'
+# LXD
+alias lxlist='lxc list -c ns4Dtc'
 # Juju
 alias wjs="watch -n 1 -c juju status --color"
 alias wjsr="watch -n 1 -c juju status --color --relations"
@@ -61,7 +64,8 @@ alias jc="juju controllers"
 alias jcf="juju config"
 alias ja="juju actions"
 alias jra="juju run-action"
-alias jaddssh="juju add-ssh-key '$(cat ~/.ssh/id_rsa.pub)'"
+alias jssh="juju ssh"
+alias jassh="juju add-ssh-key '$(cat ~/.ssh/id_rsa.pub)'"
 alias jsw="juju switch"
 alias jswdl="juju switch dwellir-lagos"
 alias jswdp="juju switch dwellir2-pionen"
@@ -69,5 +73,11 @@ alias jswds="juju switch dwellir-sodertalje"
 alias jswdt="juju switch dwellir-tunis"
 alias jswll="juju switch locallxd"
 alias jswlk="juju switch localk8s"
+alias jfi="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-instance.py --id $1"
+alias jfip="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-instance.py --ip $1"
+alias jfm="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-juju-models.py --pattern $1"
+alias jfo="/usr/bin/bash $HOME/versioned/dwellir-public/ops/juju/scripts/orphaned-instances.sh"
 # Microk8s
 alias k="microk8s.kubectl"
+# Work scritps
+alias all-models="python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
