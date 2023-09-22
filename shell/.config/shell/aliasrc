@@ -24,6 +24,7 @@ alias bri="brew install -v"
 alias brs="brew search -v"
 # VIM
 alias v="nvim"
+alias vim="nvim"
 alias sv="sudo nvim"
 # VS-Codium
 alias code="codium"

@@ -5,12 +5,17 @@ source ~/.config/shell/aliasrc
 
 # Homebrew
 export HOMEBREW_NO_AUTO_UPDATE=1
-# Homebrew Completions
+## Homebrew Completions
 if type brew &>/dev/null
 then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
     autoload -Uz compinit
     compinit
+fi
+## Basic auto/tab complete:
+if type brew &>/dev/null
+then
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
 # Load colors
@@ -24,14 +29,7 @@ HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.local/share/history
 
-# Basic auto/tab complete:
-## if brew installed run following.
-if type brew &>/dev/null
-then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-fi
-
-
+# ZSH Completions
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' menu select
