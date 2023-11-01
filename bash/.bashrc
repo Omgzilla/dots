@@ -73,6 +73,11 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 . /usr/share/autojump/autojump.sh
 . /usr/share/autojump/autojump.bash
 
+# Source bash_profile if it exsists
+if [ -f ~/.bash_profile ]; then
+  . ~/.bash_profile
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
