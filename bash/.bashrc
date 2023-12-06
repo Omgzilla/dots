@@ -119,8 +119,8 @@ source /usr/share/doc/fzf/examples/key-bindings.bash
 ## Avoid diplicates
 HISTCONTROL=ignoredups:erasedups
 ## for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=100000
-HISTFILESIZE=100000
+HISTSIZE=1000000
+HISTFILESIZE=1000000
 ## When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
 ## Save and reload the history after each command finishes
