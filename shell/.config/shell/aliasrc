@@ -38,6 +38,8 @@ alias find="find . -name"
 alias brc='nvim ~/.bashrc'
 alias zrc='nvim ~/.config/zsh/.zshrc'
 alias aliasrc='nvim ~/.config/shell/aliasrc'
+alias kittyrc='nvim ~/.config/kitty/kitty.conf'
+alias termrc='nvim ~/.config/terminator/config'
 # Git
 alias gs="git status"
 alias gc="git commit -m '$1'" # Commit changes
@@ -45,7 +47,8 @@ alias gco="git checkout" # List branches
 alias gcb="git checkout -b" # Checkout new branch
 alias gf="git fetch"
 alias glb="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate" # List branches
-alias gp="git push origin main"
+# SGPT
+alias gp="sgpt --model gpt-4 $1"
 # Permissions
 alias 000='chmod 000'
 alias 640='chmod 640'
@@ -67,13 +70,13 @@ alias ja="juju actions"
 alias jra="juju run-action"
 alias jssh="juju ssh"
 alias jassh="juju add-ssh-key '$(cat ~/.ssh/id_rsa.pub)'"
+alias jssj='function _jssj(){ juju ssh $1 -- journalctl -f -n ${2:-100}; }; _jssj'
 alias jscp="juju scp"
 alias jsw="juju switch"
 alias jswdl="juju switch dwellir-lagos"
 alias jswdp="juju switch dwellir2-pionen"
 alias jswds="juju switch dwellir-sodertalje"
 alias jswdt="juju switch dwellir-tunis"
-alias jswdss="juju switch dwellir-site3"
 alias jswll="juju switch locallxd"
 alias jswlk="juju switch localk8s"
 alias jfi="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-instance.py --id $1"
