@@ -40,6 +40,8 @@ alias zrc='nvim ~/.config/zsh/.zshrc'
 alias aliasrc='nvim ~/.config/shell/aliasrc'
 alias kittyrc='nvim ~/.config/kitty/kitty.conf'
 alias termrc='nvim ~/.config/terminator/config'
+# Suckless
+alias makedwm='cd ~/.local/suckless/dwm && make && rm config.h'
 # Git
 alias gs="git status"
 alias gc="git commit -m '$1'" # Commit changes
@@ -64,6 +66,7 @@ alias wjsr="watch -n 1 -c juju status --color --relations"
 alias js="juju status --color"
 alias jsr="juju status --color --relations"
 alias jm="juju models --all"
+alias jmg="juju models --all | grep $1"
 alias jc="juju controllers"
 alias jcf="juju config"
 alias jcfq='function _jcfq(){ juju config $1 --format yaml | yq; }; _jcfq'
