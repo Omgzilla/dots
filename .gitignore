@@ -1,10 +1,10 @@
 # ignore following
 *.DS_Store
-nvim/.config/nvim/plugin
-nvim/.config/nvim/snapshots
-tmux/.config/tmux/plugins
-vifm/.config/vifm/vifm-help.txt
-vifm/.config/vifm/vifminfo.json
-zsh/.config/zsh/.zsh_sessions
-zsh/.config/zsh/.zcompdump
-zsh/.config/zsh/.zsh_history
+.config/nvim/plugin
+.config/nvim/snapshots
+.config/tmux/plugins
+.config/vifm/vifm-help.txt
+.config/vifm/vifminfo.json
+.config/zsh/.zsh_sessions
+.config/zsh/.zcompdump
+.config/zsh/.zsh_history
