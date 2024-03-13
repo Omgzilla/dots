@@ -69,9 +69,12 @@ esac
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Source autojump
-. /usr/share/autojump/autojump.sh
-. /usr/share/autojump/autojump.bash
+
+
+# Being replaced by zoxide
+## Source autojump
+#. /usr/share/autojump/autojump.sh
+#. /usr/share/autojump/autojump.bash
 
 # Source bash_profile if it exsists
 if [ -f ~/.bash_profile ]; then
@@ -148,3 +151,11 @@ export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+
+# Initialize zoxide
+if command -v zoxide >/dev/null 2>%1; then
+  eval "$(zoxide init bash)"
+fi
+
+# Source Cargo
+. "/home/marcus/.local/share/cargo/env"

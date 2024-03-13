@@ -16,6 +16,7 @@ alias ip="ip -c"
 alias jc="sudo journalctl"
 alias sc="sudo systemctl"
 alias w="watch -n 1 -c"
+alias ping="ping -O"
 # Package manager
 alias apt="sudo apt"
 alias pac="sudo pacman"
@@ -62,6 +63,8 @@ alias ux='chmod u+x'
 # LXD
 alias lxlist='lxc list -c ns4Dtc'
 # Juju
+alias jcsw2="sudo snap switch --channel=2.9/stable juju && sudo snap refresh juju --classic"
+alias jcsw3="sudo snap switch --channel=3.3/stable juju && sudo snap refresh juju"
 alias wjs="watch -n 1 -c juju status --color"
 alias wjsr="watch -n 1 -c juju status --color --relations"
 alias js="juju status --color"
@@ -84,6 +87,9 @@ alias jswds="juju switch dwellir-sodertalje"
 alias jswdt="juju switch dwellir-tunis"
 alias jswaws="juju switch jc-aws.dwellir.tech"
 alias jswlab="juju switch dwellir-lab"
+alias jswsk="juju switch site-kista"
+alias jswsp="juju switch site-pionen"
+alias jswst="juju switch site-tunis"
 alias jswll="juju switch locallxd"
 alias jswlk="juju switch localk8s"
 alias jfi="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-instance.py --id $1"
