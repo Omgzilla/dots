@@ -18,6 +18,17 @@ then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
+# FZF
+eval "$(fzf --zsh)"
+
+if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+fi
+# Auto-completion
+# source "/opt/homebrew/opt/fzf/shell/completion.zsh"
+# Key bindings
+source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+
 # Load colors
 autoload -U colors && colors
 
