@@ -17,6 +17,7 @@ alias jc="sudo journalctl"
 alias sc="sudo systemctl"
 alias w="watch -n 1 -c"
 alias ping="ping -O"
+alias cd="z"
 # Package manager
 alias apt="sudo apt"
 alias pac="sudo pacman"
@@ -63,8 +64,6 @@ alias ux='chmod u+x'
 # LXD
 alias lxlist='lxc list -c ns4Dtc'
 # Juju
-alias jcsw2="sudo snap switch --channel=2.9/stable juju && sudo snap refresh juju --classic"
-alias jcsw3="sudo snap switch --channel=3.3/stable juju && sudo snap refresh juju"
 alias wjs="watch -n 1 -c juju status --color"
 alias wjsr="watch -n 1 -c juju status --color --relations"
 alias js="juju status --color"
@@ -75,7 +74,7 @@ alias jc="juju controllers"
 alias jcf="juju config"
 alias jcfq='function _jcfq(){ juju config $1 --format yaml | yq; }; _jcfq'
 alias ja="juju actions"
-alias jra="juju run-action"
+alias jr="juju run"
 alias jssh="juju ssh"
 alias jassh="juju add-ssh-key '$(cat ~/.ssh/id_rsa.pub)'"
 alias jssj='function _jssj(){ juju ssh ${1:-0} -- journalctl -f -n ${2:-100}; }; _jssj'
