@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {import = "omgzilla.plugins"},
---  {import = "omgzilla.plugins.lsp"}
+  {import = "omgzilla.plugins.lsp"}
 }, {
   install = {
     colorscheme = { "dracula" },

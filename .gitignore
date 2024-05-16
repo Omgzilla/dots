@@ -1,8 +1,11 @@
 # ignore following
 *.DS_Store
+.config/nvim/lazy-lock.json
 .config/nvim/plugin
+.config/nvim/plugin/*
 .config/nvim/snapshots
 .config/tmux/plugins
+.config/tmux/plugins/*
 .config/vifm/vifm-help.txt
 .config/vifm/vifminfo.json
 .config/zsh/.zsh_sessions
