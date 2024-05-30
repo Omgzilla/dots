@@ -18,6 +18,8 @@ then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
+# Zoxide
+eval "$(zoxide init zsh)"
 # FZF
 eval "$(fzf --zsh)"
 
