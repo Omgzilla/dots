@@ -48,13 +48,11 @@ alias makedwm='cd ~/.local/suckless/dwm && make && rm config.h'
 alias makedmenu='cd ~/.local/suckless/dmenu && make && rm config.h && rm patches.h'
 # Git
 alias gs="git status"
-alias gc="git commit -m '$1'" # Commit changes
+alias gc="git commit -m" # Commit changes
 alias gco="git checkout" # List branches
 alias gcb="git checkout -b" # Checkout new branch
 alias gf="git fetch"
 alias glb="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate" # List branches
-# SGPT
-alias gp="sgpt --model gpt-4 $1"
 # Permissions
 alias 000='chmod 000'
 alias 640='chmod 640'
