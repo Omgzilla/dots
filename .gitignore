@@ -5,8 +5,9 @@
 .config/nvim/plugin
 .config/nvim/plugin/*
 .config/nvim/snapshots
-.config/tmux/plugins*
+.config/tmux/plugins/*
 .config/tmux/plugins/tpm*
+.config/tmux/plugins/tmux
 .config/vifm/vifm-help.txt
 .config/vifm/vifminfo.json
 .config/zsh/.zsh_sessions
