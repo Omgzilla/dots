@@ -1,14 +1,6 @@
 ---------------
 -- Keybindings
 ---------------
-
-local function map(m, k, v)
-    vim.keymap.set(m, k, v, { silent = true})
-end
-
-
---Remap space as leader key
-map("", "<Space>", "<Nop>")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -20,75 +12,70 @@ vim.g.maplocalleader = " "
 --   term_mode = "t",
 --   command_mode = "c",
 
--- File Explorer
-map("n", "<leader>pv", vim.cmd.Ex)
-
--- Enable/Disable numbers
-map("n", "<leader>n", ":set invrnu invnu<CR>")
-
--- Yes/No to signcolumn
-map("n", "<leader>c", ":set signcolumn=yes<CR>")
-map("n", "<leader>C", ":set signcolumn=no<CR>")
-
--- Better window navigation
-map("n", "<C-h>", "<C-w>h")
-map("n", "<C-j>", "<C-w>j")
-map("n", "<C-k>", "<C-w>k")
-map("n", "<C-l>", "<C-w>l")
--- Scroll half page at a time
-map("n", "<C-d>", "<C-d>zz")
-map("n", "<C-u>", "<C-u>zz")
-
--- Resize with arrows
-map("n", "<C-Up>", ":resize -2<CR>")
-map("n", "<C-Down>", ":resize +2<CR>")
-map("n", "<C-Left>", ":vertical resize -2<CR>")
-map("n", "<C-Right>", ":vertical resize +2<CR>")
--- Resize with arrows(macOS)
-map("n", "<M-Up>", ":resize -2<CR>")
-map("n", "<M-Down>", ":resize +2<CR>")
-map("n", "<M-Left>", ":vertical resize -2<CR>")
-map("n", "<M-Right>", ":vertical resize +2<CR>")
-
--- Navigate buffers
-map("n", "<S-l>", ":bnext<CR>")
-map("n", "<S-h>", ":bprevious<CR>")
-
--- Keep pasting same
-map("x", "<leader>p", "\"_dP")
--- Copy to clipboard (not buffer)
-map("n", "<leader>y", "\"+y")
-map("v", "<leader>y", "\"+y")
-map("n", "<leader>Y", "\"+Y")
-
--- Move text up and down
-map("n", "J", ":m '>+1<CR>gv=gv")
-map("n", "K", ":m '<-2<CR>gv=gv")
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '<-2<CR>gv=gv")
-map("x", "J", ":m '>+1<CR>gv=gv")
-map("x", "K", ":m '<-2<CR>gv=gv")
-
--- Telescope
---map("n", "<leader>fr", "<CMD>Telescope oldfiles<CR>")
---map("n", "<leader>ff", "<CMD>Telescope find_files<CR>")
---map("n", "<leader>fb", "<CMD>Telescope file_browser<CR>")
---map("n", "<leader>fw", "<CMD>Telescope live_grep<CR>")
---map("n", "<leader>ht", "<CMD>Telescope colorscheme<CR>")
-
--- Replace words
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-
--- Set run priv on file
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-
+local map = vim.keymap.set
 -- Toggle transparent
 map("n", "<leader>b", "<CMD>TransparentToggle<CR>")
 
--- Press jk fast to exit insert mode 
-map("i", "jk", "<ESC>")
-map("i", "<C-c>", "<ESC>")
+-- Enable/Disable numbers
+map("n", "<leader>n", ":set invrnu invnu<CR>", { desc = "Toggle numbers" })
+
+-- Yes/No to signcolumn
+map("n", "<leader>c", ":set signcolumn=yes<CR>", { desc = "Enable Signcolumn" })
+map("n", "<leader>C", ":set signcolumn=no<CR>", { desc = "Disable Signcolumn" })
+
+-- Window management
+-- split windows
+map("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
+map("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
+map("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
+map("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
+-- tab windows
+map("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
+map("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
+map("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" })
+map("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
+map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in a new tab" })
+-- better window navigation
+map("n", "<C-h>", "<C-w>h", { desc = "Navigate to Right window" })
+map("n", "<C-j>", "<C-w>j", { desc = "Navigate to Down window" })
+map("n", "<C-k>", "<C-w>k", { desc = "Navigate to Up window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Navigate to Left window" })
+-- scroll half page at a time
+map("n", "<C-d>", "<C-d>zz", { desc = "Navigate half page down" })
+map("n", "<C-u>", "<C-u>zz", { desc = "Navigate half page up" })
+-- resize with arrows
+map("n", "<C-Up>", ":resize -2<CR>", { desc = "Resize window up" })
+map("n", "<C-Down>", ":resize +2<CR>", { desc = "Resize window down" })
+map("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Resize window left" })
+map("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Resize window right" })
+-- navigate buffers
+map("n", "<S-l>", ":bnext<CR>", { desc = "Navigate to next buffer" })
+map("n", "<S-h>", ":bprevious<CR>", { desc = "Navigate to previous buffer" })
+
+-- increment/decrement numbers
+map("n", "<leader>+", "<C-a>", { desc = "Increment number" })
+map("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
+
+-- Keep pasting same
+map("x", "<leader>p", '"_dP', { desc = "Paste same yank" })
+-- Copy to clipboard (not buffer)
+map("n", "<leader>y", '"+y', { desc = "Copy to clipboard" })
+map("v", "<leader>y", '"+y', { desc = "Copy to clipboard" })
+
+-- Move text up and down
+map("v", "S-j", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
+map("v", "S-k", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
+
+-- Replace words
+map("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace selected word/s" })
+
+-- Set run priv on file
+map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { desc = "Enable execute mod" })
+
+-- Press jk fast to exit insert mode
+map("i", "jk", "<ESC>", { desc = "Exit insert mode" })
+map("i", "<C-c>", "<ESC>", { desc = "Exit insert mode" })
 
 -- Stay in indent mode
-map("v", "<", "<gv")
-map("v", ">", ">gv")
+map("v", "<", "<gv", { desc = "Decrease indentation" })
+map("v", ">", ">gv", { desc = "Increase indentation" })
