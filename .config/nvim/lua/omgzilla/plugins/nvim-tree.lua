@@ -1,12 +1,12 @@
 return {
   "nvim-tree/nvim-tree.lua",
-  dependecies = {
-    "nvim-tree/nvim-web-decicons"
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
   },
   config = function()
     local nvimtree = require("nvim-tree")
 
-        -- recommended settings from nvim-tree documentation
+    -- recommended settings from nvim-tree documentation
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
 
@@ -55,12 +55,12 @@ return {
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
     -- toggle file explorer
-    keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) 
+    keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
     -- toggle file explorer on current file
-    keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) 
+    keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" })
     -- collapse file explorer
     keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" })
     -- refresh file explorer
-    keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) 
+    keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" })
   end,
 }
