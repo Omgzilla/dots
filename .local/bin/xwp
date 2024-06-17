@@ -1,0 +1,6 @@
+#!/bin/bash
+# this script requires xwallpapers be installed
+
+dir="$HOME/Pictures/Wallpapers"
+
+xwallpaper --zoom $dir/wp1.jpg

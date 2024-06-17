@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Declare colors
+red='\033[0;31m'
+nc='\033[0m'
+yellow='\033[1;33m'
+
+brightness_file="/sys/class/backlight/intel_backlight/brightness"
+max_brightness="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
+current_brightness="$(cat /sys/class/backlight/intel_backlight/brightness)"
+change_value="$(( max_brightness / 20 ))"
+
+brightnessctl() {
+	case $1 in
+	max|100)
+		echo $max_brightness > $brightness_file
+		;;
+	decrease|less|down)
+		if [ $current_brightness -gt $change_value ]; then
+			new_brightness="$(( current_brightness - change_value ))"
+			echo $new_brightness > $brightness_file
+		else
+			echo $change_value > $brightness_file
+		fi
+		;;
+	increase|more|up)
+		safety_net="$(( max_brightness - $change_value ))"
+		if [ $current_brightness -lt $safety_net ]; then
+			new_brightness="$(( current_brightness + change_value ))"
+			echo $new_brightness > $brightness_file
+		else
+			echo $max_brightness > $brightness_file
+		fi
+		;;
+
+	bigdown|moredown)
+		big_change="$(( change_value * 3 ))"
+		if [ $current_brightness -gt $big_change ]; then
+			new_brightness="$(( current_brightness - big_change ))"
+			echo $new_brightness > $brightness_file
+		else
+			echo $change_value > $brightness_file
+		fi
+		;;
+
+	bigup|moreup)
+		big_change="$(( change_value * 3 ))"
+		safety_net="$(( max_brightness - big_change ))"
+		if [ $current_brightness -lt $safety_net ]; then
+			new_brightness="$(( current_brightness + big_change ))"
+			echo $new_brightness > $brightness_file
+		else
+			echo $max_brightness > $brightness_file
+		fi
+		;;
+	*)
+		printf "${yellow}    ERROR   ${nc}\n"
+		printf "${red} $1 ${yellow}is not a valid command...${nc}\n"
+		;;
+
+	esac
+	}
+brightnessctl $1
+
