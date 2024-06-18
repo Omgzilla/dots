@@ -30,7 +30,7 @@ alias vi="nvim"
 alias vim="nvim"
 alias sv="sudo nvim"
 # VS-Codium
-alias code="codium"
+#alias code="codium"
 # Asciinema
 alias aplay="asciinema play -s 2.5"
 alias arec="asciinema rec"
