@@ -71,7 +71,7 @@ alias jm="juju models --all"
 alias jmg="juju models --all | grep $1"
 alias jc="juju controllers"
 alias jcf="juju config"
-alias jcfq='function _jcfq(){ juju config $1 --format yaml | yq; }; _jcfq'
+alias jcfq='function _jcfq(){ juju config $1 | yq; }; _jcfq'
 alias ja="juju actions"
 alias jr="juju run"
 alias jssh="juju ssh"
@@ -92,3 +92,5 @@ alias jfip="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/fin
 alias jfm="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-models.py --pattern $1"
 alias jfo="/usr/bin/bash $HOME/versioned/dwellir-public/ops/juju/scripts/orphaned-instances.sh"
 alias jam="python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
+# Netbox
+alias nq="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query.py"
