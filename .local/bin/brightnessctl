@@ -13,23 +13,23 @@ change_value="$(( max_brightness / 20 ))"
 brightnessctl() {
 	case $1 in
 	max|100)
-		echo $max_brightness > $brightness_file
+		echo $max_brightness | sudo tee $brightness_file
 		;;
 	decrease|less|down)
 		if [ $current_brightness -gt $change_value ]; then
 			new_brightness="$(( current_brightness - change_value ))"
-			echo $new_brightness > $brightness_file
+			echo $new_brightness | sudo tee $brightness_file
 		else
-			echo $change_value > $brightness_file
+			echo $change_value | sudo tee $brightness_file
 		fi
 		;;
 	increase|more|up)
 		safety_net="$(( max_brightness - $change_value ))"
 		if [ $current_brightness -lt $safety_net ]; then
 			new_brightness="$(( current_brightness + change_value ))"
-			echo $new_brightness > $brightness_file
+			echo $new_brightness | sudo tee $brightness_file
 		else
-			echo $max_brightness > $brightness_file
+			echo $max_brightness | sudo tee  $brightness_file
 		fi
 		;;
 
@@ -37,9 +37,9 @@ brightnessctl() {
 		big_change="$(( change_value * 3 ))"
 		if [ $current_brightness -gt $big_change ]; then
 			new_brightness="$(( current_brightness - big_change ))"
-			echo $new_brightness > $brightness_file
+			echo $new_brightness | sudo tee $brightness_file
 		else
-			echo $change_value > $brightness_file
+			echo $change_value | sudo tee $brightness_file
 		fi
 		;;
 
@@ -48,9 +48,9 @@ brightnessctl() {
 		safety_net="$(( max_brightness - big_change ))"
 		if [ $current_brightness -lt $safety_net ]; then
 			new_brightness="$(( current_brightness + big_change ))"
-			echo $new_brightness > $brightness_file
+			echo $new_brightness | sudo tee $brightness_file
 		else
-			echo $max_brightness > $brightness_file
+			echo $max_brightness | sudo tee $brightness_file
 		fi
 		;;
 	*)

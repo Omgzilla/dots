@@ -73,16 +73,16 @@ markup = full #full,stip,no
 frame_color = "#924441"
 foreground = "#d7d7d7"
 background = "#282c34"
-timeout = 8
+timeout = 10
 
 [urgency_normal]
 frame_color = "#924441"
 foreground = "#d7d7d7"
 background = "#282c34"
-timeout = 8
+timeout = 10
 
 [urgency_critical]
 frame_color = "#924441"
 foreground = "#d7d7d7"
 background = "#282c34"
-timeout = 12
+timeout = 15
