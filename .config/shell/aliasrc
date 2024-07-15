@@ -53,6 +53,7 @@ alias gco="git checkout" # List branches
 alias gcb="git checkout -b" # Checkout new branch
 alias gf="git fetch"
 alias glb="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate" # List branches
+alias lg="lazygit"
 # Permissions
 alias 000='chmod 000'
 alias 640='chmod 640'

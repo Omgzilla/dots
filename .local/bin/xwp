@@ -1,6 +1,8 @@
 #!/bin/bash
 # this script requires xwallpapers be installed
-
-dir="$HOME/Pictures/Wallpapers"
-
-xwallpaper --zoom $dir/wp1.jpg
+dir="$HOME/Pictures/Wallpapers/"
+lines=$(ls -l $dir | wc -l)
+rnd=$(shuf -i 1-$lines -n 1)
+wpnr=$(($rnd - 1))
+echo $rnd
+xwallpaper --zoom $dir/wp${wpnr}.jpg
