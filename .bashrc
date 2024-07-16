@@ -153,9 +153,7 @@ export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 
 # Initialize zoxide
-if command -v zoxide >/dev/null 2>%1; then
-  eval "$(zoxide init bash)"
-fi
+eval "$(zoxide init bash)"
 
 # Source Cargo
 #. "/home/marcus/.local/share/cargo/env"
