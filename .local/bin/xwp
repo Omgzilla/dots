@@ -1,8 +1,26 @@
 #!/bin/bash
-# this script requires xwallpapers be installed
-dir="$HOME/Pictures/Wallpapers/"
-lines=$(ls -l $dir | wc -l)
-rnd=$(shuf -i 1-$lines -n 1)
-wpnr=$(($rnd - 1))
-echo $rnd
-xwallpaper --zoom $dir/wp${wpnr}.jpg
+# Xwallpaper randomizer
+
+# Path to wallpapers directory
+directory="$HOME/Pictures/Wallpapers"
+
+# Check if directory exists
+if [[ ! -d $directory ]]; then
+  echo "Directory $directory does not exist."
+  exit 1
+fi
+
+# Get a list of all files in the directory
+files=("$directory"/*)
+
+# Check if there are any files in the directory
+if [[ ${#files[@]} -eq 0 ]]; then
+  echo "No files found in the directory."
+  exit 1
+fi
+
+# Pick a random file from the list
+random_file="${files[RANDOM % ${#files[@]}]}"
+
+# Set random wallpaper as background
+xwallpaper --zoom $random_file
