@@ -114,6 +114,7 @@ export TERMINAL="terminator"
 export MANPAGER="nvim +Man!"
 export COLORTERM="truecolor"
 export PAGER="less"
+export BROWSER="firefox"
 
 # Source FZF bindings
 source /usr/share/doc/fzf/examples/key-bindings.bash
