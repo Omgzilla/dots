@@ -12,7 +12,6 @@ containers=(
 "dwellir1:tailscale"
 "dwellir4:tailscale"
 "dwellir5:tailscale"
-"dwellir6:tailscale"
 "dwellir8:tailscale"
 "dwellir7:tailscale"
 )
@@ -22,7 +21,7 @@ echo ""
 for tailscale in "${containers[@]}"; do
   echo "Upgrading tailscale on $tailscale"
   echo ""
-  lxc exec $tailscale -- sh -c "sudo apt update && sudo apt upgrade -y"
+  lxc exec $tailscale --project networking -- sh -c "sudo apt update && sudo apt upgrade -y"
 done
 
 echo ""
