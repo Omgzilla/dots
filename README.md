@@ -29,3 +29,7 @@ nix run nix-darwin -- switch --flake ~/dots/nix#omg-mac
 ```zsh
 darwin-rebuild switch --flake ~/dots/nix#omg-mac
 ```
+### Docs for nix-darwin
+```zsh
+darwin-help
+```

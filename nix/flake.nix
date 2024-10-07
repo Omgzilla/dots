@@ -72,7 +72,7 @@
           "Tailscale" = 1475387142;
         };
         onActivation.cleanup = "zap";
-        onActivation.autoUpgrade = true;
+        onActivation.autoUpdate = true;
         onActivation.upgrade = true;
       };
 
@@ -109,6 +109,26 @@
         done
             '';
 
+      # MacOS preferences
+      system.defaults = {
+        dock.autohide = true;
+        dock.autohide-delay = 0.05;
+        dock.persistent-apps = [
+          "/Applications/Firefox.app"
+          "/Applications/Brave Browser.app"
+          "/System/Applications/Messages.app"
+          "/System/Applications/FaceTime.app"
+          "/System/Applications/Mail.app"
+          "/System/Applications/Calendar.app"
+          "/System/Applications/Notes.app"
+          "/System/Applications/System Settings.app"
+          "${pkgs.obsidian}/Applications/Obsidian.app"
+        ];
+        loginwindow.GuestEnabled = false;
+        NSGlobalDomain.AppleICUForce24HourTime = true;
+        NSGlobalDomain.AppleInterfaceStyleSwitchesAutomatically = true;
+        NSGlobalDomain.KeyRepeat = 2;
+      };
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
 
