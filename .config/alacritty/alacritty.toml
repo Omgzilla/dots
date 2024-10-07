@@ -26,7 +26,7 @@ WINIT_HIDPI_FACTOR = "1"
 TERM = "xterm-256color"
 
 [font]
-size = 8.0
+size = 12.0
 
 [font.bold]
 family = "UbuntuMono Nerd Font"
@@ -130,7 +130,7 @@ semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 #program = "/bin/zsh"
 
 [window]
-decorations = "none"
+decorations = "full"
 dynamic_padding = false
 dynamic_title = true
 opacity = 0.9
