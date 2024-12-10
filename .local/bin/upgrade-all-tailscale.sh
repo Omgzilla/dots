@@ -6,6 +6,7 @@ containers=(
 "site-lab:juju-b5f8f7-3"
 "lagos1:tailscale"
 "lagos2:tailscale"
+"lagos3:tailscale"
 "tunis1:tailscale"
 "tunis2:tailscale"
 "dwellir2:tailscale"
