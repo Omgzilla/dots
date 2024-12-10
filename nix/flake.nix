@@ -25,6 +25,7 @@
           pkgs.juju
           pkgs.mkalias
           pkgs.neovim
+          pkgs.nodejs_22
           pkgs.obsidian
           pkgs.stow
           pkgs.zoxide
