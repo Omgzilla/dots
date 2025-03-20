@@ -8,7 +8,7 @@ return {
     local markdown = require("render-markdown")
 
     markdown.setup({
-      enable = true,
+      enabled = true,
       file_types = { "markdown" },
       render_modes = { "n", "c" },
       max_file_size = 5.0,
