@@ -2,29 +2,36 @@
 {
     //"layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 20, // Waybar height (to be removed for auto height)
+    "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
         "hyprland/workspaces",
-        "hyprland/submap",
-        "hyprland/window"
+        "hyprland/submap"
+        //"sway/scratchpad",
+        //"custom/media"
     ],
     "modules-center": [
-        "clock"
+        "hyprland/window"
     ],
     "modules-right": [
+        //"mpd",
+        //"idle_inhibitor",
         "pulseaudio",
         "network",
+        //"power-profiles-daemon",
         "cpu",
         "memory",
         "temperature",
         "backlight",
-        "power-profiles-daemon",
-        //"custom/notifications",
+        //"keyboard-state",
+        //"sway/language",
         "battery",
+        //"battery#bat2",
+        "clock",
         "tray"
+        //"custom/power"
     ],
     // Modules configuration
     // "sway/workspaces": {
@@ -53,12 +60,17 @@
         }
     },
     "hyprland/submap": {
-        "format": "<span style=\"italic\">{}</span>",
-        "max-length": 30,
-        "tooltip": false
+        "format": "<span style=\"italic\">{}</span>"
     },
     "hyprland/window": {
       "separate-outputs": true
+    },
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": false,
+        "format-icons": ["", ""],
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
     },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
@@ -95,23 +107,12 @@
     },
     "tray": {
         // "icon-size": 21,
-        "spacing": 8
+        "spacing": 10
     },
     "clock": {
-        "format": "{:%H:%M}",
-        "format-alt": "{:%d-%m-%Y}",
-        "timezone": "Europe/Stockholm",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
-        "calendar": {
-            "mode"  : "month",
-            "weeks-pos": "left",
-            "format": {
-              "months"  : "<span color='#6272a4'><b>{}</b></span>",
-              "days"    : "<span color='#f8f8f2'><b>{}</b></span>",
-              "weeks"   : "<span color='#f1fa8c'><b>{}</b></span>",
-              "today"   : "<b><u>{}</u></b>"
-            }
-        }
+        // "timezone": "America/New_York",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
     },
     "cpu": {
         "format": "{usage}% ",
@@ -202,21 +203,16 @@
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
-    "custom/notifications": {
-        "exec": "~/.config/waybar/makoctl",
-        "restart-interval": 1,
-        "on-click": "makoctl mode -t do-not-disturb"
-    },
     "custom/power": {
         "format" : "⏻ ",
-		    "tooltip": false,
-		    "menu": "on-click",
-		    "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
-		    "menu-actions": {
-		    	"shutdown": "shutdown",
-		    	"reboot": "reboot",
-		    	"suspend": "systemctl suspend",
-		    	"hibernate": "systemctl hibernate"
-		    }
+		"tooltip": false,
+		"menu": "on-click",
+		"menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
+		"menu-actions": {
+			"shutdown": "shutdown",
+			"reboot": "reboot",
+			"suspend": "systemctl suspend",
+			"hibernate": "systemctl hibernate"
+		}
     }
 }

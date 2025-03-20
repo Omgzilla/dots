@@ -1,11 +1,11 @@
 [global_config]
+  hide_from_taskbar = True
   inactive_color_offset = 0.9036458333333334
-  suppress_multiple_term_dialog = True
 [keybindings]
 [profiles]
   [[default]]
     background_color = "#282a36"
-    background_darkness = 0.95
+    background_darkness = 0.9
     background_type = transparent
     font = Ubuntu Mono 11
     foreground_color = "#f8f8f2"

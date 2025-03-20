@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ENABLED=
+DISABLED=
+if makoctl mode == "default" ; then echo $ENABLED; else echo $DISABLED; fi
