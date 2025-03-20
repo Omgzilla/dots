@@ -37,7 +37,7 @@ ENC = locale.getpreferredencoding()
 
 CONF = configparser.ConfigParser()
 #CONF.read(expanduser("/usr/share/archcraft/dwm/theme/networkmenu_config.ini"))
-CONF.read(expanduser("~/.local/omgzilla/dots/.local/bin/network_menu.config"))
+CONF.read(expanduser("~/.local/bin/network_menu.config"))
 
 
 def cli_args():
