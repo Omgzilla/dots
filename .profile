@@ -48,3 +48,8 @@ export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 
 # Languages
 export NODE_PATH=$HOME/.local/share/nvim/node_modules/lib/node_modules
+
+# Start Hyprland
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+       Hyprland 
+fi

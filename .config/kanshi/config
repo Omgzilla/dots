@@ -1,0 +1,22 @@
+# Home Dock Setup
+profile home {
+  output "Samsung Electric Company S27B80T HCJX100493" enable position 0,0 mode 3840x2160@60Hz scale 1.50
+  #output "Samsung Electric Company S27B80T HCJX100493" enable position 0,0 mode 2560x1440@60Hz scale 1
+  output "Acer Technologies XB271HU A T4TEE0068505" enable position 2560,0 mode 2560x1440@60Hz scale 1
+  output eDP-1 disable
+  #exec source ~/.config/hypr/monitor/workspaces-home.conf
+  exec bash ~/.config/hypr/monitor/workspace-assignment.sh
+}
+# Work Dock Setup
+profile work {
+  output "Lenovo Group Limited P27q-20 V90AW8MZ" enable position 0,0 mode 2560x1440@60Hz scale 1
+  output "Lenovo Group Limited P27q-20 V90AW8YD" enable position 2560,0 mode 2560x1440@60Hz scale 1
+  output eDP-1 disable
+  #exec source ~/.config/hypr/monitor/workspaces-office.conf
+  exec bash ~/.config/hypr/monitor/workspace-assignment.sh
+}
+# No dock (Laptop standalone)
+profile default {
+  output eDP-1 enable scale 1
+  exec source ~/.config/hypr/monitor/workspaces-default.conf
+}

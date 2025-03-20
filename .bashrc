@@ -127,8 +127,9 @@ export BROWSER="firefox"
 source /usr/share/fzf/key-bindings.bash
 
 # Preserve bash history in multiple terminal windows
-## Avoid diplicates
+## Avoid duplicates and coreutils
 HISTCONTROL=ignoredups:erasedups
+HISTIGNORE="cd:ls:ll:pwd:exit:clear:.."
 ## for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000000
 HISTFILESIZE=1000000
