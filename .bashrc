@@ -141,24 +141,27 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 #export LESSHISTFILE=-
 
 # XDG
-#export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
-#export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
-#export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
-#export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:="/tmp/xdg-runtime-$(id -u)"}
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
+export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
+export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:="/tmp/xdg-runtime-$(id -u)"}
 
 # ~/ Clean-up:
-#export XINITRC="$XDG_CONFIG_HOME"/x11/xinitrc
-#export XSERVERRC="$XDG_CONFIG_HOME"/x11/xserverrc
-#export XAUTHORITY="$XDG_CACHE_HOME"/Xauthority
-#export HISTFILE="$XDG_DATA_HOME"/history
-#export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/.gtkrc-2.0
-#export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
-#export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-#export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
-#export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
-#export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-#export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-#export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+export XINITRC="$XDG_CONFIG_HOME"/x11/xinitrc
+export XSERVERRC="$XDG_CONFIG_HOME"/x11/xserverrc
+export XAUTHORITY="$XDG_CACHE_HOME"/Xauthority
+export HISTFILE="$XDG_DATA_HOME"/history
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/.gtkrc-2.0
+export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
+export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+
+# Languages
+export NODE_PATH=$HOME/.local/share/nvim/node_modules/lib/node_modules
 
 # Initialize zoxide
 eval "$(zoxide init bash)"

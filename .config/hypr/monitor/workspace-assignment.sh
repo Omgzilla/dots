@@ -5,7 +5,7 @@ declare -A WORKSPACE_MAP
 WORKSPACE_MAP["Lenovo Group Limited P27q-20 V90AW8MZ"]="1-5"
 WORKSPACE_MAP["Lenovo Group Limited P27q-20 V90AW8YD"]="6-10"
 WORKSPACE_MAP["Samsung Electric Company S27B80T HCJX100493"]="1-5"
-WORKSPACE_MAP["Acer Technologies XB271HU A T4TEE0068505"]="1-5"
+WORKSPACE_MAP["Acer Technologies XB271HU A T4TEE0068505"]="6-10"
 
 # Get the list of connected monitors
 MONITORS=$(hyprctl monitors -j | jq -r '.[] | "\(.description) \(.name)"')
