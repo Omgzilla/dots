@@ -2,6 +2,11 @@
   hide_from_taskbar = True
   inactive_color_offset = 0.9036458333333334
 [keybindings]
+  go_up = <Alt>k
+  go_down = <Alt>j
+  go_left = <Alt>h
+  go_right = <Alt>l
+  layout_launcher = <Shift><Alt>l
 [profiles]
   [[default]]
     background_color = "#282a36"
