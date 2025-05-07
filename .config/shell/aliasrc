@@ -97,3 +97,5 @@ alias jfo="/usr/bin/bash $HOME/versioned/dwellir-public/ops/juju/scripts/orphane
 alias jam="python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
 # Netbox
 alias nq="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query.py"
+# Other scripts
+alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.sh"
