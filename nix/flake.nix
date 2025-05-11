@@ -3,7 +3,9 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin";
+    #nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
@@ -27,17 +29,15 @@
           pkgs.neovim
           pkgs.nodejs_22
           pkgs.obsidian
+          pkgs.python311
+          pkgs.python311Packages.pip
           pkgs.stow
           pkgs.zoxide
         ];
 
       # Fonts packages
       fonts.packages = [
-        (pkgs.nerdfonts.override { 
-          fonts = [ 
-          "UbuntuMono"
-          ]; 
-        })
+        pkgs.nerd-fonts.ubuntu-mono
       ];
       
       # Homebrew applications
@@ -55,6 +55,7 @@
           "discord"
           "firefox"
           "font-fontawesome"
+          "ghostty"
           "iina"
           "imageoptim"
           "iterm2"
@@ -72,13 +73,16 @@
           "Bitwarden" = 1352778147;
           "Tailscale" = 1475387142;
         };
+        taps = [
+          "homebrew/bundle"
+        ];
         onActivation.cleanup = "zap";
         onActivation.autoUpdate = true;
         onActivation.upgrade = true;
       };
 
       # Auto upgrade nix package and the daemon service.
-      services.nix-daemon.enable = true;
+      #services.nix-daemon.enable = true;
       # nix.package = pkgs.nix;
 
       # Necessary for using flakes on this system.
@@ -103,7 +107,7 @@
         rm -rf /Applications/Nix\ Apps
         mkdir -p /Applications/Nix\ Apps
         find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-        while read src; do
+        while read -r src; do
           app_name=$(basename "$src")
           echo "copying $src" >&2
           ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
