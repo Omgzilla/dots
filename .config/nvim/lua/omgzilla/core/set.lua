@@ -62,7 +62,7 @@ local set = {
 
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
-vim.cmd("let g:netrw_liststyle =3")
+vim.cmd("let g:netrw_liststyle = 3")
 -- vim.opt.fillchars.eob = " "
 -- vim.opt.fillchars = vim.opt.fillchars + "vertleft: "
 -- vim.opt.fillchars = vim.opt.fillchars + "vertright: "
@@ -87,6 +87,9 @@ vim.cmd("autocmd InsertLeave * set nopaste")
 
 -- Add asterisks in block comments
 --vim.cmd "set formatoptions+=r"
+
+-- Remove health for following languages
+vim.cmd("let g:loaded_perl_provider = 0")
 
 -- Run clipboard depending on OS
 vim.cmd("\

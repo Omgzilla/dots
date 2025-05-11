@@ -101,6 +101,12 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
+  if [ -f /usr/share/git/completion/git-completion.bash ]; then
+    . /usr/share/git/completion/git-completion.bash
+  fi
+  if [ -f /usr/share/git/completion/git-prompt.sh ]; then
+    . /usr/share/git/completion/git-prompt.sh
+  fi
 fi
 
 if [ -d "$HOME/.local/bin" ] ; then
@@ -117,11 +123,13 @@ export PAGER="less"
 export BROWSER="firefox"
 
 # Source FZF bindings
-source /usr/share/doc/fzf/examples/key-bindings.bash
+#source /usr/share/doc/fzf/examples/key-bindings.bash
+source /usr/share/fzf/key-bindings.bash
 
 # Preserve bash history in multiple terminal windows
-## Avoid diplicates
+## Avoid duplicates and coreutils
 HISTCONTROL=ignoredups:erasedups
+HISTIGNORE="cd:ls:ll:pwd:exit:clear:.."
 ## for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000000
 HISTFILESIZE=1000000
@@ -129,6 +137,8 @@ HISTFILESIZE=1000000
 shopt -s histappend
 ## Save and reload the history after each command finishes
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+# Disable files
+#export LESSHISTFILE=-
 
 # XDG
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
@@ -136,15 +146,12 @@ export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
 export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
 export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:="/tmp/xdg-runtime-$(id -u)"}
 
-# Disable files
-#export LESSHISTFILE=-
-
 # ~/ Clean-up:
 export XINITRC="$XDG_CONFIG_HOME"/x11/xinitrc
 export XSERVERRC="$XDG_CONFIG_HOME"/x11/xserverrc
 export XAUTHORITY="$XDG_CACHE_HOME"/Xauthority
 export HISTFILE="$XDG_DATA_HOME"/history
-#export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/.gtkrc-2.0
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/.gtkrc-2.0
 export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
@@ -153,12 +160,16 @@ export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 
+# Languages
+export NODE_PATH=$HOME/.local/share/nvim/node_modules/lib/node_modules
+
 # Initialize zoxide
 eval "$(zoxide init bash)"
 
 # Source Cargo
 #. "/home/marcus/.local/share/cargo/env"
 
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#export NODE_PATH=$HOME/.local/share/nvim/node_modules/lib/node_modules
+#export NVM_DIR="$HOME/.config/nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

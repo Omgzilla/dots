@@ -1,0 +1,18 @@
+# Appearance
+cursor            none
+cursor_shape      block
+# Fonts
+font_size         12.0
+font_family       Ubuntu Mono
+bold_font         Ubuntu Mono Bold
+italic_font       Ubuntu Mono Regular Italic
+bold_italic_font  Ubuntu Mono Bold Italic
+# Maps
+map ctrl+up neighboring_window up
+map ctrl+down neighboring_window down
+map ctrl+left neighboring_window left
+map ctrl+right neighboring_window right
+map shift+up move_window down
+map shift+down move_window up
+map shift+left move_window right
+map shift+right move_window left
