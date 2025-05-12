@@ -143,6 +143,7 @@ def open_grafana(site_conf: Dict, label_values: Dict[str, str]):
 
     query = f"/d/{uid}/lxd?orgId=1&from=now-6h&to=now&timezone=browser"
     query += f"&var-job={job}"
+    query += f"&var-host=$__all"
 
     for key, val in label_values.items():
         query += f"&var-{key}={val}"
