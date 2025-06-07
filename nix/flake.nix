@@ -2,36 +2,41 @@
   description = "Nix Darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    #nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    #nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }:
   let
     configuration = { pkgs, config, ... }: {
-
+      system.primaryUser = "marcus";
       nixpkgs.config.allowUnfree = true;
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
+      # Search pkgs here https://search.nixos.org/packages
       environment.systemPackages =
         [ 
-          pkgs.alacritty
+          #pkgs.alacritty
           pkgs.fd
           pkgs.fzf
           pkgs.htop
-          pkgs.hugo
+          #pkgs.hugo
           pkgs.juju
-          pkgs.mkalias
+          #pkgs.mkalias
           pkgs.neovim
           pkgs.nodejs_22
           pkgs.obsidian
-          pkgs.python311
-          pkgs.python311Packages.pip
+          pkgs.python313
+          pkgs.python313Packages.pip
+          pkgs.ripgrep
           pkgs.stow
+          #pkgs.vscode
+          pkgs.windsurf
           pkgs.zoxide
         ];
 
@@ -41,6 +46,7 @@
       ];
       
       # Homebrew applications
+      # Search pkgs here https://brew.sh/
       homebrew = {
         enable = true;
         brews = [
@@ -50,7 +56,9 @@
         casks = [
           "alt-tab"
           "android-platform-tools"
+          "appcleaner"
           "brave-browser"
+          "chatgpt"
           "cheatsheet"
           "discord"
           "firefox"
@@ -60,25 +68,30 @@
           "imageoptim"
           "iterm2"
           "lulu"
+          "macupdater"
           "onyx"
           "pika"
           "qbittorrent"
+          "signal"
           "spotify"
           "steam"
+          "syncthing"
           "the-unarchiver"
           "transmit"
-          "wine-stable"
         ];
         masApps = {
+          "Amphetamine" = 937984704;
           "Bitwarden" = 1352778147;
           "Tailscale" = 1475387142;
         };
         taps = [
           "homebrew/bundle"
         ];
-        onActivation.cleanup = "zap";
-        onActivation.autoUpdate = true;
-        onActivation.upgrade = true;
+        onActivation = {
+          autoUpdate = true;
+          cleanup = "zap";
+          upgrade = true;
+        };
       };
 
       # Auto upgrade nix package and the daemon service.
@@ -94,25 +107,25 @@
 
       # Activation Script for MacOS applications
       # https://gist.github.com/elliottminns/211ef645ebd484eb9a5228570bb60ec3
-      system.activationScripts.applications.text = let
-        env = pkgs.buildEnv {
-          name = "system-applications";
-          paths = config.environment.systemPackages;
-          pathsToLink = "/Applications";
-        };
-      in
-        pkgs.lib.mkForce ''
-        # Set up applications.
-        echo "setting up /Applications..." >&2
-        rm -rf /Applications/Nix\ Apps
-        mkdir -p /Applications/Nix\ Apps
-        find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-        while read -r src; do
-          app_name=$(basename "$src")
-          echo "copying $src" >&2
-          ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
-        done
-            '';
+      #system.activationScripts.applications.text = let
+      #  env = pkgs.buildEnv {
+      #    name = "system-applications";
+      #    paths = config.environment.systemPackages;
+      #    pathsToLink = "/Applications";
+      #  };
+      #in
+      #  pkgs.lib.mkForce ''
+      #  # Set up applications.
+      #  echo "setting up /Applications..." >&2
+      #  rm -rf /Applications/Nix\ Apps
+      #  mkdir -p /Applications/Nix\ Apps
+      #  find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
+      #  while read -r src; do
+      #    app_name=$(basename "$src")
+      #    echo "copying $src" >&2
+      #    ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+      #  done
+      #      '';
 
       # MacOS preferences
       system.defaults = {
@@ -139,7 +152,7 @@
 
       # Used for backwards compatibility, please read the changelog before changing.
       # $ darwin-rebuild changelog
-      system.stateVersion = 5;
+      system.stateVersion = 6;
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
@@ -163,6 +176,7 @@
             autoMigrate = true;
           };
         }
+        mac-app-util.darwinModules.default
       ];
     };
 
