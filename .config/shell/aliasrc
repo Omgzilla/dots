@@ -6,6 +6,7 @@ alias la="ls -A --color=auto"
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 alias fgrep="fgrep --coolor=auto"
+alias find="find . -name"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"
@@ -34,15 +35,16 @@ alias sv="sudo nvim"
 # Asciinema
 alias aplay="asciinema play -s 2.5"
 alias arec="asciinema rec"
-# Source
-alias bsrc="source ~/.bashrc"
-alias zsrc="source ~/.config/zsh/.zshrc"
-alias find="find . -name"
+# Config files
 alias brc='nvim ~/.bashrc'
+alias bsrc="source ~/.bashrc"
 alias zrc='nvim ~/.config/zsh/.zshrc'
+alias zsrc="source ~/.config/zsh/.zshrc"
 alias aliasrc='nvim ~/.config/shell/aliasrc'
+alias hyprrc='nvim ~/.config/hypr/'
 alias kittyrc='nvim ~/.config/kitty/kitty.conf'
 alias termrc='nvim ~/.config/terminator/config'
+alias vimrc='nvim ~/.config/nvim/'
 # Suckless
 alias makedwm='cd ~/.local/suckless/dwm && make && rm config.h'
 alias makedmenu='cd ~/.local/suckless/dmenu && make && rm config.h && rm patches.h'
@@ -61,8 +63,6 @@ alias 644='chmod 644'
 alias 755='chmod 755'
 alias 775='chmode 775'
 alias ux='chmod u+x'
-# LXD
-alias lxlist='lxc list -c ns4Dtc'
 # Juju
 alias wjs="watch -n 1 -c juju status --color"
 alias wjsr="watch -n 1 -c juju status --color --relations"
@@ -93,12 +93,15 @@ alias jswt="juju switch baal" # site-tunis
 alias jswa="juju switch hyperborea" # site-aws-eu
 alias jswj="juju switch janus" # site-aws-us
 alias jswh="juju switch local" # localhost
+alias jwm='function _jwm(){ juju switch $(juju models --all | grep "$@" | awk "{print $1}" | head -n 1); }; _jwm'
 alias jfi="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-instance.py --id $1"
 alias jfip="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-instance.py --ip $1"
 alias jfm="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-models.py --pattern $1"
 alias jfo="/usr/bin/bash $HOME/versioned/dwellir-public/ops/juju/scripts/orphaned-instances.sh"
-alias jam="python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
+alias jam="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
 # Netbox
 alias nq="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query.py"
 # Other scripts
 alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.sh"
+# Add an "alert" after a long running command, like: sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'

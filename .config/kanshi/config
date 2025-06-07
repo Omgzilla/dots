@@ -5,6 +5,7 @@ profile home {
   output "Acer Technologies XB271HU A T4TEE0068505" enable position 2560,0 mode 2560x1440@60Hz scale 1
   output eDP-1 disable
   exec ~/.config/hypr/scripts/set-workspaces-home.sh
+  exec waypaper --restore
 }
 # Office Dock Setup
 profile office {
@@ -12,9 +13,11 @@ profile office {
   output "Lenovo Group Limited P27q-20 V90AW8YD" enable position 2560,0 mode 2560x1440@60Hz scale 1
   output eDP-1 disable
   exec ~/.config/hypr/scripts/set-workspaces-office.sh
+  exec waypaper --restore
 }
 # No dock (Laptop standalone)
 profile default {
   output eDP-1 enable scale 1
   exec ~/.config/hypr/scripts/set-workspaces-default.sh
+  exec waypaper --restore
 }

@@ -1,6 +1,4 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
 
 # If not running interactively, don't do anything
 case $- in
@@ -37,9 +35,6 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
 	color_prompt=yes
     else
 	color_prompt=
@@ -65,29 +60,12 @@ esac
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-
-
-# Being replaced by zoxide
-## Source autojump
-#. /usr/share/autojump/autojump.sh
-#. /usr/share/autojump/autojump.bash
-
 # Source bash_profile if it exsists
 if [ -f ~/.bash_profile ]; then
   . ~/.bash_profile
 fi
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-#if [ -f ~/.bash_aliases ]; then
-#    . ~/.bash_aliases
-#fi
+# Sourece aliasrc
 if [ -f ~/.config/shell/aliasrc ]; then
     . ~/.config/shell/aliasrc
 fi
@@ -109,6 +87,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Add .local bin to PATH
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
@@ -123,8 +102,8 @@ export PAGER="less"
 export BROWSER="firefox"
 
 # Source FZF bindings
-#source /usr/share/doc/fzf/examples/key-bindings.bash
-source /usr/share/fzf/key-bindings.bash
+#source /usr/share/doc/fzf/examples/key-bindings.bash # Ubuntu
+source /usr/share/fzf/key-bindings.bash # Arch
 
 # Preserve bash history in multiple terminal windows
 ## Avoid duplicates and coreutils
@@ -137,16 +116,13 @@ HISTFILESIZE=1000000
 shopt -s histappend
 ## Save and reload the history after each command finishes
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
-# Disable files
-#export LESSHISTFILE=-
 
 # XDG
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
 export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
 export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:="/tmp/xdg-runtime-$(id -u)"}
-
-# ~/ Clean-up:
+## ~/ Clean-up:
 export XINITRC="$XDG_CONFIG_HOME"/x11/xinitrc
 export XSERVERRC="$XDG_CONFIG_HOME"/x11/xserverrc
 export XAUTHORITY="$XDG_CACHE_HOME"/Xauthority
@@ -160,7 +136,7 @@ export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 
-# Languages
+# Languages for neovim
 export NODE_PATH=$HOME/.local/share/nvim/node_modules/lib/node_modules
 
 # Initialize zoxide
