@@ -29,7 +29,7 @@ term = xterm-256color
 gtk-tabs-location = left
 gtk-wide-tabs = false
 
-window-decoration = none
+window-decoration = auto
 window-padding-color = background
 window-padding-x = 1
 window-padding-y = 1 
@@ -50,3 +50,4 @@ keybind = ctrl+shift+up=resize_split:up,10
 keybind = ctrl+shift+right=resize_split:right,10
 keybind = ctrl+shift+x=toggle_split_zoom
 keybind = ctrl+shift+b=toggle_tab_overview
+keybind = ctrl+shift+v=toggle_window_decorations
