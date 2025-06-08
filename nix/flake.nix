@@ -21,7 +21,6 @@
       # Search pkgs here https://search.nixos.org/packages
       environment.systemPackages =
         [ 
-          #pkgs.alacritty
           pkgs.fd
           pkgs.fzf
           pkgs.htop
