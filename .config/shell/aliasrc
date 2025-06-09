@@ -19,6 +19,7 @@ alias sc="sudo systemctl"
 alias w="watch -n 1 -c"
 alias ping="ping -O"
 alias cd="z"
+alias sshr='ssh-keygen -f "/home/marcus/.ssh/known_hosts" -R "$@"'
 # Package manager
 alias apt="sudo apt"
 alias pac="sudo pacman"
