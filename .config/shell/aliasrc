@@ -31,8 +31,9 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias sv="sudo nvim"
-# VS-Codium
+# VSCode
 #alias code="codium"
+alias code="windsurf"
 # Asciinema
 alias aplay="asciinema play -s 2.5"
 alias arec="asciinema rec"
