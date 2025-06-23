@@ -23,11 +23,11 @@ move_workspace_to() {
   fi
 }
 
-move_workspace_to 1 "Samsung Electric Company S27B80T HCJX100493"
-move_workspace_to 2 "Samsung Electric Company S27B80T HCJX100493"
-move_workspace_to 3 "Samsung Electric Company S27B80T HCJX100493"
-move_workspace_to 4 "Samsung Electric Company S27B80T HCJX100493"
-move_workspace_to 5 "Samsung Electric Company S27B80T HCJX100493"
+move_workspace_to 1 eDP-1
+move_workspace_to 2 eDP-1
+move_workspace_to 3 eDP-1
+move_workspace_to 4 eDP-1
+move_workspace_to 5 eDP-1
 move_workspace_to 6 "Acer Technologies XB271HU A T4TEE0068505"
 move_workspace_to 7 "Acer Technologies XB271HU A T4TEE0068505"
 move_workspace_to 8 "Acer Technologies XB271HU A T4TEE0068505"
