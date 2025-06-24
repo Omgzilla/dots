@@ -3,6 +3,7 @@ profile home {
   output eDP-1 enable scale 1
   output "Acer Technologies XB271HU A T4TEE0068505" enable position 1920,0 mode 2560x1440@60Hz scale 1
   exec ~/.config/hypr/scripts/set-workspaces-home.sh
+  exec solaar -w hide &
   exec waypaper --restore
 }
 # Office Dock Setup
