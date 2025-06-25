@@ -6,19 +6,27 @@
 git clone https://github.com/Omgzilla/dots.git && cd /dots && stow -t ~/ .
 ```
 
+# Install stow
 _This require [GNU Stow](https://www.gnu.org/software/stow/) to be installed_
 
-# Debian/Ubuntu
+## Arch
+```bash
+sudo pacman -S stow
+```
+
+## Debian/Ubuntu
 
 ```bash
 sudo apt install stow
 ```
 
-# Homebrew on MacOS
+## Homebrew on MacOS
 
 ```zsh
 brew install stow
 ```
+
+# Nix on MacOS
 
 ## Install Nix-darwin on MacOS using flake
 
