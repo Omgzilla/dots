@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# Unified workspace switcher for Hyprland
+# Usage: ./set-workspaces.sh [default|home|office]
+
+set -euo pipefail
+
+usage() {
+  cat <<EOF
+Usage: $0 [default|home|office]
+
+Profiles:
+  default — laptop-only (all workspaces on eDP-1)
+  home    — split 1–5 on eDP-1, 6–10 on Acer external
+  office  — split 1–5 on Lenovo MZ, 6–10 on Lenovo YD
+EOF
+  exit 1
+}
+
+# Ensure exactly one argument
+if [[ $# -ne 1 ]]; then
+  usage
+fi
+
+profile="$1"
+
+# Map profile name to workspace config file
+declare -A WS_MAP=(
+  [default]="$HOME/.config/hypr/workspaces-default.conf"
+  [home]="$HOME/.config/hypr/workspaces-home.conf"
+  [office]="$HOME/.config/hypr/workspaces-office.conf"
+)
+
+# Validate profile
+ws_src="${WS_MAP[$profile]:-}"
+if [[ -z "$ws_src" || ! -f "$ws_src" ]]; then
+  echo "Error: unknown profile or missing config for '$profile'"
+  usage
+fi
+
+# Give Hyprland a moment to settle monitors
+sleep 2
+
+# Copy selected workspace layout into live config
+cp "$ws_src" "$HOME/.config/hypr/workspaces.conf"
+
+# Reload Hyprland to apply the new workspace bindings
+hyprctl reload
+
+echo "[set-workspaces] Applied '$profile' profile (from $ws_src)"
+

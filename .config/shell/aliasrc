@@ -102,8 +102,13 @@ alias jfm="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find
 alias jfo="/usr/bin/bash $HOME/versioned/dwellir-public/ops/juju/scripts/orphaned-instances.sh"
 alias jam="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
 # Netbox
-alias nq="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query.py"
+alias nq="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py"
 # Other scripts
+alias blockdiff="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/blockdiff.py"
 alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.sh"
 # Add an "alert" after a long running command, like: sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+# SSH
+alias sshremove='ssh-keygen -f "$HOME/.ssh/known_hosts" -R'
+alias cisco='cisco() { [ $# -eq 2 ] || { echo "Usage: cisco <user> <host>"; return 1; }; ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-cbc -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; }; cisco'
+alias cisco45='cisco45() { [ $# -eq 2 ] || { echo "Usage: cisco <user> <host>"; return 1; }; ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-ctr -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; }; cisco45'
