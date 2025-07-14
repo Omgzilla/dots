@@ -1,3 +1,6 @@
+# Source functions
+#source ./alias-functions
+
 # System
 alias ls="ls --color=auto"
 alias l="ls -lC --color=auto"
@@ -112,3 +115,4 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias sshremove='ssh-keygen -f "$HOME/.ssh/known_hosts" -R'
 alias cisco='cisco() { [ $# -eq 2 ] || { echo "Usage: cisco <user> <host>"; return 1; }; ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-cbc -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; }; cisco'
 alias cisco45='cisco45() { [ $# -eq 2 ] || { echo "Usage: cisco <user> <host>"; return 1; }; ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-ctr -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; }; cisco45'
+alias sc=ser
