@@ -47,5 +47,8 @@ cp "$ws_src" "$HOME/.config/hypr/workspaces.conf"
 # Reload Hyprland to apply the new workspace bindings
 hyprctl reload
 
+# Reload Waypaper
+waypaper --restore
+
 echo "[set-workspaces] Applied '$profile' profile (from $ws_src)"
 
