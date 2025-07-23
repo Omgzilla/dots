@@ -14,7 +14,7 @@ vim.g.maplocalleader = " "
 
 local map = vim.keymap.set
 -- Toggle transparent
-map("n", "<leader>b", "<CMD>TransparentToggle<CR>")
+map("n", "<leader>b", "<CMD>TransparentToggle<CR>", { desc = "Toggle transparent background" })
 
 -- Enable/Disable numbers
 map("n", "<leader>n", ":set invrnu invnu<CR>", { desc = "Toggle numbers" })
@@ -70,7 +70,7 @@ map("v", "S-k", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 map("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace selected word/s" })
 
 -- Set run priv on file
-map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { desc = "Enable execute mod" })
+map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { desc = "Set +x execute mod to file" })
 
 -- Press jk fast to exit insert mode
 map("i", "jk", "<ESC>", { desc = "Exit insert mode" })
