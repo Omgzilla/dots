@@ -16,7 +16,8 @@ require("lazy").setup({
   { import = "omgzilla.plugins.lsp" },
 }, {
   install = {
-    colorscheme = { "dracula" },
+    --colorscheme = { "dracula" },
+    colorscheme = { "catppuccin-mocha" },
   },
   checker = {
     enabled = true, -- automatic update checker
