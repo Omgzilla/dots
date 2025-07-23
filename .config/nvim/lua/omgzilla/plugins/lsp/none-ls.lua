@@ -16,7 +16,6 @@ return {
       ensure_installed = {
         "prettier", -- prettier formatter
         "stylua", -- lua formatter
-        "black", -- python formatter
         "pylint", -- python linter
         "eslint_d", -- js linter
       },
@@ -36,13 +35,7 @@ return {
       -- setup formatters & linters
       sources = {
         --  to disable file types use
-        --  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
-        formatting.prettier.with({
-          extra_filetypes = { "svelte" },
-        }), -- js/ts formatter
         formatting.stylua, -- lua formatter
-        formatting.isort,
-        formatting.black,
         diagnostics.pylint,
         diagnostics.eslint_d.with({ -- js/ts linter
           condition = function(utils)
