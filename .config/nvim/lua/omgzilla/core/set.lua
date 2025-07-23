@@ -94,9 +94,6 @@ if has('unix')\
         runtime ./macos.lua\
     endif\
 endif\
-if has('win32')\
-    runtime ./win.lua\
-endif\
 ")
 
 vim.filetype.add({
