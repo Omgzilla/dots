@@ -2,10 +2,11 @@
   description = "Nix Darwin system flake";
 
   inputs = {
-    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
     #nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+    #nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     mac-app-util.url = "github:hraban/mac-app-util";
@@ -56,12 +57,14 @@
           "alt-tab"
           "android-platform-tools"
           "appcleaner"
+          #"balenaetcher"
           "brave-browser"
           "chatgpt"
           "cheatsheet"
           "discord"
           "firefox"
           "font-fontawesome"
+          #"foobar2000"
           "ghostty"
           "iina"
           "imageoptim"
@@ -72,9 +75,11 @@
           "pika"
           "qbittorrent"
           "signal"
+          "slack"
           "spotify"
           "steam"
           "syncthing"
+          "teamviewer"
           "the-unarchiver"
           "transmit"
         ];
