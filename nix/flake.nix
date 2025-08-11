@@ -68,7 +68,7 @@
           "ghostty"
           "iina"
           "imageoptim"
-          "iterm2"
+          #iterm2"
           "lulu"
           "macupdater"
           "onyx"
@@ -107,7 +107,6 @@
 
       # Create /etc/zshrc that loads the nix-darwin environment.
       programs.zsh.enable = true;  # default shell on catalina
-      # programs.fish.enable = true;
 
       # Activation Script for MacOS applications
       # https://gist.github.com/elliottminns/211ef645ebd484eb9a5228570bb60ec3
