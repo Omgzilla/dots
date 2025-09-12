@@ -12,7 +12,7 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+       . "$HOME/.bashrc"
     fi
 fi
 
@@ -26,30 +26,40 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# Add npm bin to PATH
+if [ -d "$HOME/.local/lib/npm/bin" ] ; then
+  PATH="$HOME/.local/lib/npm/bin:$PATH"
+fi
+
 # XDG
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
 export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
 export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:="/tmp/xdg-runtime-$(id -u)"}
+export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
 
-# ~/ Clean-up:
+# History
+export HISTFILE="$XDG_DATA_HOME"/bash/history
+
+# X11
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export XINITRC="$XDG_CONFIG_HOME"/x11/xinitrc
 export XSERVERRC="$XDG_CONFIG_HOME"/x11/xserverrc
-export XAUTHORITY="$XDG_CACHE_HOME"/Xauthority
-export HISTFILE="$XDG_DATA_HOME"/history
-export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/.gtkrc-2.0
-export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
-export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
-export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
-export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 
-# Languages
-export NODE_PATH=$HOME/.local/share/nvim/node_modules/lib/node_modules
+# Tools
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export CODEX_HOME="$XDG_CONFIG_HOME/codex"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GOPATH="$XDG_DATA_HOME/go"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
+export KODI_DATA="$XDG_DATA_HOME/kodi"
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+export VSCODE_PORTABLE="$XDG_DATA_HOME/vscode"
+export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
 
 # Start Hyprland
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-       Hyprland 
+if uwsm check may-start; then
+    exec uwsm start hyprland.desktop
 fi
