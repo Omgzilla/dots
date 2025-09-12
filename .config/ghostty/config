@@ -37,6 +37,8 @@ window-theme = ghostty
 window-vsync = true
 
 keybind = ctrl+shift+r>r=reload_config
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
 keybind = ctrl+shift+r>x=equalize_splits
 keybind = ctrl+shift+o=new_split:down
 keybind = ctrl+shift+e=new_split:right
