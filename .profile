@@ -39,7 +39,7 @@ export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:="/tmp/xdg-runtime-$(id -u)"}
 export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
 
 # History
-export HISTFILE="$XDG_DATA_HOME"/bash/history
+export HISTFILE="$XDG_STATE_HOME/bash/history"
 
 # X11
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"

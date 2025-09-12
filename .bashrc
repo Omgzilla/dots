@@ -120,7 +120,7 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 #export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
 
 # History
-#export HISTFILE="$XDG_DATA_HOME"/bash/history
+#export HISTFILE="$XDG_STATE_HOME"/bash/history
 
 # X11
 #export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
