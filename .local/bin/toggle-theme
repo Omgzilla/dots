@@ -1,0 +1,193 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# ==========================================================
+# Config: list multiple candidates per mode (first found wins)
+# Edit these arrays to your liking.
+# ==========================================================
+LIGHT_GTK_THEMES=( "Adwaita" )
+DARK_GTK_THEMES=( "Adwaita-dark" )
+
+LIGHT_ICON_THEMES=( "Adwaita" )
+DARK_ICON_THEMES=( "Adwaita" )
+
+LIGHT_CURSOR_THEMES=( "Adwaita" )
+DARK_CURSOR_THEMES=( "Adwaita" )
+
+# Nerd Fonts icons (ensure your Waybar uses a Nerd Font patched font)
+ICON_LIGHT=""   # nf-fa-sun_o
+ICON_DARK=""    # nf-fa-moon_o
+
+# Files to update (same ones nwg-look manages)
+GTK3_INI="$HOME/.config/gtk-3.0/settings.ini"
+GTK4_INI="$HOME/.config/gtk-4.0/settings.ini"
+
+# Standard theme dirs to probe
+THEME_DIRS=( "$HOME/.themes" "/usr/share/themes" )
+ICON_DIRS=( "$HOME/.icons" "/usr/share/icons" )
+
+# ==========================================================
+# Helpers
+# ==========================================================
+exists_in_dirs() {
+  local name="$1"; shift
+  local -a dirs=("$@")
+  for d in "${dirs[@]}"; do
+    [[ -d "$d/$name" ]] && return 0
+  done
+  return 1
+}
+
+pick_first_available() {
+  # $1: type (gtk|icon|cursor), $2..: candidates
+  local type="$1"; shift
+  local -a candidates=( "$@" )
+  local -a dirs=()
+  case "$type" in
+    gtk)   dirs=("${THEME_DIRS[@]}") ;;
+    icon|cursor) dirs=("${ICON_DIRS[@]}") ;;
+    *) echo "Unknown type: $type" >&2; return 1 ;;
+  esac
+
+  for c in "${candidates[@]}"; do
+    if exists_in_dirs "$c" "${dirs[@]}"; then
+      echo "$c"; return 0
+    fi
+  done
+  # Fallback: just return the first candidate even if not found (in case theme exists but not laid out conventionally)
+  echo "${candidates[0]}"
+}
+
+get_mode() {
+  # Prefer gsettings (color-scheme), else infer from GTK3 settings.ini
+  if command -v gsettings >/dev/null 2>&1; then
+    local cs
+    cs=$(gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null || echo "'prefer-light'")
+    [[ "$cs" == *prefer-dark* ]] && echo "dark" || echo "light"
+  else
+    if [[ -f "$GTK3_INI" ]] && grep -qiE '^gtk-theme-name=.*-dark' "$GTK3_INI"; then
+      echo "dark"
+    else
+      echo "light"
+    fi
+  fi
+}
+
+write_ini() {
+  # $1 ini path, $2 theme, $3 icon, $4 cursor, $5 prefer_dark(0|1)
+  local ini="$1" theme="$2" icon="$3" cursor="$4" prefer="$5"
+  mkdir -p "$(dirname "$ini")"
+  [[ -f "$ini" ]] || printf "[Settings]\n" > "$ini"
+  awk -v t="$theme" -v i="$icon" -v c="$cursor" -v d="$prefer" '
+    BEGIN{ft=fi=fc=fd=0}
+    /^gtk-theme-name=/               {print "gtk-theme-name=" t; ft=1; next}
+    /^gtk-icon-theme-name=/          {print "gtk-icon-theme-name=" i; fi=1; next}
+    /^gtk-cursor-theme-name=/        {print "gtk-cursor-theme-name=" c; fc=1; next}
+    /^gtk-application-prefer-dark-theme=/ {print "gtk-application-prefer-dark-theme=" d; fd=1; next}
+    {print}
+    END{
+      if(!ft) print "gtk-theme-name=" t
+      if(!fi) print "gtk-icon-theme-name=" i
+      if(!fc) print "gtk-cursor-theme-name=" c
+      if(!fd) print "gtk-application-prefer-dark-theme=" d
+    }
+  ' "$ini" > "$ini.tmp" && mv "$ini.tmp" "$ini"
+}
+
+apply_mode() {
+  # $1: "light" | "dark"
+  local mode="$1"
+  local gtk icon cursor prefer color_scheme
+
+  if [[ "$mode" == "dark" ]]; then
+    gtk=$(pick_first_available gtk   "${DARK_GTK_THEMES[@]}")
+    icon=$(pick_first_available icon "${DARK_ICON_THEMES[@]}")
+    cursor=$(pick_first_available cursor "${DARK_CURSOR_THEMES[@]}")
+    prefer=1
+    color_scheme="prefer-dark"
+  else
+    gtk=$(pick_first_available gtk   "${LIGHT_GTK_THEMES[@]}")
+    icon=$(pick_first_available icon "${LIGHT_ICON_THEMES[@]}")
+    cursor=$(pick_first_available cursor "${LIGHT_CURSOR_THEMES[@]}")
+    prefer=0
+    color_scheme="prefer-light"
+  fi
+
+  # gsettings where possible (many apps + portals read this)
+  #if command -v gsettings >/dev/null 2>&1; then
+  #  gsettings set org.gnome.desktop.interface color-scheme "$color_scheme" 2>/dev/null || true
+  #  gsettings set org.gnome.desktop.interface gtk-theme "$gtk" 2>/dev/null || true
+  #  gsettings set org.gnome.desktop.interface icon-theme "$icon" 2>/dev/null || true
+  #  gsettings set org.gnome.desktop.interface cursor-theme "$cursor" 2>/dev/null || true
+  #fi
+
+  # Always write the files nwg-look uses
+  write_ini "$GTK3_INI" "$gtk" "$icon" "$cursor" "$prefer"
+  write_ini "$GTK4_INI" "$gtk" "$icon" "$cursor" "$prefer"
+}
+
+reload_ui() {
+  # Waybar (reload CSS)
+  pkill -SIGUSR2 waybar 2>/dev/null || true
+  # NWG-look apply
+  nwg-look -a
+  # Hyprland (if your config sources colors, this will reapply)
+  command -v hyprctl >/dev/null 2>&1 && hyprctl reload >/dev/null 2>&1 || true
+}
+
+status_icon() {
+  if [[ "$(get_mode)" == "dark" ]]; then
+    echo "$ICON_DARK"
+  else
+    echo "$ICON_LIGHT"
+  fi
+}
+
+status_json() {
+  local mode icon tip
+  mode="$(get_mode)"
+  if [[ "$mode" == "dark" ]]; then
+    icon="$ICON_DARK"; tip="Dark mode"
+  else
+    icon="$ICON_LIGHT"; tip="Light mode"
+  fi
+  printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' "$icon" "$tip" "$mode"
+}
+
+usage() {
+  cat >&2 <<EOF
+Usage: $(basename "$0") [toggle|status|json|label|set MODE]
+
+  toggle        Toggle between light/dark
+  status        Print icon only (Nerd Fonts)
+  json          Print Waybar JSON: {"text": "...", "tooltip": "..."}
+  label         Print "light" or "dark"
+  set MODE      Force a mode: MODE = light | dark
+EOF
+  exit 1
+}
+
+# ==========================================================
+# Main
+# ==========================================================
+cmd="${1:-toggle}"
+case "$cmd" in
+  toggle)
+    cur=$(get_mode)
+    [[ "$cur" == "dark" ]] && next="light" || next="dark"
+    apply_mode "$next"
+    reload_ui
+    ;;
+  set)
+    [[ $# -ge 2 ]] || usage
+    case "$2" in
+      light|dark) apply_mode "$2"; reload_ui ;;
+      *) usage ;;
+    esac
+    ;;
+  status) status_icon ;;
+  json)   status_json ;;
+  label)  get_mode ;;
+  *) usage ;;
+esac
+
