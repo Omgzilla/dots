@@ -11,10 +11,6 @@ esac
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
-
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -57,9 +53,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
 # Sourece aliasrc
 if [ -f ~/.config/shell/aliasrc ]; then
     . ~/.config/shell/aliasrc
@@ -89,7 +82,8 @@ fi
 
 # Default applicaitons:
 export EDITOR="nvim"
-export TERMINAL="terminator"
+#export TERMINAL="terminator"
+export TERMINAL="ghostty"
 #export TERMINAL="alacritty"
 export MANPAGER="nvim +Man!"
 export COLORTERM="truecolor"
@@ -111,46 +105,9 @@ HISTFILESIZE=1000000
 shopt -s histappend
 ## Save and reload the history after each command finishes
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
-
-# XDG
-#export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
-#export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
-#export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
-#export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:="/tmp/xdg-runtime-$(id -u)"}
-#export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
-
-# History
-#export HISTFILE="$XDG_STATE_HOME"/bash/history
-
-# X11
-#export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-#export XINITRC="$XDG_CONFIG_HOME"/x11/xinitrc
-#export XSERVERRC="$XDG_CONFIG_HOME"/x11/xserverrc
-
-# Tools
-#export CARGO_HOME="$XDG_DATA_HOME/cargo"
-#export CODEX_HOME="$XDG_CONFIG_HOME/codex"
-#export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-#export GOPATH="$XDG_DATA_HOME/go"
-#export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
-#export KODI_DATA="$XDG_DATA_HOME/kodi"
-#export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
-#export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
-#export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
-#export VSCODE_PORTABLE="$XDG_DATA_HOME/vscode"
-#export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
+export HISTFILE="$XDG_STATE_HOME"/bash/history
 
 export OPENCODE_CONFIG="$XDG_CONFIG_HOME/opencode/custom-config.json"
 
-# Languages for neovim
-#export NODE_PATH=$HOME/.local/share/nvim/node_modules/lib/node_modules
-
 # Initialize zoxide
 eval "$(zoxide init bash)"
-
-# Source Cargo
-#. "/home/marcus/.local/share/cargo/env"
-
-#export NVM_DIR="$HOME/.config/nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
