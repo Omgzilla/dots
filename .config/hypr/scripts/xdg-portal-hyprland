@@ -1,7 +1,9 @@
 #!/bin/bash
 killall /usr/lib/xdg-desktop-portal
 killall /usr/lib/xdg-desktop-portal-hyprland
-sleep 2
-/usr/lib/xdg-desktop-portal-hyprland &
-sleep 2
-/usr/lib/xdg-desktop-portal &
+#sleep 2
+##/usr/lib/xdg-desktop-portal-hyprland &
+#uwsm app -- /usr/lib/xdg-desktop-portal-hyprland
+#sleep 2
+##/usr/lib/xdg-desktop-portal &
+#uwsm app -- /usr/lib/xdg-desktop-portal
