@@ -1,5 +1,5 @@
-import = ["~/.config/alacritty/colors/draculasoothe.toml"]
-
+[general]
+import = ["colors/draculasoothe.toml"]
 live_config_reload = true
 
 [bell]
@@ -9,10 +9,7 @@ duration = 1
 
 [cursor]
 unfocused_hollow = true
-
-[cursor.style]
-blinking = "On"
-shape = "Block"
+style = { blinking = "On", shape = "Block" }
 
 [debug]
 highlight_damage = false
@@ -26,96 +23,30 @@ WINIT_HIDPI_FACTOR = "1"
 TERM = "xterm-256color"
 
 [font]
-size = 12.0
+normal = { family = "Inconsolata", style = "Regular" }
+bold = { family = "Inconsolata", style = "Bold" }
+bold_italic = { family = "Inconsolata", style = "Bold Italic" }
+italic = { family = "Inconsolata", style = "Italic" }
+glyph_offset = {x = 0, y = 0}
+offset = { x = 0, y = 0 }
+size = 11.0
 
-[font.bold]
-family = "UbuntuMono Nerd Font"
-style = "Bold"
-
-[font.bold_italic]
-family = "UbuntuMono Nerd Font"
-style = "Bold Italic"
-
-[font.glyph_offset]
-x = 0
-y = 0
-
-[font.italic]
-family = "UbuntuMono Nerd Font"
-style = "Italic"
-
-[font.normal]
-family = "UbuntuMono Nerd Font"
-style = "Regular"
-
-[font.offset]
-x = 0
-y = 0
-
-[[keyboard.bindings]]
-action = "Paste"
-key = "V"
-mods = "Control|Shift"
-
-[[keyboard.bindings]]
-action = "Copy"
-key = "C"
-mods = "Control|Shift"
-
-[[keyboard.bindings]]
-action = "PasteSelection"
-key = "Insert"
-mods = "Shift"
-
-[[keyboard.bindings]]
-action = "ResetFontSize"
-key = "Key0"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "IncreaseFontSize"
-key = "Equals"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "IncreaseFontSize"
-key = "Plus"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "DecreaseFontSize"
-key = "Minus"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "Paste"
-key = "Paste"
-
-[[keyboard.bindings]]
-action = "Copy"
-key = "Copy"
+[keyboard]
+bindings = [
+  { mods = "Control|Shift", key = "c", action = "Copy" },
+  { mods = "Control|Shift", key = "v", action = "Paste" },
+  { mods = "Control", key = "Equals", action = "IncreaseFontSize" },
+  { mods = "Control", key = "Plus", action = "IncreaseFontSize" },
+  { mods = "Control", key = "Minus", action = "DecreaseFontSize" },
+  { mods = "Control", key = "Key0", action = "ResetFontSize" },
+]
 
 [mouse]
+bindings = [
+  { mods = "Control", mouse = "Right", action = "PasteSelection" },
+  { mouse = "Middle", action = "None" }
+]
 hide_when_typing = false
-
-#[[mouse.bindings]]
-#action = "CopySelection"
-#mouse = "Right"
-
-[[mouse.bindings]]
-action = "PasteSelection"
-mods = "Control"
-mouse = "Right"
-
-[[mouse.bindings]]
-action = "None"
-mouse = "Middle"
-
-#[mouse.double_click]
-#threshold = 300
-
-#[mouse.triple_click]
-#threshold = 300
 
 [scrolling]
 history = 100000
@@ -125,26 +56,12 @@ multiplier = 3
 save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
-#[shell]
-#program = "/bin/bash"
-#program = "/bin/zsh"
-
 [window]
+blur = false
 decorations = "full"
+dimensions = {columns = 90, lines = 30}
 dynamic_padding = false
 dynamic_title = true
 opacity = 0.9
+padding = {x = 2, y = 2}
 startup_mode = "Windowed"
-title = "Alacritty"
-
-[window.class]
-general = "Alacritty"
-instance = "Alacritty"
-
-[window.dimensions]
-columns = 90
-lines = 30
-
-[window.padding]
-x = 6
-y = 6
