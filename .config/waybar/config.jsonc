@@ -21,6 +21,7 @@
         "memory",
         "temperature",
         "backlight",
+        "custom/theme",
         "power-profiles-daemon",
         //"custom/notifications",
         "battery",
@@ -218,5 +219,12 @@
 		    	"suspend": "systemctl suspend",
 		    	"hibernate": "systemctl hibernate"
 		    }
+    },
+    "custom/theme": {
+        "exec": "~/.local/bin/toggle-theme json",
+        "return-type": "json",
+        "interval": 5,
+        "on-click": "~/.local/bin/toggle-theme toggle",
+        "tooltip": true,
     }
 }
