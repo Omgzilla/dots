@@ -1,0 +1,8 @@
+#!/bin/sh
+#killall -q waybar
+#waybar &
+
+# stop any existing uwsm-managed waybar units, then start fresh
+systemctl --user stop 'uwsm-app-waybar.*' 2>/dev/null || true
+exec uwsm app -- waybar
+
