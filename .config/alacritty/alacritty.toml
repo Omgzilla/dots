@@ -1,5 +1,5 @@
 [general]
-import = ["colors/draculasoothe.toml"]
+import = ["colors/catppuccin-macchiato.toml"]
 live_config_reload = true
 
 [bell]
@@ -50,7 +50,7 @@ hide_when_typing = false
 
 [scrolling]
 history = 100000
-multiplier = 3
+multiplier = 5
 
 [selection]
 save_to_clipboard = true
@@ -62,6 +62,6 @@ decorations = "full"
 dimensions = {columns = 90, lines = 30}
 dynamic_padding = false
 dynamic_title = true
-opacity = 0.9
-padding = {x = 2, y = 2}
+opacity = 1
+padding = {x = 0, y = 0}
 startup_mode = "Windowed"

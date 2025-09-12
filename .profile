@@ -60,6 +60,14 @@ export VSCODE_PORTABLE="$XDG_DATA_HOME/vscode"
 export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
 
 # Start Hyprland
-if uwsm check may-start; then
+#if uwsm check may-start; then
+#    exec uwsm start hyprland.desktop
+#fi
+if command -v uwsm >/dev/null 2>&1 \
+   && [ -z "$TMUX" ] \
+   && [ -z "${WAYLAND_DISPLAY}${DISPLAY}" ] \
+   && [ "${XDG_VTNR:-0}" -eq 1 ]; then
+  if uwsm check may-start >/dev/null 2>&1; then
     exec uwsm start hyprland.desktop
+  fi
 fi
