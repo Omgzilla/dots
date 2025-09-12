@@ -2,7 +2,13 @@
 
 * {
   /* `otf-font-awesome` is required to be installed for icons */
-  font-family: Ubuntu Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    Ubuntu Mono,
+    FontAwesome,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 13px;
 }
 
@@ -11,7 +17,7 @@ window#waybar {
   border-bottom: 3px solid rgba(100, 114, 125, 0.5);
   color: @foreground;
   transition-property: background-color;
-  transition-duration: .2s;
+  transition-duration: 0.2s;
 }
 
 window#waybar.hidden {
@@ -28,7 +34,7 @@ window#waybar.solo {
 */
 
 window#waybar.termite {
-  background-color: #3F3F3F;
+  background-color: #3f3f3f;
 }
 
 window#waybar.chromium {
@@ -81,7 +87,7 @@ button:hover {
 }
 
 #workspaces button.visible {
-  color: @cyan;
+  color: @pink;
 }
 
 #mode {
@@ -105,6 +111,7 @@ button:hover {
 #idle_inhibitor,
 #scratchpad,
 #power-profiles-daemon,
+#custom-theme,
 #mpd {
   padding: 0 10px;
   color: @foreground;
@@ -116,12 +123,12 @@ button:hover {
 }
 
 /* If workspaces is the leftmost module, omit left margin */
-.modules-left>widget:first-child>#workspaces {
+.modules-left > widget:first-child > #workspaces {
   margin-left: 0;
 }
 
 /* If workspaces is the rightmost module, omit right margin */
-.modules-right>widget:last-child>#workspaces {
+.modules-right > widget:last-child > #workspaces {
   margin-right: 0;
 }
 
@@ -167,7 +174,6 @@ button:hover {
   color: @purple;
 }
 
-
 #power-profiles-daemon.power-saver {
   color: @green;
 }
@@ -185,7 +191,7 @@ label:focus {
 }
 
 #disk {
-  color: @orange
+  color: @orange;
 }
 
 #backlight {
@@ -197,7 +203,7 @@ label:focus {
 }
 
 #network.disconnected {
-  color: @red
+  color: @red;
 }
 
 #pulseaudio {
@@ -230,24 +236,26 @@ label:focus {
 }
 
 #temperature {
-  color: @orange
+  color: @orange;
 }
 
 #temperature.critical {
   color: @red;
 }
 
-#tray {}
+#tray {
+}
 
-#tray>.passive {
+#tray > .passive {
   -gtk-icon-effect: dim;
 }
 
-#tray>.needs-attention {
+#tray > .needs-attention {
   -gtk-icon-effect: highlight;
 }
 
-#idle_inhibitor {}
+#idle_inhibitor {
+}
 
 #idle_inhibitor.activated {
   color: #2d3436;
@@ -285,11 +293,11 @@ label:focus {
   min-width: 16px;
 }
 
-#keyboard-state>label {
+#keyboard-state > label {
   padding: 0 5px;
 }
 
-#keyboard-state>label.locked {
+#keyboard-state > label.locked {
   background: rgba(0, 0, 0, 0.2);
 }
 
@@ -320,4 +328,12 @@ label:focus {
 
 #privacy-item.audio-out {
   background-color: #0069d4;
+}
+
+#custom-theme.light {
+  color: @yellow;
+}
+
+#custom-theme.dark {
+  color: @purple;
 }
