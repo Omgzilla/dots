@@ -1,6 +1,3 @@
-# Source functions
-#source ./alias-functions
-
 # System
 alias ls="ls --color=auto"
 alias l="ls -lC --color=auto"
@@ -16,6 +13,7 @@ alias rm="rm -iv"
 alias mkdir="mkdir -pv"
 alias ..="cd .."
 alias ...="cd ../.."
+alias ....="cd ../../.."
 alias ip="ip -c"
 alias jc="sudo journalctl"
 alias sc="sudo systemctl"
@@ -36,30 +34,29 @@ alias vim="nvim"
 alias sv="sudo nvim"
 # VSCode
 #alias code="codium"
-alias code="windsurf"
-# Asciinema
-alias aplay="asciinema play -s 2.5"
-alias arec="asciinema rec"
+alias wind="windsurf"
 # Config files
+alias aliasrc='nvim ~/.config/shell/aliasrc'
 alias brc='nvim ~/.bashrc'
 alias bsrc="source ~/.bashrc"
-alias zrc='nvim ~/.config/zsh/.zshrc'
-alias zsrc="source ~/.config/zsh/.zshrc"
-alias aliasrc='nvim ~/.config/shell/aliasrc'
 alias hyprrc='nvim ~/.config/hypr/'
 alias kittyrc='nvim ~/.config/kitty/kitty.conf'
 alias termrc='nvim ~/.config/terminator/config'
 alias vimrc='nvim ~/.config/nvim/'
+alias zrc='nvim ~/.config/zsh/.zshrc'
+alias zsrc="source ~/.config/zsh/.zshrc"
 # Suckless
 alias makedwm='cd ~/.local/suckless/dwm && make && rm config.h'
 alias makedmenu='cd ~/.local/suckless/dmenu && make && rm config.h && rm patches.h'
 # Git
+alias ga="git add"
 alias gs="git status"
-alias gc="git commit -m" # Commit changes
-alias gco="git checkout" # List branches
+alias gcmsg="git commit -m" # Commit changes
+alias gb="git branch" # List branches
 alias gcb="git checkout -b" # Checkout new branch
 alias gf="git fetch"
-alias glb="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate" # List branches
+alias gft="git fetch --tags"
+alias gp="git pull"
 alias lg="lazygit"
 # Permissions
 alias 000='chmod 000'
@@ -69,10 +66,10 @@ alias 755='chmod 755'
 alias 775='chmode 775'
 alias ux='chmod u+x'
 # Juju
-alias wjs="watch -n 1 -c juju status --color"
-alias wjsr="watch -n 1 -c juju status --color --relations"
 alias js="juju status --color"
 alias jsr="juju status --color --relations"
+alias wjs="watch -n 1 -c juju status --color"
+alias wjsr="watch -n 1 -c juju status --color --relations"
 alias jm="juju models --all"
 alias jmg="juju models --all | grep $1"
 alias jgm='function _jgm(){ juju grant omgzilla@external admin $(juju show-model --format json | jq -r ".[].name" | head -n 1); }; _jgm'
@@ -106,6 +103,9 @@ alias jfo="/usr/bin/bash $HOME/versioned/dwellir-public/ops/juju/scripts/orphane
 alias jam="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
 # Netbox
 alias nq="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py"
+alias nqd="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py device"
+alias nqi="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py ipam"
+alias nqv="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py vm"
 # Other scripts
 alias blockdiff="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/blockdiff.py"
 alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.sh"
@@ -113,6 +113,59 @@ alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.sh"
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 # SSH
 alias sshremove='ssh-keygen -f "$HOME/.ssh/known_hosts" -R'
-alias cisco='cisco() { [ $# -eq 2 ] || { echo "Usage: cisco <user> <host>"; return 1; }; ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-cbc -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; }; cisco'
-alias cisco45='cisco45() { [ $# -eq 2 ] || { echo "Usage: cisco <user> <host>"; return 1; }; ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-ctr -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; }; cisco45'
-alias sc=ser
+
+
+# SSH into Cisco older models
+_cisco() 
+{ 
+  [ $# -eq 2 ] || { echo "Usage: cisco <user> <host>"; return 1; }; 
+  ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-cbc -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; 
+}
+alias cisco='_cisco'
+
+# SSH into Cisco 4500 models
+_cisco45() 
+{ 
+  [ $# -eq 2 ] || { echo "Usage: cisco45 <user> <host>"; return 1; }; 
+  ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-ctr -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; 
+}
+alias cisco45='_cisco45'
+
+# Get substrate genesis hash
+_get-substrate-genesis-hash () 
+{ 
+  local url="$1";
+  if [[ -z "$url" ]]; then
+      echo "Usage: get-genesis-hash <host[:port]> (with or without http[s]://)";
+      return 1;
+  fi;
+  if [[ ! "$url" =~ ^https?:// ]]; then
+      url="http://$url";
+  fi;
+  if [[ ! "$url" =~ :[0-9]+$ ]]; then
+      url="${url}:9933";
+  fi;
+  local genesis=$(curl -s -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","id":1,"method":"chain_getBlockHash","params":[0]}' "$url" | jq -r .result);
+  local chain=$(curl -s -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","id":2,"method":"system_chain","params":[]}' "$url" | jq -r .result);
+  local paraId=$(curl -s -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","id":3,"method":"state_getStorage","params":["0x/parachainid"]}' "$url" | jq -r .result 2> /dev/null);
+  if [[ "$paraId" == "null" || -z "$paraId" ]]; then
+      paraId=$(curl -s -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","id":4,"method":"parachainInfo_parachainId","params":[]}' "$url" | jq -r .result 2> /dev/null);
+  fi;
+  if [[ "$paraId" == "null" || -z "$paraId" ]]; then
+      echo "${chain:-Unknown chain} genesis hash: $genesis";
+  else
+      echo "${chain:-Unknown chain} (ParaID $paraId) genesis hash: $genesis";
+  fi
+}
+alias get-substrate-genesis-hash='_get-substrate-genesis-hash'
+
+# Search system-parachains in current controller
+_system-parachains ()
+{
+  parachains=("asset-hub" "bridge-hub" "passet-hub" "collectives" "coretime" "people" "statemin" "westmint")
+  for chain in "${parachains[@]}"; do
+    juju models | grep "$chain" | awk '{print $1}'
+  done
+}
+alias system-parachains="_system-parachains"
+
