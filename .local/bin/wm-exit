@@ -1,27 +1,31 @@
 #!/bin/bash
 menu=("󰌾 lock
+󰜉 reload-wm
 󰜉 restart-wm
 󰍃 logout
 󰤁 reboot
 󰐥 shutdown")
 
-choice="$(echo -e "${menu[@]}" | rofi -dmenu -l 5 -p "󰩈 Exit: ")"
+choice="$(echo -e "${menu[@]}" | rofi -dmenu -l 6 -p "󰩈 Exit: ")"
 [ -z "$choice" ] && exit 0
 case "$choice" in
 	󰌾*)
-		hyprlock
+		pidof hyprlock >/dev/null || hyprlock
 		;;
-  󰜉*)
-		pkill dwm
+  󰜉*reload-wm)
+		hyprctl reload
 		;;
+  󰜉*restart-wm)
+    hyprctl dispatch exit
+    ;;
 	󰍃*)
-		pkill -u $USER dwm
+		uwsm stop
 		;;
 	󰤁*)
-		reboot
+		systemctl reboot
 		;;
 	󰐥*)
-		poweroff
+		systemctl poweroff
 		;;
 	*)
 		exit 1
