@@ -7,7 +7,8 @@ return {
   },
   config = function()
     -- import lspconfig plugin
-    local lspconfig = require("lspconfig")
+    -- local lspconfig = require("lspconfig")
+    local lspconfig = vim.lsp.config
 
     -- import cmp-nvim-lsp plugin
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -71,38 +72,38 @@ return {
     end
 
     -- configure html server
-    lspconfig["html"].setup({
+    lspconfig("html", {
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
     -- configure css server
-    lspconfig["cssls"].setup({
+    lspconfig("cssls", {
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
     -- configure tailwindcss server
-    lspconfig["tailwindcss"].setup({
+    lspconfig("tailwindcss", {
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
     -- configure emmet language server
-    lspconfig["emmet_ls"].setup({
+    lspconfig("emmet_ls", {
       capabilities = capabilities,
       on_attach = on_attach,
       filetypes = { "html", "css", "sass", "scss", "less" },
     })
 
     -- configure python server
-    lspconfig["pyright"].setup({
+    lspconfig("pyright", {
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
     -- configure lua server (with special settings)
-    lspconfig["lua_ls"].setup({
+    lspconfig("lua_ls", {
       capabilities = capabilities,
       on_attach = on_attach,
       settings = { -- custom settings for lua
