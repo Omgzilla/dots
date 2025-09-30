@@ -7,9 +7,11 @@ git clone https://github.com/Omgzilla/dots.git && cd /dots && stow -t ~/ .
 ```
 
 # Install stow
+
 _This require [GNU Stow](https://www.gnu.org/software/stow/) to be installed_
 
 ## Arch
+
 ```bash
 sudo pacman -S stow
 ```
@@ -55,7 +57,25 @@ sudo darwin-rebuild switch --flake ~/dots/nix#omg-mac
 ### Update flake
 
 ```zsh
-nix flake update --flake ~/dots/nix/
+# 1) Update inputs (with user, not with sudo)
+cd ~/.dotfiles/nix
+nix flake update --flake  # update all inputs to latest
+# or only nixpkgs
+# nix flake lock --update-input nixpks
+
+# 2) Commit the new lockfile
+git add flake.lock
+git commit -m "nix-flake: update inputs"
+
+# 3) Rebuild/apply
+sudo darwin-rebuild switch --flake .#omg-mac --no-write-lock-file
+```
+
+#### Verify what your're pinned to
+
+```bash
+nix flake metadata ~/.dotfiles/nix   # shows locked commits for nixpkgs, nix-darwin, etc.
+darwin-rebuild list-generations      # confirms a new system generation was created
 ```
 
 ### Docs for nix-darwin

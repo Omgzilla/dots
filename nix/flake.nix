@@ -68,7 +68,7 @@
           "ghostty"
           "iina"
           "imageoptim"
-          #iterm2"
+          #"iterm2"
           "lulu"
           "macupdater"
           "onyx"
@@ -82,6 +82,7 @@
           "teamviewer"
           "the-unarchiver"
           "transmit"
+          #"wezterm"
         ];
         masApps = {
           "Amphetamine" = 937984704;
@@ -184,6 +185,6 @@
     };
 
     # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."simple".pkgs;
+    darwinPackages = self.darwinConfigurations."omg-mac".pkgs;
   };
 }
