@@ -53,6 +53,7 @@
           "lxc"
           "mas"
         ];
+        greedyCasks = true;
         casks = [
           "alt-tab"
           "android-platform-tools"
@@ -94,8 +95,8 @@
         ];
         onActivation = {
           autoUpdate = true;
-          cleanup = "zap";
           upgrade = true;
+          cleanup = "zap";
         };
       };
 
