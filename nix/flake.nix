@@ -36,7 +36,7 @@
           pkgs.ripgrep
           pkgs.stow
           #pkgs.vscode
-          pkgs.windsurf
+          #pkgs.windsurf
           pkgs.zoxide
         ];
 
@@ -52,6 +52,7 @@
         brews = [
           "lxc"
           "mas"
+          "syncthing"
         ];
         greedyCasks = true;
         casks = [
@@ -79,11 +80,11 @@
           "slack"
           "spotify"
           "steam"
-          "syncthing"
           "teamviewer"
           "the-unarchiver"
           "transmit"
           #"wezterm"
+          "windsurf"
         ];
         masApps = {
           "Amphetamine" = 937984704;
