@@ -17,11 +17,12 @@ return {
         lua = { "stylua" },
         python = { "pylint" },
       },
-      format_on_save = {
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      },
+      format_on_save = false,
+      -- format_on_save = {
+      --   lsp_fallback = true,
+      --   async = false,
+      --   timeout_ms = 1000,
+      -- },
     })
 
     vim.keymap.set({ "n", "v" }, "<leader>mp", function()
