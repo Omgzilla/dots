@@ -59,7 +59,7 @@
           "alt-tab"
           "android-platform-tools"
           "appcleaner"
-          #"balenaetcher"
+          "balenaetcher"
           "brave-browser"
           "chatgpt"
           "cheatsheet"
