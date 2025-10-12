@@ -15,6 +15,8 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }:
   let
     configuration = { pkgs, config, ... }: {
+      # Determinate manages Nix; tell nix-darwin not to.
+      nix.enable = false;
       system.primaryUser = "marcus";
       nixpkgs.config.allowUnfree = true;
       # List packages installed in system profile. To search by name, run:
@@ -66,7 +68,7 @@
           "discord"
           "firefox"
           "font-fontawesome"
-          #"foobar2000"
+          "foobar2000"
           "ghostty"
           "iina"
           "imageoptim"

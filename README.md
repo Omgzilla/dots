@@ -41,6 +41,14 @@ _Follow [this](https://www.youtube.com/watch?v=Z8BL8mdzWHI) guide for new setup_
 ```zsh
 sh <(curl -L https://nixos.org/nix/install)`
 ```
+Use determinate nix if above doesn't work (like on Sonoma)
+```zsh
+curl -L https://install.determinate.systems/nix | sh -s -- install
+```
+*Repair/reinstall using determinate*
+```zsh
+curl -L https://install.determinate.systems/nix | sh -s -- install --diagnose --reinstall
+```
 
 ### Switch to this flake
 
