@@ -67,6 +67,8 @@ alias 644='chmod 644'
 alias 755='chmod 755'
 alias 775='chmode 775'
 alias ux='chmod u+x'
+# Nix on darwin
+alias nix-update='nix flake update --flake ~/.dotfiles/nix/flake.nix && sudo -i nix run nix-darwin -- switch --flake ~/.dotfiles/nix#omg-mac'
 # Juju
 alias js="juju status --color"
 alias jsr="juju status --color --relations"
