@@ -12,7 +12,6 @@ Usage: $0 [default|home|office]
 Profiles:
   default — laptop-only (all workspaces on eDP-1)
   home    — split 1–5 on Lenovo MZ, 6–10 on Acer external
-  office  — split 1–5 on Lenovo MZ, 6–10 on Lenovo YD
 EOF
   exit 1
 }
@@ -26,9 +25,8 @@ profile="$1"
 
 # Map profile name to workspace config file
 declare -A WS_MAP=(
-  [default]="$HOME/.config/hypr/workspaces-default.conf"
-  [home]="$HOME/.config/hypr/workspaces-home.conf"
-  [office]="$HOME/.config/hypr/workspaces-office.conf"
+  [default]="$HOME/.config/hypr/monitors/workspaces-default.conf"
+  [home]="$HOME/.config/hypr/monitors/workspaces-home.conf"
 )
 
 # Validate profile

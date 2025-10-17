@@ -224,3 +224,10 @@ _jwm () {
   fi
 }
 alias jwm="_jwm"
+_jj () 
+{ 
+    local target=$1;
+    local service=${2:-${1%%/*}};
+    juju ssh "$target" -- SYSTEMD_COLORS=1 journalctl -f --output=cat -u "$service"
+}
+alias jj="_jj"

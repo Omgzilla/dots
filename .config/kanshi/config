@@ -3,18 +3,11 @@ profile home {
   output "Lenovo Group Limited P27q-20 V90AW8MZ" enable position 0,0 mode 2560x1440@60Hz scale 1
   output "Acer Technologies XB271HU A T4TEE0068505" enable position 2560,0 mode 2560x1440@60Hz scale 1
   output eDP-1 disable
-  exec ~/.config/hypr/scripts/set-workspaces home
+  exec ~/.config/hypr/monitors/set-workspaces home
   exec solaar -w hide &
-}
-# Office Dock Setup
-profile office {
-  output "Lenovo Group Limited P27q-20 V90AW8MZ" enable position 0,0 mode 2560x1440@60Hz scale 1
-  output "Lenovo Group Limited P27q-20 V90AW8YD" enable position 2560,0 mode 2560x1440@60Hz scale 1
-  output eDP-1 disable
-  exec ~/.config/hypr/scripts/set-workspaces office
 }
 # No dock (Laptop standalone)
 profile default {
   output eDP-1 enable scale 1
-  exec ~/.config/hypr/scripts/set-workspaces default
+  exec ~/.config/hypr/monitors/set-workspaces default
 }
