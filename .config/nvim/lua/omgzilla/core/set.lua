@@ -6,8 +6,8 @@ local set = {
   title = true,
   completeopt = { "menuone", "noselect" }, -- mostly just for cmp
   conceallevel = 0, -- so that `` is visible in markdown files
-  guicursor = "",
-  guifont = "monospace:h17", -- the font used in graphical neovim applications
+  -- guicursor = "",
+  -- guifont = "monospace:h17", -- the font used in graphical neovim applications
 
   winblend = 0,
   wildoptions = "pum",
@@ -28,7 +28,7 @@ local set = {
   shiftwidth = 2, -- the number of spaces inserted for each indentation
   expandtab = true, -- convert tabs to spaces
   smartindent = true,
-  autoindent = true,
+  autoindent = true, -- copy indentation from current line to new line
 
   splitbelow = true, -- force all horizontal splits to go below current window
   splitright = true, -- force all vertical splits to go to the right of current window
@@ -60,31 +60,19 @@ local set = {
   colorcolumn = "80",
 }
 
-vim.cmd("let g:netrw_liststyle = 3")
-vim.opt.fillchars = vim.opt.fillchars + "eob: "
-vim.opt.fillchars:append({
-  stl = " ",
-})
-
--- Don't pass messages to |ins-completion-menu|.
-vim.opt.shortmess:append("c")
-
 for key, value in pairs(set) do
   vim.opt[key] = value
 end
 
---vim.cmd "set path+=**" -- Finding files - search down into subfolders
+local opt = vim.opt
+opt.fillchars = vim.opt.fillchars + "eob: "
+opt.fillchars:append({ stl = " ", })
+opt.shortmess:append("c") -- Don't pass messages to |ins-completion-menu|.
 
+
+vim.cmd("let g:netrw_liststyle = 3")
 vim.cmd("filetype plugin indent on")
-
--- Turn off paste mode when leaving insert
-vim.cmd("autocmd InsertLeave * set nopaste")
-
--- Add asterisks in block comments
---vim.cmd "set formatoptions+=r"
-
--- Remove health for following languages
-vim.cmd("let g:loaded_perl_provider = 0")
+vim.cmd("autocmd InsertLeave * set nopaste") -- Turn off paste mode when leaving insert
 
 -- Run clipboard depending on OS
 vim.cmd("\

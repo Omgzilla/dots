@@ -26,7 +26,6 @@ return {
         ensure_installed = {
           "bash",
           "css",
-          "query",
           "dockerfile",
           "gitignore",
           "html",
@@ -36,7 +35,7 @@ return {
           "markdown",
           "markdown_inline",
           "python",
-          "rust",
+          "query",
           "scss",
           "toml",
           "vim",
@@ -52,9 +51,8 @@ return {
           },
         },
       })
-
-      -- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
-    --  require('ts_context_commentstring').setup {}
+      -- use bash parser for zsh files
+      vim.treesitter.language.register("bash", "zsh")
     end,
   },
 }

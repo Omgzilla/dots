@@ -1,5 +1,5 @@
 return {
-  "numToStr/Comment.nvim",
-  event = { "BufReadPre", "BufNewFile" },
-  config = true -- run requie('Comment').setup()
+  -- "numToStr/Comment.nvim",
+  -- event = { "BufReadPre", "BufNewFile" },
+  -- config = true -- run requie('Comment').setup()
 }
