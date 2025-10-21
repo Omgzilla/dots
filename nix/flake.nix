@@ -39,6 +39,7 @@
           pkgs.stow
           #pkgs.vscode
           #pkgs.windsurf
+          pkgs.zsh-completions
           pkgs.zoxide
         ];
 

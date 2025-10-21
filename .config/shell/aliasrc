@@ -33,8 +33,9 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias sv="sudo nvim"
-# VSCode
+# Code
 #alias code="codium"
+alias python="python3"
 alias wind="windsurf"
 # Config files
 alias aliasrc='nvim ~/.config/shell/aliasrc'
