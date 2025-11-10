@@ -49,7 +49,8 @@ border-color=#bd93f980
 border-color=#ff6e67
 
 [summary~="Screenshot" body~="\\.png$"]
-on-button-left=exec swappy -f "$HOME/Pictures/Screenshots/latest.png"
+#on-button-left=exec swappy -f "$HOME/Pictures/Screenshots/latest.png"
+on-button-left=exec satty -f "$HOME/Pictures/Screenshots/latest.png"
 
 [app-name="recorder" summary~="Recording (started|stopped)"]
 on-button-left=exec mpv "$HOME/Videos/Screenrecords/latest.mkv"
