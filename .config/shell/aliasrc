@@ -113,7 +113,7 @@ alias nqi="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query
 alias nqv="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py vm"
 # Other scripts
 alias blockdiff="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/blockdiff.py"
-alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.sh"
+alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.py"
 alias disable-backend="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/haproxy/scripts/disable_backend.py"
 alias enable-backend="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/haproxy/scripts/enable_backend.py"
 alias pull-gslb="/usr/bin/python3 ./scripts/pull_gslb_config.py"
