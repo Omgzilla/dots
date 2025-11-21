@@ -337,3 +337,6 @@ label:focus {
 #custom-theme.dark {
   color: @purple;
 }
+#custom-expand-icon {
+  margin-right: 20px;
+}
