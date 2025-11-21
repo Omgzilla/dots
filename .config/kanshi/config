@@ -4,7 +4,7 @@ profile home {
   output "Acer Technologies XB271HU A T4TEE0068505" enable position 2560,0 mode 2560x1440@60Hz scale 1
   output eDP-1 disable
   exec ~/.config/hypr/monitors/set-workspaces home
-  exec solaar -w hide &
+  #exec solaar -w hide &
 }
 # No dock (Laptop standalone)
 profile default {
