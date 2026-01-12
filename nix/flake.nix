@@ -56,6 +56,7 @@
           "lxc"
           "mas"
           "syncthing"
+          "tmux"
         ];
         greedyCasks = true;
         casks = [
@@ -75,7 +76,7 @@
           "imageoptim"
           #"iterm2"
           "lulu"
-          "macupdater"
+          #"macupdater"
           "onyx"
           "pika"
           "qbittorrent"
