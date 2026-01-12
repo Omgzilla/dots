@@ -63,11 +63,14 @@ export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
 #if uwsm check may-start; then
 #    exec uwsm start hyprland.desktop
 #fi
+
 if command -v uwsm >/dev/null 2>&1 \
    && [ -z "$TMUX" ] \
    && [ -z "${WAYLAND_DISPLAY}${DISPLAY}" ] \
    && [ "${XDG_VTNR:-0}" -eq 1 ]; then
   if uwsm check may-start >/dev/null 2>&1; then
     exec uwsm start hyprland-uwsm.desktop
+    #exec uswm start mango
   fi
 fi
+
