@@ -180,55 +180,117 @@ _system-parachains ()
 }
 alias system-parachains="_system-parachains"
 
-# Search models pick closest match
-_jwm () {
-  local out term
-  out="$(juju models --all)"
 
-  # AND-filter by all provided terms (literal, case-insensitive)
-  for term in "$@"; do
-    out="$(printf "%s\n" "$out" | grep -Fi -- "$term")" || out=""
-  done
+jswm() {
+  local q="${1-}"
+  local models="" err=""
 
-  # Extract the first column (model id/name); drop blank/header lines; unique
-  local -a models
-  mapfile -t models < <(
-    printf "%s\n" "$out" \
-    | grep -vE '^(Controller|MODEL)\b' \
-    | awk '{print $1}' \
-    | sed '/^$/d' \
-    | sort -u
-  )
+  # 1) Try JSON first (if supported)
+  if command -v python3 >/dev/null 2>&1; then
+    local json
+    json="$(juju models --format=json 2>/tmp/juju_models_err.$$)"
+    if [ -n "$json" ]; then
+      models="$(
+        printf '%s' "$json" | python3 - <<'PY'
+import json, sys
+raw = sys.stdin.read().strip()
+if not raw:
+    sys.exit(0)
+data = json.loads(raw)
 
-  if (( ${#models[@]} == 0 )); then
-    echo "No model matches: $*"
-    return 1
-  elif (( ${#models[@]} == 1 )); then
-    juju switch "${models[0]}"
-  else
-    local choice
-    if command -v fzf >/dev/null 2>&1; then
-      choice="$(printf "%s\n" "${models[@]}" | fzf --prompt='Pick model > ' --height=15 --reverse --border)"
+items = None
+if isinstance(data, dict):
+    items = data.get("models") or data.get("results")
+elif isinstance(data, list):
+    items = data
+
+out = []
+if isinstance(items, list):
+    for it in items:
+        if isinstance(it, str):
+            out.append(it.strip().lstrip("*").strip())
+        elif isinstance(it, dict):
+            name = it.get("name") or it.get("model") or it.get("model-name") or it.get("model_name")
+            if isinstance(name, str) and name.strip():
+                out.append(name.strip().lstrip("*").strip())
+
+seen = set()
+for m in out:
+    if m and m not in seen:
+        seen.add(m)
+        print(m)
+PY
+      )"
     else
-      PS3="Pick a model #: "
-      select choice in "${models[@]}"; do
-        [[ -n "$choice" ]] && break
-        echo "Invalid selection."
-      done
+      err="$(cat /tmp/juju_models_err.$$ 2>/dev/null || true)"
     fi
-    if [[ -n "$choice" ]]; then
-      juju switch "$choice"
-    else
-      echo "No selection made."
-      return 1
-    fi
+    rm -f /tmp/juju_models_err.$$ >/dev/null 2>&1
   fi
+
+  # 2) Fallback: parse tabular output
+  if [ -z "$models" ]; then
+    local tab
+    tab="$(juju models 2>/tmp/juju_models_err.$$)" || true
+    models="$(
+      printf '%s\n' "$tab" | awk '
+        NR==1 {next}         # skip header
+        NF==0 {next}         # skip blanks
+        {gsub(/\*/, "", $1); print $1}
+      '
+    )"
+    if [ -z "$models" ]; then
+      err="$(cat /tmp/juju_models_err.$$ 2>/dev/null || true)"
+    fi
+    rm -f /tmp/juju_models_err.$$ >/dev/null 2>&1
+  fi
+
+  if [ -z "$models" ]; then
+    echo "No models found from Juju." >&2
+    [ -n "$err" ] && echo "juju models error: $err" >&2
+    return 1
+  fi
+
+  # If no query: open fzf over all models
+  if [ -z "$q" ]; then
+    local picked
+    picked="$(printf '%s\n' "$models" | fzf --prompt='juju model> ' --height=40% --reverse)"
+    if [ -n "$picked" ]; then
+      juju switch "$picked"
+      return $?
+    fi
+    return 130  # user cancelled
+  fi
+
+  # Filter by substring first
+  local candidates
+  candidates="$(printf '%s\n' "$models" | grep -i -- "$q" || true)"
+
+  # If nothing matched: fzf over all, with query prefilled
+  if [ -z "$candidates" ]; then
+    local picked
+    picked="$(printf '%s\n' "$models" | fzf --query "$q" --prompt='juju model> ' --height=40% --reverse)"
+    if [ -n "$picked" ]; then
+      juju switch "$picked"
+      return $?
+    fi
+    return 130
+  fi
+
+  # If exactly one match: switch immediately
+  if [ "$(printf '%s\n' "$candidates" | wc -l | tr -d ' ')" = "1" ]; then
+    juju switch "$candidates"
+    return $?
+  fi
+
+  # Multiple matches: fzf among candidates
+  local picked
+  picked="$(printf '%s\n' "$candidates" | fzf --query "$q" --prompt='juju model> ' --height=40% --reverse)"
+  if [ -n "$picked" ]; then
+    juju switch "$picked"
+    return $?
+  fi
+  return 130
 }
-alias jwm="_jwm"
-_jj () 
-{ 
-    local target=$1;
-    local service=${2:-${1%%/*}};
-    juju ssh "$target" -- SYSTEMD_COLORS=1 journalctl -f --output=cat -u "$service"
-}
-alias jj="_jj"
+
+alias jswm='jswm'
+
