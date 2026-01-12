@@ -1,4 +1,6 @@
 *~
+.local/share/fonts/.uuid
+.local/share/fonts/**/.uuid
 .config/nvim/lazy-lock.json
 .config/nvim/plugin
 .config/tmux/plugins
