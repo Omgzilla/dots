@@ -1,6 +1,8 @@
 # General
 export EDITOR="nvim"
 export PATH="$PATH:/home/marcus/.local/bin"
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
 source ~/.config/zsh/.zprofile
 source ~/.config/shell/aliasrc
 

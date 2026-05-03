@@ -55,6 +55,7 @@
         brews = [
           "lxc"
           "mas"
+          "openjdk@17"
           "syncthing"
           "tmux"
         ];
@@ -62,12 +63,13 @@
         casks = [
           "alt-tab"
           "android-platform-tools"
+          "android-studio"
           "appcleaner"
           "balenaetcher"
           "brave-browser"
           "chatgpt"
           "cheatsheet"
-          "discord"
+          #"discord"
           "firefox"
           "font-fontawesome"
           "foobar2000"
@@ -87,6 +89,7 @@
           "teamviewer"
           "the-unarchiver"
           "transmit"
+          "vesktop"
           #"wezterm"
           "windsurf"
         ];
@@ -99,7 +102,8 @@
           "homebrew/bundle"
         ];
         onActivation = {
-          autoUpdate = true;
+          #autoUpdate = true;
+          autoUpdate = false;
           upgrade = true;
           cleanup = "zap";
         };
