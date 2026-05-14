@@ -3,7 +3,27 @@
 ## Clone and run with stow
 
 ```bash
-git clone https://github.com/Omgzilla/dots.git && cd /dots && stow -t ~/ .
+git clone https://github.com/Omgzilla/dots.git && cd dots && make common
+```
+
+### Linux Home
+```
+make linux-home
+```
+
+### Linux Work
+```
+make linux-work
+```
+
+### MacOS
+```zsh
+make mac
+```
+
+### Manual Stow
+```bash
+stow --dir="$PWD" --target="$HOME" --no-folding shell-common bash-linux nvim
 ```
 
 # Install stow
