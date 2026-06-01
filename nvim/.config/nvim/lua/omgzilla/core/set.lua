@@ -69,6 +69,13 @@ opt.fillchars = vim.opt.fillchars + "eob: "
 opt.fillchars:append({ stl = " ", })
 opt.shortmess:append("c") -- Don't pass messages to |ins-completion-menu|.
 
+-- Set Yank highlight
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = "Highlight when Yank text",
+  callback = function()
+    vim.hl.on_yank()
+  end,
+})
 
 vim.cmd("let g:netrw_liststyle = 3")
 vim.cmd("filetype plugin indent on")
