@@ -13,6 +13,9 @@ vim.g.maplocalleader = " "
 --   command_mode = "c",
 
 local map = vim.keymap.set
+-- Restart Neovim
+map("n", "<leader>re", "<cmd>restart<CR>", { desc = "Restart Neovim (:restart)" })
+
 -- Toggle transparent
 map("n", "<leader>b", "<CMD>TransparentToggle<CR>", { desc = "Toggle transparent background" })
 
@@ -63,8 +66,8 @@ map("n", "<leader>y", '"+y', { desc = "Copy to clipboard" })
 map("v", "<leader>y", '"+y', { desc = "Copy to clipboard" })
 
 -- Move text up and down
-map("v", "S-j", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
-map("v", "S-k", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
+map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 
 -- Replace words
 map("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace selected word/s" })
@@ -79,3 +82,16 @@ map("i", "<C-c>", "<ESC>", { desc = "Exit insert mode" })
 -- Stay in indent mode
 map("v", "<", "<gv", { desc = "Decrease indentation" })
 map("v", ">", ">gv", { desc = "Increase indentation" })
+
+-- Join lines without moving cursor
+map("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
+
+-- Keep cursor centered when searching
+map("n", "n", "nzzzv", { desc = "Next search result keeps cursor centered"})
+map("n", "N", "Nzzzv", { desc = "Previous search result keeps cursor centered"})
+
+-- Use native undo tree
+map("n", "<leader>u", function()
+  vim.cmd.packadd("nvim.undotree")
+  require("undotree").open()
+end, { desc = "Toggle builtin Undotree" })
