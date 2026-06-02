@@ -37,6 +37,7 @@
           pkgs.python313Packages.pip
           pkgs.ripgrep
           pkgs.stow
+          pkgs.tree-sitter
           #pkgs.vscode
           #pkgs.windsurf
           pkgs.zsh-completions
