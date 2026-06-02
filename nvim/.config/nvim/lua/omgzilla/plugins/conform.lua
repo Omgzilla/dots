@@ -7,15 +7,16 @@ return {
 
     conform.setup({
       formatters_by_ft = {
-        javascript = { "prettier" },
-        javascriptreact = { "prettier" },
         css = { "prettier" },
         html = { "prettier" },
+        javascript = { "prettier" },
+        javascriptreact = { "prettier" },
         json = { "prettier" },
-        yaml = { "prettier" },
-        markdown = { "prettier" },
         lua = { "stylua" },
-        python = { "pylint" },
+        markdown = { "prettier" },
+        nix = { "nixfmt" },
+        python = { "isort", "black" },
+        yaml = { "prettier" },
       },
       format_on_save = false,
       -- format_on_save = {
