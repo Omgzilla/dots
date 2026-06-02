@@ -12,36 +12,75 @@
     mac-app-util.url = "github:hraban/mac-app-util";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }:
+  outputs = { self, nix-darwin, nixpkgs, nix-homebrew, mac-app-util }:
   let
-    configuration = { pkgs, config, ... }: {
+    configuration = { pkgs, ... }: {
       # Determinate manages Nix; tell nix-darwin not to.
       nix.enable = false;
-      system.primaryUser = "marcus";
       nixpkgs.config.allowUnfree = true;
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       # Search pkgs here https://search.nixos.org/packages
-      environment.systemPackages =
-        [ 
-          pkgs.fd
-          pkgs.fzf
-          pkgs.htop
-          #pkgs.hugo
-          pkgs.juju
-          #pkgs.mkalias
-          pkgs.neovim
-          pkgs.nodejs_22
-          pkgs.obsidian
-          pkgs.python313
-          pkgs.python313Packages.pip
-          pkgs.ripgrep
-          pkgs.stow
-          pkgs.tree-sitter
-          #pkgs.vscode
-          #pkgs.windsurf
-          pkgs.zsh-completions
-          pkgs.zoxide
+      environment.systemPackages = with pkgs; [ 
+          # CLI
+          fd
+          fzf
+          htop
+          #hugo
+          juju
+          neovim
+          nixd
+          nixfmt
+          nodejs_22
+          obsidian
+          python313
+          python313Packages.pip
+          ripgrep
+          statix
+          stow
+          tree-sitter
+          #vscode
+          #windsurf
+          zsh-completions
+          zoxide
+
+          (writeShellScriptBin "nix-upgrade" ''
+            set -euo pipefail
+          
+            FLAKE="$HOME/.dotfiles/nix#omg-mac"
+          
+            echo "Applying nix-darwin system config..."
+            sudo darwin-rebuild switch --flake "$FLAKE"
+          
+            echo "Checking Mac App Store apps..."
+          
+            declare -A MAS_APPS=(
+              ["937984704"]="Amphetamine"
+              ["1352778147"]="Bitwarden"
+              ["1475387142"]="Tailscale"
+            )
+          
+            installed_ids="$(mas list | awk '{print $1}')"
+          
+            for id in "''${!MAS_APPS[@]}"; do
+              name="''${MAS_APPS[$id]}"
+          
+              if echo "$installed_ids" | grep -qx "$id"; then
+                echo "Already installed: $name"
+              else
+                echo "Installing missing MAS app: $name ($id)"
+                mas install "$id"
+              fi
+            done
+          
+            echo "Updating installed Mac App Store apps..."
+          
+            if mas outdated | grep -q .; then
+              mas upgrade
+            else
+              echo "No Mac App Store updates available."
+            fi
+          '')
         ];
 
       # Fonts packages
@@ -53,6 +92,13 @@
       # Search pkgs here https://brew.sh/
       homebrew = {
         enable = true;
+        
+        onActivation = {
+          autoUpdate = true;
+          upgrade = true;
+          cleanup = "zap";
+        };
+
         brews = [
           "lxc"
           "mas"
@@ -96,20 +142,14 @@
           #"wezterm"
           "windsurf"
         ];
-        masApps = {
-          "Amphetamine" = 937984704;
-          "Bitwarden" = 1352778147;
-          "Tailscale" = 1475387142;
-        };
+        #masApps = {
+        #  "Amphetamine" = 937984704;
+        #  "Bitwarden" = 1352778147;
+        #  "Tailscale" = 1475387142;
+        #};
         taps = [
           "homebrew/bundle"
         ];
-        onActivation = {
-          #autoUpdate = true;
-          autoUpdate = false;
-          upgrade = true;
-          cleanup = "zap";
-        };
       };
 
       # Auto upgrade nix package and the daemon service.
@@ -117,7 +157,8 @@
       # nix.package = pkgs.nix;
 
       # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
+      # Determinate Nix manages nix.conf; this is intentionally not configured here.
+      # nix.settings.experimental-features = "nix-command flakes";
 
       # Create /etc/zshrc that loads the nix-darwin environment.
       programs.zsh.enable = true;  # default shell on catalina
@@ -145,32 +186,37 @@
       #      '';
 
       # MacOS preferences
-      system.defaults = {
-        dock.autohide = true;
-        dock.autohide-delay = 0.05;
-        dock.persistent-apps = [
-          "/Applications/Firefox.app"
-          "/Applications/Brave Browser.app"
-          "/System/Applications/Messages.app"
-          "/System/Applications/FaceTime.app"
-          "/System/Applications/Mail.app"
-          "/System/Applications/Calendar.app"
-          "/System/Applications/Notes.app"
-          "/System/Applications/System Settings.app"
-          "${pkgs.obsidian}/Applications/Obsidian.app"
-        ];
-        loginwindow.GuestEnabled = false;
-        NSGlobalDomain.AppleICUForce24HourTime = true;
-        NSGlobalDomain.AppleInterfaceStyleSwitchesAutomatically = true;
-        NSGlobalDomain.KeyRepeat = 2;
+      system = {
+        defaults = {
+          dock.autohide = true;
+          dock.autohide-delay = 0.05;
+          dock.persistent-apps = [
+            "/Applications/Firefox.app"
+            "/Applications/Brave Browser.app"
+            "/System/Applications/Messages.app"
+            "/System/Applications/FaceTime.app"
+            "/System/Applications/Mail.app"
+            "/System/Applications/Calendar.app"
+            "/System/Applications/Notes.app"
+            "/System/Applications/System Settings.app"
+            "${pkgs.obsidian}/Applications/Obsidian.app"
+          ];
+          loginwindow.GuestEnabled = false;
+          NSGlobalDomain = {
+            AppleICUForce24HourTime = true;
+            AppleInterfaceStyleSwitchesAutomatically = true;
+            KeyRepeat = 2;
+            };
+        };
+        # Set Git commit hash for darwin-version.
+        configurationRevision = self.rev or self.dirtyRev or null;
+
+        primaryUser = "marcus";
+        # Used for backwards compatibility, please read the changelog before changing.
+        # $ darwin-rebuild changelog
+        stateVersion = 6;
+
       };
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 6;
-
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
     };
@@ -196,6 +242,8 @@
         mac-app-util.darwinModules.default
       ];
     };
+
+    formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt;
 
     # Expose the package set, including overlays, for convenience.
     darwinPackages = self.darwinConfigurations."omg-mac".pkgs;
