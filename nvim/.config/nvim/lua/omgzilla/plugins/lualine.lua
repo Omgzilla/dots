@@ -42,11 +42,6 @@ return {
         c = { bg = colors.bg, fg = colors.fg },
       },
       visual = {
-        a = { bg = colors.purple, fq = colors.bg, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.fg },
-        c = { bg = colors.bg, fg = colors.fg },
-      },
-      visual = {
         a = { bg = colors.pink, fg = colors.bg, gui = "bold" },
         b = { bg = colors.bg, fg = colors.fg },
         c = { bg = colors.bg, fg = colors.fg },
