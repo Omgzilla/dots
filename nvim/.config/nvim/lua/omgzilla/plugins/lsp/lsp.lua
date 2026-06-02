@@ -12,6 +12,11 @@ return {
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
+    vim.lsp.enable({
+      "emmet_ls",
+      "lua_ls",
+      "nixd",
+    })
     vim.lsp.config("*", {
       capabilities = capabilities,
     })
