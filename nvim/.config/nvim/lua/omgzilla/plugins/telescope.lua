@@ -1,7 +1,6 @@
 return {
   "nvim-telescope/telescope.nvim",
   -- branch = "0.1.x",
-  -- tag = "v0.1.9",
   tag = "v0.2.2",
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -23,6 +22,20 @@ return {
           },
         },
       },
+      pickers = {
+        find_files = {
+          hidden = true,
+          follow = true,
+        },
+        grep_string = {
+          hidden = true,
+          follow = true,
+        },
+        live_grep = {
+          hidden = true,
+          follow = true,
+        },
+      },
     })
 
     telescope.load_extension("fzf")
@@ -30,9 +43,44 @@ return {
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
 
-    keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
-    keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
-    keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-    keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+      keymap.set("n", "<leader>ff", function()
+        require("telescope.builtin").find_files({
+          additional_args = {
+            "--glob",
+            "!**/.git/*"
+          },
+        })
+      end, { desc = "Fuzzy find files in cwd" })
+
+      keymap.set("n", "<leader>fr", function()
+        require("telescope.builtin").oldfiles({
+          additional_args = {
+            "--glob",
+            "!**/.git/*",
+          },
+        })
+      end, { desc = "Fuzzy find recent files" })
+
+      keymap.set("n", "fs", function()
+        require("telescope.builtin").live_grep({
+          additional_args = {
+            "--hidden",
+            "--follow",
+            "--glob",
+            "!**/.git/*",
+          },
+        })
+      end, { desc = "Find string in cwd" })
+
+      keymap.set("n", "fc", function()
+        require("telescope.builtin").grep_string({
+          additional_args = {
+            "--hidden",
+            "--follow",
+            "--glob",
+            "!**/.git/*",
+          },
+        })
+      end, { desc = "Find string under cursor in cwd" })
   end,
 }
