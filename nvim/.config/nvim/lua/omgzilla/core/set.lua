@@ -82,14 +82,9 @@ vim.cmd("filetype plugin indent on")
 vim.cmd("autocmd InsertLeave * set nopaste") -- Turn off paste mode when leaving insert
 
 -- Run clipboard depending on OS
-vim.cmd("\
-if has('unix')\
-    let s:uname = system('uname -s')\
-    if s:uname == 'Darwin'\
-        runtime ./macos.lua\
-    endif\
-endif\
-")
+if vim.uv.os_uname().sysname == "Darwin" then
+  require("omgzilla.core.macos")
+end
 
 vim.filetype.add({
   extension = {
