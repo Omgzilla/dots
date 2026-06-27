@@ -103,6 +103,7 @@
           "lxc"
           "mas"
           "openjdk@17"
+          "pnpm"
           "syncthing"
           "tmux"
         ];
