@@ -4,12 +4,13 @@ return {
     opts = {
       -- list of servers for mason to install
       ensure_installed = {
-        "html",
         "cssls",
-        "tailwindcss",
-        "lua_ls",
         "emmet_ls",
+        "eslint-lsp",
+        "html",
+        "lua_ls",
         "pyright",
+        "tailwindcss",
       },
     },
     dependencies = {
