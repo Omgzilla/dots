@@ -1,12 +1,20 @@
 *~
 fonts/.local/share/fonts/.uuid
 fonts/.local/share/fonts/**/.uuid
+<<<<<<< HEAD
 nix/flake.lock
 nvim/.config/nvim/lazy-lock.json
 nvim/.config/nvim/plugin
 tmux/.config/tmux/plugins
 vifm/.config/vifm/vifm-help.txt
 vifm/.config/vifm/vifminfo.json
+=======
+nvim/.config/nvim/lazy-lock.json
+nvim/.config/nvim/plugin
+tmux/.config/tmux/plugins
+tmux/.config/vifm/vifm-help.txt
+linux-common/.config/vifm/vifminfo.json
+>>>>>>> 9da40b9 (latest settings omg-pc)
 zsh/.config/zsh/.zsh_sessions
 zsh/.config/zsh/.zcompdump
 zsh/.config/zsh/.zcompcache
