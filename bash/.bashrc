@@ -83,8 +83,7 @@ fi
 # Default applicaitons:
 export EDITOR="nvim"
 #export TERMINAL="terminator"
-export TERMINAL="ghostty"
-#export TERMINAL="alacritty"
+export TERMINAL="foot"
 export MANPAGER="nvim +Man!"
 export COLORTERM="truecolor"
 export PAGER="less"
