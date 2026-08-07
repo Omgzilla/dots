@@ -19,7 +19,6 @@
         "/System/Applications/Calendar.app"
         "/System/Applications/Notes.app"
         "/System/Applications/System Settings.app"
-        "${pkgs.obsidian}/Applications/Obsidian.app"
       ];
     };
 
