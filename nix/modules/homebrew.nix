@@ -12,6 +12,7 @@
     };
 
     brews = [
+      "incus"
       "lxc"
       "pnpm"
       "syncthing"
