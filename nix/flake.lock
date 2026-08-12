@@ -141,11 +141,11 @@
         "brew-src": "brew-src"
       },
       "locked": {
-        "lastModified": 1786217209,
-        "narHash": "sha256-rusAj5QBnbSwXG6csns6dwxTeCOGRcj08VmlnhUQ6ZY=",
+        "lastModified": 1786568255,
+        "narHash": "sha256-eyW21U9Ouj6KeTQ7lGNkwEAsj35V8f2USFurH+dZ+WQ=",
         "owner": "zhaofengli-wip",
         "repo": "nix-homebrew",
-        "rev": "486357ea434dc0061ea52121ff99b1d33096c811",
+        "rev": "234269a445d846d02e31dae4fad159c0c3f9ee58",
         "type": "github"
       },
       "original": {
