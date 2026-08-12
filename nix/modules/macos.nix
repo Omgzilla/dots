@@ -115,7 +115,7 @@
 
       # Keep Force Click enabled and use the default trackpad tracking speed.
       "com.apple.trackpad.forceClick" = true;
-      "com.apple.trackpad.scaling" = 1;
+      "com.apple.trackpad.scaling" = 1.0;
     };
 
     CustomUserPreferences = {
