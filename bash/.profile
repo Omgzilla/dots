@@ -70,7 +70,8 @@ if command -v uwsm >/dev/null 2>&1 \
    && [ "${XDG_VTNR:-0}" -eq 1 ]; then
   if uwsm check may-start >/dev/null 2>&1; then
     exec uwsm start hyprland-uwsm.desktop
-    #exec uswm start mango
+    #exec uwsm start mango-uwsm.desktop
+    #exec uwsm start niri.desktop
   fi
 fi
 
