@@ -1,0 +1,21 @@
+hl.config({
+    input = {
+        kb_layout = "se",
+        kb_variant = "",
+        kb_model = "",
+        kb_options = "",
+        kb_rules = "",
+        follow_mouse = 1,
+        repeat_rate = 40,
+        repeat_delay = 600,
+        numlock_by_default = true,
+        sensitivity = 0,
+        touchpad = {
+            natural_scroll = true,
+            disable_while_typing = false,
+            middle_button_emulation = false,
+            drag_lock = false,
+            tap_to_click = true,
+        },
+    },
+})
