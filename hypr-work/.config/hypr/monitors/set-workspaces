@@ -1,52 +1,62 @@
 #!/usr/bin/env bash
 
-# Unified workspace switcher for Hyprland
-# Usage: ./set-workspaces.sh [default|home|office]
-
 set -euo pipefail
 
 usage() {
   cat <<EOF
-Usage: $0 [default|home|office]
+Usage: $0 [default|home]
 
 Profiles:
-  default — laptop-only (all workspaces on eDP-1)
-  home    — split 1–5 on Lenovo MZ, 6–10 on Acer external
+  default — laptop-only
+  home    — workspaces 1–5 on Lenovo, 6–10 on Acer
 EOF
   exit 1
 }
 
-# Ensure exactly one argument
-if [[ $# -ne 1 ]]; then
-  usage
-fi
+[[ $# -eq 1 ]] || usage
 
 profile="$1"
 
-# Map profile name to workspace config file
 declare -A WS_MAP=(
-  [default]="$HOME/.config/hypr/monitors/workspaces-default.conf"
-  [home]="$HOME/.config/hypr/monitors/workspaces-home.conf"
+  [default]="$HOME/.config/hypr/monitors/workspaces-default.lua"
+  [home]="$HOME/.config/hypr/monitors/workspaces-home.lua"
 )
 
-# Validate profile
 ws_src="${WS_MAP[$profile]:-}"
+
 if [[ -z "$ws_src" || ! -f "$ws_src" ]]; then
   echo "Error: unknown profile or missing config for '$profile'"
   usage
 fi
 
-# Give Hyprland a moment to settle monitors
+# Give Kanshi/Hyprland time to finish configuring outputs.
 sleep 2
 
-# Copy selected workspace layout into live config
+if [[ "$profile" == "home" ]]; then
+  LENOVO="desc:Lenovo Group Limited P27q-20 V90AW8MZ"
+  ACER="desc:Acer Technologies XB271HU A T4TEE0068505"
+
+  # Temporarily move both monitors away from workspaces 1-10.
+  hyprctl dispatch "hl.dsp.focus({ monitor = \"$LENOVO\" })"
+  hyprctl dispatch 'hl.dsp.focus({ workspace = "90", on_current_monitor = true })'
+
+  hyprctl dispatch "hl.dsp.focus({ monitor = \"$ACER\" })"
+  hyprctl dispatch 'hl.dsp.focus({ workspace = "91", on_current_monitor = true })'
+fi
+
 cp "$ws_src" "$HOME/.config/hypr/workspaces.conf"
 
-# Reload Hyprland to apply the new workspace bindings
 hyprctl reload
+sleep 0.2
 
-# Reload Waypaper
+if [[ "$profile" == "home" ]]; then
+  hyprctl dispatch "hl.dsp.focus({ monitor = \"$LENOVO\" })"
+  hyprctl dispatch 'hl.dsp.focus({ workspace = "1" })'
+
+  hyprctl dispatch "hl.dsp.focus({ monitor = \"$ACER\" })"
+  hyprctl dispatch 'hl.dsp.focus({ workspace = "6" })'
+fi
+
 waypaper --restore
 
 echo "[set-workspaces] Applied '$profile' profile (from $ws_src)"
-

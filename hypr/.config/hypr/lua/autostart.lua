@@ -3,6 +3,7 @@ local commands = {
     "uwsm app -- waybar -c ~/.config/hypr/waybar.jsonc -s ~/.config/waybar/style.css -l error",
     "uwsm app -- hypridle",
     "uwsm app -- hyprpaper",
+    "uwsm app -- kanshi",
     "uwsm app -- waypaper --restore",
     "uwsm app -- nm-applet",
     "uwsm app -- mako",

@@ -24,6 +24,18 @@ hl.bind(altMod .. " + C", hl.dsp.exec_cmd(missgpt))
 hl.bind(altMod .. " + L", hl.dsp.exec_cmd(linear))
 hl.bind(altMod .. " + D", hl.dsp.exec_cmd(docs))
 
+hl.bind("SUPER + 1", hl.dsp.focus({ workspace = "1" }))
+hl.bind("SUPER + 2", hl.dsp.focus({ workspace = "2" }))
+hl.bind("SUPER + 3", hl.dsp.focus({ workspace = "3" }))
+hl.bind("SUPER + 4", hl.dsp.focus({ workspace = "4" }))
+hl.bind("SUPER + 5", hl.dsp.focus({ workspace = "5" }))
+
+hl.bind("SUPER + 6", hl.dsp.focus({ workspace = "6" }))
+hl.bind("SUPER + 7", hl.dsp.focus({ workspace = "7" }))
+hl.bind("SUPER + 8", hl.dsp.focus({ workspace = "8" }))
+hl.bind("SUPER + 9", hl.dsp.focus({ workspace = "9" }))
+hl.bind("SUPER + 0", hl.dsp.focus({ workspace = "10" }))
+
 local recordRegion = [[sh -c 'state=/tmp/wf-recorder.pid; dir="$HOME/Videos/Screenrecords"; mkdir -p "$dir"; if [ -r "$state" ] && kill -0 "$(cat "$state")" 2>/dev/null; then kill -INT "$(cat "$state")" 2>/dev/null; rm -f "$state"; f="$dir/latest.mkv"; [ -f "$f" ] && notify-send -a recorder "Recording stopped" "$f" || notify-send -a recorder "Recording stopped"; else geo=$(slurp); [ -n "$geo" ] || { notify-send -a recorder "Recording canceled"; exit 0; }; file="$dir/wf-$(date +%F_%H-%M-%S).mkv"; ln -sf -- "$file" "$dir/latest.mkv"; ( wf-recorder -g "$geo" -c h264_vaapi -f "$file" & echo $! > "$state" ) >/dev/null 2>&1 & notify-send -a recorder "Recording started" "$file"; fi']]
 local recordWindow = [[sh -c 'state=/tmp/wf-recorder.pid; dir="$HOME/Videos/Screenrecords"; mkdir -p "$dir"; if [ -r "$state" ] && kill -0 "$(cat "$state")" 2>/dev/null; then kill -INT "$(cat "$state")" 2>/dev/null; rm -f "$state"; notify-send -a recorder "Recording stopped" "$dir/latest.mkv"; else rect="$(hyprctl clients -j | jq -r ".[] | \"\\(.at[0]),\\(.at[1]) \\(.size[0])x\\(.size[1]) \\(.class)\"" | slurp -r)"; [ -n "$rect" ] || { notify-send -a recorder "Recording canceled"; exit 0; }; file="$dir/wf-$(date +%F_%H-%M-%S).mkv"; ln -sf -- "$file" "$dir/latest.mkv"; ( wf-recorder -g "$rect" -c h264_vaapi -f "$file" & echo $! > "$state" ) >/dev/null 2>&1 & notify-send -a recorder "Recording started" "$file"; fi']]
 local recordOutput = [[sh -c 'state=/tmp/wf-recorder.pid; dir="$HOME/Videos/Screenrecords"; mkdir -p "$dir"; if [ -r "$state" ] && kill -0 "$(cat "$state")" 2>/dev/null; then kill -INT "$(cat "$state")" 2>/dev/null; rm -f "$state"; notify-send -a recorder "Recording stopped" "$dir/latest.mkv"; else out="$(slurp -o -f "%o")"; [ -n "$out" ] || { notify-send -a recorder "Recording canceled"; exit 0; }; file="$dir/wf-$(date +%F_%H-%M-%S).mkv"; ln -sf -- "$file" "$dir/latest.mkv"; ( wf-recorder -o "$out" -c h264_vaapi -f "$file" & echo $! > "$state" ) >/dev/null 2>&1 & notify-send -a recorder "Recording started" "$file"; fi']]
