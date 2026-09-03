@@ -6,7 +6,7 @@ return {
       ensure_installed = {
         "cssls",
         "emmet_ls",
-        "eslint-lsp",
+        "eslint",
         "html",
         "lua_ls",
         "pyright",
