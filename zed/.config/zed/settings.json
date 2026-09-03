@@ -54,7 +54,7 @@
     },
     "codex-acp": {
       "default_config_options": {
-        "collaboration_mode": "plan",
+        "collaboration_mode": "default",
         "reasoning_effort": "max",
         "fast-mode": true,
         "mode": "read-only",
