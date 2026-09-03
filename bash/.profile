@@ -69,8 +69,8 @@ if command -v uwsm >/dev/null 2>&1 \
    && [ -z "${WAYLAND_DISPLAY}${DISPLAY}" ] \
    && [ "${XDG_VTNR:-0}" -eq 1 ]; then
   if uwsm check may-start >/dev/null 2>&1; then
-    exec uwsm start hyprland-uwsm.desktop
-    #exec uwsm start mango-uwsm.desktop
+    #exec uwsm start hyprland-uwsm.desktop
+    exec uwsm start mango-uwsm.desktop
     #exec uwsm start niri.desktop
   fi
 fi
