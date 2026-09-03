@@ -106,6 +106,7 @@ alias jfip="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/fin
 alias jfm="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-models.py --pattern $1"
 alias jfo="/usr/bin/bash $HOME/versioned/dwellir-public/ops/juju/scripts/orphaned-instances.sh"
 alias jam="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
+alias jmp="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/jm.py"
 # Netbox
 alias nq="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py"
 alias nqd="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py device"
