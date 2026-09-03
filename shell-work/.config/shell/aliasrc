@@ -1,0 +1,297 @@
+# System
+alias ls="ls --color=auto"
+alias l="ls -lC --color=auto"
+alias ll="ls -al --color=auto"
+alias la="ls -A --color=auto"
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --coolor=auto"
+alias find="find . -name"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+alias mkdir="mkdir -pv"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ip="ip -c"
+alias jc="sudo journalctl"
+alias sc="sudo systemctl"
+alias w="watch -n 1 -c"
+alias ping="ping -O"
+alias cd="z"
+alias sshr='ssh-keygen -f "/home/marcus/.ssh/known_hosts" -R "$@"'
+# Package manager
+alias apt="sudo apt"
+alias pac="sudo pacman"
+alias yay="yay --aur"
+alias brup="brew update -v && brew upgrade -v"
+alias bri="brew install -v"
+alias brs="brew search -v"
+# VIM
+alias v="nvim"
+alias vi="nvim"
+alias vim="nvim"
+alias sv="sudo nvim"
+# Code
+#alias code="codium"
+alias python="python3"
+alias wind="windsurf"
+# Config files
+alias aliasrc='nvim ~/.config/shell/aliasrc'
+alias brc='nvim ~/.bashrc'
+alias bsrc="source ~/.bashrc"
+alias ghostrc="nvim ~/.config/ghostty/config"
+alias hyprrc='nvim ~/.config/hypr/'
+alias kittyrc='nvim ~/.config/kitty/kitty.conf'
+alias termrc='nvim ~/.config/terminator/config'
+alias vimrc='nvim ~/.config/nvim/'
+alias zrc='nvim ~/.config/zsh/.zshrc'
+alias zsrc="source ~/.config/zsh/.zshrc"
+# Suckless
+alias makedwm='cd ~/.local/suckless/dwm && make && rm config.h'
+alias makedmenu='cd ~/.local/suckless/dmenu && make && rm config.h && rm patches.h'
+# Git
+alias ga="git add"
+alias gs="git status"
+alias gcmsg="git commit -m" # Commit changes
+alias gb="git branch" # List branches
+alias gcb="git checkout -b" # Checkout new branch
+alias gf="git fetch"
+alias gft="git fetch --tags"
+alias gp="git pull"
+alias lg="lazygit"
+# Permissions
+alias 000='chmod 000'
+alias 640='chmod 640'
+alias 644='chmod 644'
+alias 755='chmod 755'
+alias 775='chmode 775'
+alias ux='chmod u+x'
+# Nix on darwin
+alias nix-update='nix flake update --flake ~/.dotfiles/nix/flake.nix && sudo -i nix run nix-darwin -- switch --flake ~/.dotfiles/nix#omg-mac'
+# Juju
+alias js="juju status --color"
+alias jsr="juju status --color --relations"
+alias wjs="watch -n 1 -c juju status --color"
+alias wjsr="watch -n 1 -c juju status --color --relations"
+alias jm="juju models --all"
+alias jmg="juju models --all | grep $1"
+alias jgm='function _jgm(){ juju grant omgzilla@external admin $(juju show-model --format json | jq -r ".[].name" | head -n 1); }; _jgm'
+alias jgmm='function _jgmm(){ juju grant marcus-segerbjer admin $(juju show-model --format json | jq -r ".[].name" | head -n 1); }; _jgmm'
+alias jc="juju controllers"
+alias jcf="juju config"
+alias jcfq='function _jcfq(){ juju config $1 | yq; }; _jcfq'
+alias ja="juju actions"
+alias jr="juju run"
+alias jar="juju relate"
+alias jdr="juju remove-relation"
+alias jssh="juju ssh"
+alias jassh="juju add-ssh-key '$(cat ~/.ssh/id_rsa.pub)'"
+alias jssj='function _jssj(){ juju ssh ${1:-0} -- journalctl -f -n ${2:-100} ${3}; }; _jssj'
+alias jscp="juju scp"
+alias jsw="juju switch"
+alias jswu="juju switch munin" # site-lab
+alias jswk="juju switch frej" # site-kista
+alias jswl="juju switch obatala" # site-lagos
+alias jswp="juju switch tor" # site-pionen
+alias jsws="juju switch lungmo" # site-singapore
+alias jswt="juju switch baal" # site-tunis
+alias jswa="juju switch hyperborea" # site-aws-eu
+alias jswj="juju switch janus" # site-aws-us
+alias jswh="juju switch local" # localhost
+#alias jwm='function _jwm(){ juju switch $(juju models --all | grep "$@" | awk "{print $1}" | head -n 1); }; _jwm'
+alias jfi="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-instance.py --id $1"
+alias jfip="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-instance.py --ip $1"
+alias jfm="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/find-models.py --pattern $1"
+alias jfo="/usr/bin/bash $HOME/versioned/dwellir-public/ops/juju/scripts/orphaned-instances.sh"
+alias jam="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
+alias jmp="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/jm.py"
+# Netbox
+alias nq="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py"
+alias nqd="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py device"
+alias nqi="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py ipam"
+alias nqv="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py vm"
+# Other scripts
+alias blockdiff="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/blockdiff.py"
+alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.py"
+alias disable-backend="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/haproxy/scripts/disable_backend.py"
+alias enable-backend="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/haproxy/scripts/enable_backend.py"
+alias pull-gslb="/usr/bin/python3 ./scripts/pull_gslb_config.py"
+alias push-gslb="/usr/bin/python3 ./scripts/push_gslb_config.py"
+alias pull-haproxy="/usr/bin/python3 ./scripts/pull_haproxy_config.py"
+alias push-haproxy="/usr/bin/python3 ./scripts/push_haproxy_config.py"
+# Add an "alert" after a long running command, like: sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+# SSH
+alias sshremove='ssh-keygen -f "$HOME/.ssh/known_hosts" -R'
+
+
+# SSH into Cisco older models
+_cisco() 
+{ 
+  [ $# -eq 2 ] || { echo "Usage: cisco <user> <host>"; return 1; }; 
+  ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-cbc -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; 
+}
+alias cisco='_cisco'
+
+# SSH into Cisco 4500 models
+_cisco45() 
+{ 
+  [ $# -eq 2 ] || { echo "Usage: cisco45 <user> <host>"; return 1; }; 
+  ssh -o KexAlgorithms=diffie-hellman-group-exchange-sha1 -o HostKeyAlgorithms=ssh-rsa -o Ciphers=aes256-ctr -o ServerAliveInterval=60 -o ServerAliveCountMax=3 "$1@$2"; 
+}
+alias cisco45='_cisco45'
+
+# Get substrate genesis hash
+_get-substrate-genesis-hash () 
+{ 
+  local url="$1";
+  if [[ -z "$url" ]]; then
+      echo "Usage: get-genesis-hash <host[:port]> (with or without http[s]://)";
+      return 1;
+  fi;
+  if [[ ! "$url" =~ ^https?:// ]]; then
+      url="http://$url";
+  fi;
+  if [[ ! "$url" =~ :[0-9]+$ ]]; then
+      url="${url}:9933";
+  fi;
+  local genesis=$(curl -s -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","id":1,"method":"chain_getBlockHash","params":[0]}' "$url" | jq -r .result);
+  local chain=$(curl -s -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","id":2,"method":"system_chain","params":[]}' "$url" | jq -r .result);
+  local paraId=$(curl -s -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","id":3,"method":"state_getStorage","params":["0x/parachainid"]}' "$url" | jq -r .result 2> /dev/null);
+  if [[ "$paraId" == "null" || -z "$paraId" ]]; then
+      paraId=$(curl -s -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","id":4,"method":"parachainInfo_parachainId","params":[]}' "$url" | jq -r .result 2> /dev/null);
+  fi;
+  if [[ "$paraId" == "null" || -z "$paraId" ]]; then
+      echo "${chain:-Unknown chain} genesis hash: $genesis";
+  else
+      echo "${chain:-Unknown chain} (ParaID $paraId) genesis hash: $genesis";
+  fi
+}
+alias get-substrate-genesis-hash='_get-substrate-genesis-hash'
+
+# Search system-parachains in current controller
+_system-parachains ()
+{
+  parachains=("asset-hub" "bridge-hub" "passet-hub" "collectives" "coretime" "people" "statemin" "westmint")
+  for chain in "${parachains[@]}"; do
+    juju models | grep "$chain" | awk '{print $1}'
+  done
+}
+alias system-parachains="_system-parachains"
+
+
+jswm() {
+  local q="${1-}"
+  local models="" err=""
+
+  # 1) Try JSON first (if supported)
+  if command -v python3 >/dev/null 2>&1; then
+    local json
+    json="$(juju models --format=json 2>/tmp/juju_models_err.$$)"
+    if [ -n "$json" ]; then
+      models="$(
+        printf '%s' "$json" | python3 - <<'PY'
+import json, sys
+raw = sys.stdin.read().strip()
+if not raw:
+    sys.exit(0)
+data = json.loads(raw)
+
+items = None
+if isinstance(data, dict):
+    items = data.get("models") or data.get("results")
+elif isinstance(data, list):
+    items = data
+
+out = []
+if isinstance(items, list):
+    for it in items:
+        if isinstance(it, str):
+            out.append(it.strip().lstrip("*").strip())
+        elif isinstance(it, dict):
+            name = it.get("name") or it.get("model") or it.get("model-name") or it.get("model_name")
+            if isinstance(name, str) and name.strip():
+                out.append(name.strip().lstrip("*").strip())
+
+seen = set()
+for m in out:
+    if m and m not in seen:
+        seen.add(m)
+        print(m)
+PY
+      )"
+    else
+      err="$(cat /tmp/juju_models_err.$$ 2>/dev/null || true)"
+    fi
+    rm -f /tmp/juju_models_err.$$ >/dev/null 2>&1
+  fi
+
+  # 2) Fallback: parse tabular output
+  if [ -z "$models" ]; then
+    local tab
+    tab="$(juju models 2>/tmp/juju_models_err.$$)" || true
+    models="$(
+      printf '%s\n' "$tab" | awk '
+        NR==1 {next}         # skip header
+        NF==0 {next}         # skip blanks
+        {gsub(/\*/, "", $1); print $1}
+      '
+    )"
+    if [ -z "$models" ]; then
+      err="$(cat /tmp/juju_models_err.$$ 2>/dev/null || true)"
+    fi
+    rm -f /tmp/juju_models_err.$$ >/dev/null 2>&1
+  fi
+
+  if [ -z "$models" ]; then
+    echo "No models found from Juju." >&2
+    [ -n "$err" ] && echo "juju models error: $err" >&2
+    return 1
+  fi
+
+  # If no query: open fzf over all models
+  if [ -z "$q" ]; then
+    local picked
+    picked="$(printf '%s\n' "$models" | fzf --prompt='juju model> ' --height=40% --reverse)"
+    if [ -n "$picked" ]; then
+      juju switch "$picked"
+      return $?
+    fi
+    return 130  # user cancelled
+  fi
+
+  # Filter by substring first
+  local candidates
+  candidates="$(printf '%s\n' "$models" | grep -i -- "$q" || true)"
+
+  # If nothing matched: fzf over all, with query prefilled
+  if [ -z "$candidates" ]; then
+    local picked
+    picked="$(printf '%s\n' "$models" | fzf --query "$q" --prompt='juju model> ' --height=40% --reverse)"
+    if [ -n "$picked" ]; then
+      juju switch "$picked"
+      return $?
+    fi
+    return 130
+  fi
+
+  # If exactly one match: switch immediately
+  if [ "$(printf '%s\n' "$candidates" | wc -l | tr -d ' ')" = "1" ]; then
+    juju switch "$candidates"
+    return $?
+  fi
+
+  # Multiple matches: fzf among candidates
+  local picked
+  picked="$(printf '%s\n' "$candidates" | fzf --query "$q" --prompt='juju model> ' --height=40% --reverse)"
+  if [ -n "$picked" ]; then
+    juju switch "$picked"
+    return $?
+  fi
+  return 130
+}
+
+alias jswm='jswm'
+

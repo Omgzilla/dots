@@ -1,23 +1,20 @@
-STOW := stow --dir=$(CURDIR) --target=$(HOME) --no-folding
+STOW := stow --dir=$(CURDIR) --target=$(HOME)
 
-.PHONY: common linux-home linux-work mac delete-linux-home delete-linux-work delete-mac
+.PHONY: home work mac delete-home delete-work delete-mac
 
-common:
-	$(STOW) shell-common nvim fonts
+home:
+	$(STOW) bash bin brave chromium fontconfig fonts foot gtk-home hypr hypr-home mango mimeapps-home nvim rofi shell-home waybar waypaper-home
 
-linux-home:
-	$(STOW) bash bin chromium fontconfig foot gtk-home hypr hypr-home linux-common mango waybar waypaper-home xdg-home
-
-linux-work:
-	$(STOW) bash bin brave chromium fontconfig foot gtk-work hypr hypr-work linux-common terminator waybar waypaper-work tmux xdg-work
+work:
+	$(STOW) bash bin brave chromium DankMaterialShell fontconfig fonts foot gtk-work hypr hypr-work mango mimeapps-work nvim quickshell-work rofi shell-work terminator waybar waypaper-work tmux
 
 mac:
 	$(STOW) ghostty tmux zsh
 
-delete-linux-home:
+delete-home:
 	$(STOW) -D shell-common nvim fonts bash bin chromium fontconfig foot gtk-home hypr hypr-home linux-common tmux waybar waypaper-home xdg-home
 
-delete-linux-work:
+delete-work:
 	$(STOW) -D shell-common nvim fonts bash bin brave chromium fontconfig foot gtk-work hypr hypr-work linux-common terminator waybar waypaper-work tmux xdg-work
 
 delete-mac:

@@ -1,0 +1,6 @@
+#!/bin/sh
+p=/tmp/hyprshot-last
+[ -f "$p" ] || exit 0
+f=$(cat "$p")
+[ -n "$f" ] && [ -f "$f" ] || exit 0
+exec swappy -f "$f"

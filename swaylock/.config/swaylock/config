@@ -1,0 +1,45 @@
+# ~/.config/swaylock/config
+
+# Use current desktop as background
+screenshots
+
+# Background effects
+effect-blur=7x5
+effect-vignette=0.4:0.4
+
+# Clock
+clock
+timestr=%H:%M
+datestr=%d %B
+
+# Indicator
+indicator
+indicator-radius=110
+indicator-thickness=8
+
+# Transparent-ish center
+inside-color=1e1e2ecc
+inside-clear-color=1e1e2ecc
+inside-ver-color=1e1e2ecc
+inside-wrong-color=1e1e2ecc
+
+# Ring
+ring-color=89b4faff
+ring-clear-color=a6e3a1ff
+ring-ver-color=f9e2afff
+ring-wrong-color=f38ba8ff
+
+# Text
+text-color=cdd6f4ff
+text-clear-color=cdd6f4ff
+text-ver-color=cdd6f4ff
+text-wrong-color=cdd6f4ff
+
+# Keyboard feedback
+key-hl-color=a6e3a1ff
+bs-hl-color=f38ba8ff
+
+# Other
+separator-color=00000000
+line-color=00000000
+fade-in=0.2
