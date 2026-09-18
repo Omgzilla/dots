@@ -59,11 +59,6 @@ export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export VSCODE_PORTABLE="$XDG_DATA_HOME/vscode"
 export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
 
-# Start Hyprland
-#if uwsm check may-start; then
-#    exec uwsm start hyprland.desktop
-#fi
-
 if command -v uwsm >/dev/null 2>&1 \
    && [ -z "$TMUX" ] \
    && [ -z "${WAYLAND_DISPLAY}${DISPLAY}" ] \
@@ -73,4 +68,3 @@ if command -v uwsm >/dev/null 2>&1 \
     exec uwsm start mango-uwsm.desktop
   fi
 fi
-
