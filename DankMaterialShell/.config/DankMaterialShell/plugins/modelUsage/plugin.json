@@ -1,0 +1,21 @@
+{
+    "id": "modelUsage",
+    "name": "Model Usage",
+    "description": "Claude Code, OpenAI Codex, and Kimi Code limits, activity, and estimated API costs",
+    "version": "1.0.0",
+    "author": "DigitalPals / DMS port",
+    "license": "MIT",
+    "icon": "data_usage",
+    "type": "widget",
+    "capabilities": ["dankbar-widget"],
+    "component": "./ModelUsage.qml",
+    "settings": "./ModelUsageSettings.qml",
+    "requires_dms": ">=1.6.0",
+    "dependencies": ["python3"],
+    "permissions": [
+        "settings_read",
+        "settings_write",
+        "process",
+        "network"
+    ]
+}

@@ -1,0 +1,8 @@
+{
+  "modelUsage": {
+    "enabled": true,
+    "enabledProviders": [
+      "codex"
+    ]
+  }
+}

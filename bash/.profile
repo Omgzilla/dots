@@ -71,7 +71,6 @@ if command -v uwsm >/dev/null 2>&1 \
   if uwsm check may-start >/dev/null 2>&1; then
     #exec uwsm start hyprland-uwsm.desktop
     exec uwsm start mango-uwsm.desktop
-    #exec uwsm start niri.desktop
   fi
 fi
 

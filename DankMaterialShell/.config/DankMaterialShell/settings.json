@@ -5,8 +5,6 @@
   "mangoLayoutBorderSize": 1,
   "showWeekNumber": true,
   "clockFormat": "24h",
-  "nightModeEnabled": false,
-  "batteryPillPercentSign": false,
   "controlCenterShowMicPercent": true,
   "showWorkspaceIndex": true,
   "appIdSubstitutions": [],
@@ -27,22 +25,22 @@
       "cursorHideTimeout": 0
     }
   },
+  "fontFamily": "Inter Display",
+  "monoFontFamily": "JetBrainsMonoNL NF",
   "textRenderQuality": 3,
   "notificationSummaryFontSize": 14,
   "notificationBodyFontSize": 12,
   "acLockTimeout": 300,
-  "acPostLockMonitorTimeout": 30,
+  "acPostLockMonitorTimeout": 15,
   "batteryLockTimeout": 120,
+  "batterySuspendTimeout": 600,
   "batteryPostLockMonitorTimeout": 30,
   "batteryCriticalNotificationType": 0,
   "lockBeforeSuspend": true,
   "fadeToLockGracePeriod": 3,
-  "gtkThemingEnabled": false,
-  "qtThemingEnabled": false,
   "notificationCompactMode": true,
   "notificationShowTimeoutBar": true,
   "osdPowerProfileEnabled": true,
-  "powerActionHoldDuration": 0.25,
   "screenPreferences": {
     "wallpaper": [
       "all"
@@ -78,6 +76,10 @@
       ],
       "rightWidgets": [
         "systemTray",
+        {
+          "id": "modelUsage",
+          "enabled": true
+        },
         "clipboard",
         "cpuUsage",
         {
@@ -141,6 +143,32 @@
       "hoverPopoutDelay": 150
     }
   ],
+  "desktopClockCustomColor": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1,
+    "hsvHue": -1,
+    "hsvSaturation": 0,
+    "hsvValue": 1,
+    "hslHue": -1,
+    "hslSaturation": 0,
+    "hslLightness": 1,
+    "valid": true
+  },
+  "systemMonitorCustomColor": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1,
+    "hsvHue": -1,
+    "hsvSaturation": 0,
+    "hsvValue": 1,
+    "hslHue": -1,
+    "hslSaturation": 0,
+    "hslLightness": 1,
+    "valid": true
+  },
   "builtInPluginSettings": {
     "dms_settings_search": {
       "trigger": "?"
@@ -149,6 +177,5 @@
       "trigger": "cb"
     }
   },
-  "configVersion": 17,
-  "closeNiriOverviewOnWindowFocus": true
+  "configVersion": 18
 }

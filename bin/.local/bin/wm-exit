@@ -1,7 +1,6 @@
 #!/bin/bash
 menu=("󰌾 lock
-󰜉 reload-wm
-󰜉 restart-wm
+ suspend
 󰍃 logout
 󰤁 reboot
 󰐥 shutdown")
@@ -10,14 +9,12 @@ choice="$(echo -e "${menu[@]}" | rofi -dmenu -l 6 -p "󰩈 Exit: ")"
 [ -z "$choice" ] && exit 0
 case "$choice" in
 	󰌾*)
-		pidof hyprlock >/dev/null || hyprlock
+		#pidof hyprlock >/dev/null || hyprlock
+    dms ipc call lock lock
 		;;
-  󰜉*reload-wm)
-		hyprctl reload
+   )
+    dms ipc call lock lockAndOutputsOff
 		;;
-  󰜉*restart-wm)
-    hyprctl dispatch exit
-    ;;
 	󰍃*)
 		uwsm stop
 		;;
