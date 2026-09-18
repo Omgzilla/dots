@@ -28,6 +28,23 @@
           "disabled": false
         }
       }
+    },
+    {
+      "id": "profile_1789761804341_j4545d3",
+      "name": "laptop",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1200@60.001",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false
+        }
+      }
     }
   ]
 }
