@@ -3,19 +3,19 @@ STOW := stow --dir=$(CURDIR) --target=$(HOME)
 .PHONY: home work mac delete-home delete-work delete-mac
 
 home:
-	$(STOW) bash bin brave chromium fontconfig fonts foot gtk-home hypr hypr-home mango mimeapps-home nvim rofi shell-home waybar waypaper-home
+	$(STOW) bash bin brave chromium DankMaterialShell DankMaterialShell-home fontconfig fonts foot gtk-home mango mango-home mimeapps-home nvim rofi shell-home tmux waybar waypaper-home zed
 
 work:
-	$(STOW) bash bin brave chromium DankMaterialShell fontconfig fonts foot gtk-work hypr hypr-work mango mimeapps-work nvim rofi shell-work terminator waybar waypaper-work tmux zed
+	$(STOW) bash bin brave chromium DankMaterialShell DankMaterialShell-work fontconfig fonts foot gtk-work mango mango-home mimeapps-work nvim rofi shell-work terminator waybar waypaper-work tmux zed
 
 mac:
 	$(STOW) ghostty tmux zsh
 
 delete-home:
-	$(STOW) -D shell-common nvim fonts bash bin chromium fontconfig foot gtk-home hypr hypr-home linux-common tmux waybar waypaper-home xdg-home
+	$(STOW) -D nvim fonts bash bin chromium fontconfig foot gtk-home hypr hypr-home tmux waybar waypaper-home
 
 delete-work:
-	$(STOW) -D shell-common nvim fonts bash bin brave chromium fontconfig foot gtk-work hypr hypr-work linux-common terminator waybar waypaper-work tmux xdg-work
+	$(STOW) -D nvim fonts bash bin brave chromium fontconfig foot gtk-work hypr hypr-work linux-common terminator waybar waypaper-work tmux xdg-work
 
 delete-mac:
-	$(STOW) -D shell-common nvim fonts ghostty tmux zsh
+	$(STOW) -D nvim fonts ghostty tmux zsh

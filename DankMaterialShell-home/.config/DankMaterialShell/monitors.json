@@ -75,6 +75,7 @@
       }
     },
     {
+<<<<<<< HEAD:DankMaterialShell/.config/DankMaterialShell/monitors.json
       "id": "auto_5ce659c1",
       "name": "",
       "outputs": {
@@ -83,12 +84,23 @@
           "position": {
             "x": 0,
             "y": 0
+=======
+      "id": "auto_5857370a",
+      "name": "",
+      "outputs": {
+        "DP-2": {
+          "mode": "3840x2160@59.997",
+          "position": {
+            "x": 0,
+            "y": 800
+>>>>>>> 7366b4d (fix dms and mango for home/work):DankMaterialShell-home/.config/DankMaterialShell/monitors.json
           },
           "scale": 1,
           "transform": "Normal",
           "vrr": false,
           "disabled": false
         },
+<<<<<<< HEAD:DankMaterialShell/.config/DankMaterialShell/monitors.json
         "DP-8": {
           "mode": "2560x1440@59.951",
           "position": {
@@ -96,11 +108,49 @@
             "y": 0
           },
           "scale": 1,
+=======
+        "HDMI-A-1": {
+          "mode": "2560x1440@59.951",
+          "position": {
+            "x": 3840,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "90",
+          "vrr": false,
+          "disabled": false
+        }
+      }
+    },
+    {
+      "id": "profile_1789583713006_vinhtpu",
+      "name": "pc",
+      "outputs": {
+        "HDMI-A-1": {
+          "mode": "2560x1440@59.951",
+          "position": {
+            "x": 3840,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "90",
+          "vrr": false,
+          "disabled": false
+        },
+        "DP-2": {
+          "mode": "3840x2160@240.016",
+          "position": {
+            "x": 0,
+            "y": 400
+          },
+          "scale": 1,
+>>>>>>> 7366b4d (fix dms and mango for home/work):DankMaterialShell-home/.config/DankMaterialShell/monitors.json
           "transform": "Normal",
           "vrr": false,
           "disabled": false
         }
       }
+<<<<<<< HEAD:DankMaterialShell/.config/DankMaterialShell/monitors.json
     },
     {
       "id": "auto_28af39",
@@ -118,6 +168,8 @@
           "disabled": false
         }
       }
+=======
+>>>>>>> 7366b4d (fix dms and mango for home/work):DankMaterialShell-home/.config/DankMaterialShell/monitors.json
     }
   ]
 }
