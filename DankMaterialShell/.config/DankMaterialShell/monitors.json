@@ -45,6 +45,34 @@
           "disabled": false
         }
       }
+    },
+    {
+      "id": "profile_1790444561827_qh9txzs",
+      "name": "pc",
+      "outputs": {
+        "DP-2": {
+          "mode": "3840x2160@240.016",
+          "position": {
+            "x": 0,
+            "y": 640
+          },
+          "scale": 1.25,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false
+        },
+        "HDMI-A-1": {
+          "mode": "2560x1440@59.951",
+          "position": {
+            "x": 3072,
+            "y": 0
+          },
+          "scale": 1.25,
+          "transform": "90",
+          "vrr": false,
+          "disabled": false
+        }
+      }
     }
   ]
 }
