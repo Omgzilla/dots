@@ -9,6 +9,7 @@
   "showWorkspaceIndex": true,
   "appIdSubstitutions": [],
   "clockDateFormat": "ddd MMM d",
+  "networkPreference": "wifi",
   "cursorSettings": {
     "theme": "System Default",
     "size": 24,
