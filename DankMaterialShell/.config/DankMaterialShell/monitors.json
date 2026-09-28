@@ -72,22 +72,11 @@
       "id": "profile_1789971282740_avdqqa2",
       "name": "dock",
       "outputs": {
-        "eDP-1": {
-          "mode": "1920x1200@60.001",
-          "position": {
-            "x": 4992,
-            "y": 960
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false
-        },
         "DP-10": {
           "mode": "2560x1440@59.951",
           "position": {
             "x": 3840,
-            "y": 112
+            "y": 432
           },
           "scale": 1.25,
           "transform": "90",
@@ -99,6 +88,17 @@
           "position": {
             "x": 0,
             "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false
+        },
+        "eDP-1": {
+          "mode": "1920x1200@60.001",
+          "position": {
+            "x": 4992,
+            "y": 1280
           },
           "scale": 1,
           "transform": "Normal",

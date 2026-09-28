@@ -6,7 +6,7 @@ home:
 	$(STOW) bash bin brave chromium DankMaterialShell fontconfig fonts foot gtk-home mango mango-home mimeapps-home nvim rofi shell-home solaar tmux waybar waypaper-home zed
 
 work:
-	$(STOW) bash bin brave chromium DankMaterialShell fontconfig fonts foot gtk-work mango mango-home mimeapps-work nvim rofi shell-work solaar terminator waybar waypaper-work tmux zed
+	$(STOW) bash bin brave chromium DankMaterialShell fontconfig fonts foot gtk-work mango mango-work mimeapps-work nvim rofi shell-work solaar terminator waybar waypaper-work tmux zed
 
 mac:
 	$(STOW) ghostty tmux zsh
