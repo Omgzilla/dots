@@ -117,10 +117,9 @@ alias blockdiff="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/script
 alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.py"
 alias disable-backend="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/haproxy/scripts/disable_backend.py"
 alias enable-backend="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/haproxy/scripts/enable_backend.py"
-alias pull-gslb="/usr/bin/python3 ./scripts/pull_gslb_config.py"
-alias push-gslb="/usr/bin/python3 ./scripts/push_gslb_config.py"
-alias pull-haproxy="/usr/bin/python3 ./scripts/pull_haproxy_config.py"
-alias push-haproxy="/usr/bin/python3 ./scripts/push_haproxy_config.py"
+alias pull-gslb="/usr/bin/python3 $HOME/version/dwellir-public/ops/haproxy/scripts/pull_gslb_config.py"
+alias push-gslb="/usr/bin/python3 $HOME/version/dwellir-public/ops/haproxy/scripts/push_gslb_config.py"
+alias silence='uv run --no-project --with grafana-client "$HOME/versioned/dwellir-public/ops/grafana/scripts/create_silence.py"'
 # Add an "alert" after a long running command, like: sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 # SSH
