@@ -4,10 +4,10 @@
   homebrew = {
     enable = true;
 
-    # Preserved from the existing configuration.
+    # Rebuilds apply the declared app list; nix-upgrade handles updates.
     onActivation = {
-      autoUpdate = true;
-      upgrade = true;
+      autoUpdate = false;
+      upgrade = false;
       cleanup = "uninstall";
     };
 
@@ -15,7 +15,6 @@
       "incus"
       "lxc"
       "pnpm"
-      "syncthing"
     ];
 
     greedyCasks = false;
@@ -29,7 +28,6 @@
       "brave-browser"
       "chatgpt"
       "cheatsheet"
-      "discord"
       "firefox"
       "font-fontawesome"
       "foobar2000"
@@ -39,6 +37,7 @@
       "jordanbaird-ice"
       "localsend"
       "lulu"
+      "macpacker"
       "macshot"
       "obsidian"
       "onyx"
@@ -49,7 +48,6 @@
       "spotify"
       "steam"
       "teamviewer"
-      "the-unarchiver"
       "transmit"
       "vesktop"
       "zed"
