@@ -9,7 +9,7 @@ work:
 	$(STOW) bash bin brave chromium DankMaterialShell fontconfig fonts foot gtk-work mango mango-work mimeapps-work nvim rofi shell-work solaar terminator waybar waypaper-work tmux zed
 
 mac:
-	$(STOW) ghostty tmux zsh
+	$(STOW) fonts ghostty nvim tmux zsh
 
 delete-home:
 	$(STOW) -D nvim fonts bash bin chromium fontconfig foot gtk-home hypr hypr-home tmux waybar waypaper-home
@@ -18,4 +18,4 @@ delete-work:
 	$(STOW) -D nvim fonts bash bin brave chromium fontconfig foot gtk-work hypr hypr-work linux-common terminator waybar waypaper-work tmux xdg-work
 
 delete-mac:
-	$(STOW) -D nvim fonts ghostty tmux zsh
+	$(STOW) -D fonts ghostty nvim tmux zsh

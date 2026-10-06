@@ -38,7 +38,7 @@
     (writeShellScriptBin "nix-upgrade" ''
       set -euo pipefail
 
-      flake_dir="$HOME/.dotfiles/nix"
+      flake_dir="$HOME/.local/dots/nix"
       flake_ref="$flake_dir#omg-mac"
 
       cd "$flake_dir"
