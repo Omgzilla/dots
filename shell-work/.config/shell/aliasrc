@@ -57,6 +57,7 @@ alias gs="git status"
 alias gcmsg="git commit -m" # Commit changes
 alias gb="git branch" # List branches
 alias gcb="git checkout -b" # Checkout new branch
+alias gcm="git checkout main"
 alias gf="git fetch"
 alias gft="git fetch --tags"
 alias gp="git pull"
