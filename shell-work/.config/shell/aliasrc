@@ -21,6 +21,8 @@ alias w="watch -n 1 -c"
 alias ping="ping -O"
 alias cd="z"
 alias sshr='ssh-keygen -f "/home/marcus/.ssh/known_hosts" -R "$@"'
+# Applications
+alias bat='bat --theme=Dracula'
 # Package manager
 alias apt="sudo apt"
 alias pac="sudo pacman"
