@@ -63,7 +63,7 @@ case "${1:-}" in
     window)
         rect="$(
             mmsg get all-clients |
-                jq -r '.[] | "\(.x),\(.y) \(.width)x\(.height) \(.appid)"' |
+                jq -r '.[] | "\(.x),\(.y) \(.width)x\(.height) \(.app_id)"' |
                 slurp -r
         )"
 
