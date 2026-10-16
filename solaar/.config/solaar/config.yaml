@@ -11,6 +11,7 @@
     headset-signature-shutdown, headset-signature-passive, logivoice-nr-state, logivoice-ng-state, logivoice-comp-state, logivoice-deesser-state, logivoice-depopper-state,
     logivoice-limiter-state, logivoice-hpf-state]
   _modelId: C08E00000000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
   _unitId: '32384719'
   dpi: 800
   onboard_profiles: 1
@@ -19,15 +20,16 @@
   _absent: [hi-res-scroll, lowres-scroll-mode, hires-smooth-invert, hires-smooth-resolution, hires-scroll-mode, scroll-ratchet, scroll-ratchet-torque, smart-shift,
     thumb-scroll-invert, thumb-scroll-mode, onboard_profiles, report_rate, report_rate_extended, pointer_speed, dpi, dpi_extended, speed-change, backlight-timed,
     led_control, led_zone_, rgb_control, rgb_zone_, per-key-lighting, brightness_control, rgb_idle_effect, rgb_idle_timeout, rgb_sleep_timeout, rgb_startup_animation,
-    rgb_shutdown_animation, reprogrammable-keys, persistent-remappable-keys, force-sensing, crown-smooth, divert-crown, divert-gkeys, m-key-leds, mr-key-led,
-    gesture2-gestures, gesture2-divert, gesture2-params, analog-button-tuning, haptic-level, haptic-play, sidetone, equalizer, adc_power_management, headset-eco-mode,
-    headset-do-not-disturb, headset-mic-mute, headset-mic-snr, headset-ai-nr, headset-ai-nr-level, headset-sidetone, headset-mic-gain, headset-mix-balance,
-    headset-auto-sleep, headset-onboard-eq, headset-eq-active-preset, headset-advanced-eq, headset_led_control, headset-onboard-effect, headset_per_zone_lighting,
-    headset-signature-startup, headset-signature-shutdown, headset-signature-passive, logivoice-nr-state, logivoice-ng-state, logivoice-comp-state, logivoice-deesser-state,
-    logivoice-depopper-state, logivoice-limiter-state, logivoice-hpf-state]
+    rgb_shutdown_animation, persistent-remappable-keys, force-sensing, crown-smooth, divert-crown, divert-gkeys, m-key-leds, mr-key-led, gesture2-gestures,
+    gesture2-divert, gesture2-params, analog-button-tuning, haptic-level, haptic-play, sidetone, equalizer, adc_power_management, headset-eco-mode, headset-do-not-disturb,
+    headset-mic-mute, headset-mic-snr, headset-ai-nr, headset-ai-nr-level, headset-sidetone, headset-mic-gain, headset-mix-balance, headset-auto-sleep,
+    headset-onboard-eq, headset-eq-active-preset, headset-advanced-eq, headset_led_control, headset-onboard-effect, headset_per_zone_lighting, headset-signature-startup,
+    headset-signature-shutdown, headset-signature-passive, logivoice-nr-state, logivoice-ng-state, logivoice-comp-state, logivoice-deesser-state, logivoice-depopper-state,
+    logivoice-limiter-state, logivoice-hpf-state, reprogrammable-keys]
   _battery: 4100
-  _config_cookie: [181, 135]
+  _config_cookie: [89, 8]
   _modelId: B37800000000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
   _serial: E30C632D
   _unitId: E30C632D
   _wpid: B378
@@ -52,8 +54,9 @@
     headset_per_zone_lighting, headset-signature-startup, headset-signature-shutdown, headset-signature-passive, logivoice-nr-state, logivoice-ng-state,
     logivoice-comp-state, logivoice-deesser-state, logivoice-depopper-state, logivoice-limiter-state, logivoice-hpf-state]
   _battery: 4100
-  _config_cookie: [181, 136]
+  _config_cookie: [89, 9]
   _modelId: B03400000000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
   _serial: CB687D83
   _unitId: CB687D83
   _wpid: B034
