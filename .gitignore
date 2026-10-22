@@ -1,5 +1,7 @@
 fonts/.local/share/fonts/.uuid
 fonts/.local/share/fonts/**/.uuid
+mango/.config/mango/dms/layout.conf
+mango/.config/mango/dms/windowrules.conf
 nvim/.config/nvim/lazy-lock.json
 nvim/.config/nvim/plugin
 tmux/.config/tmux/plugins
