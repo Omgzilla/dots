@@ -111,10 +111,10 @@ alias jfo="/usr/bin/bash $HOME/versioned/dwellir-public/ops/juju/scripts/orphane
 alias jam="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/all-models.py"
 alias jmp="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/jm.py"
 # Netbox
-alias nq="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py"
-alias nqd="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py device"
-alias nqi="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py ipam"
-alias nqv="$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py vm"
+alias nq='uv run "$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py"'
+alias nqd='uv run "$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py device"'
+alias nqi='uv run "$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py ipam"'
+alias nqv='uv run "$HOME/versioned/dwellir-public/ops/random/netbox-scripts/netbox-query/netbox-query.py vm"'
 # Other scripts
 alias blockdiff="/usr/bin/python3 $HOME/versioned/dwellir-public/ops/juju/scripts/blockdiff.py"
 alias compare-blocks="~/versioned/dwellir-public/ops/random/compare-blocks.py"
