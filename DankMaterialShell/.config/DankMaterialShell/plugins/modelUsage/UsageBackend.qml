@@ -15,12 +15,18 @@ Item {
   property double lastSuccessAt: 0
   property double lastAttemptAt: 0
   property bool pendingRefresh: false
+  property bool launchPending: false
 
   readonly property int refreshIntervalSec: Math.max(60, Math.min(3600,
     Math.round(Number(setting("refreshIntervalSec", 900)) || 900)))
   readonly property var enabledProviderIds: normalizedProviderIds(setting(
     "enabledProviders", ["claude", "codex", "kimi"]))
+  readonly property string usageSource: String(setting("usageSource", "direct")) === "cliproxy" ? "cliproxy" : "direct"
+  readonly property string cliproxyUrl: String(setting("cliproxyUrl", "http://127.0.0.1:8317"))
+  readonly property string cliproxyKeyFile: String(setting("cliproxyKeyFile", ""))
   readonly property var providers: payload ? UsageLogic.listOrEmpty(payload.providers) : []
+  readonly property string proxyImplementation: String(payload && payload.proxyImplementation || "")
+  readonly property string connectionId: JSON.stringify([usageSource, cliproxyUrl, cliproxyKeyFile])
   readonly property string scriptPath: localPath(Qt.resolvedUrl("scripts/usage-fetch.py"))
   readonly property double nextRefreshAt: lastAttemptAt > 0
     ? lastAttemptAt + refreshIntervalSec * 1000 : 0
@@ -50,7 +56,7 @@ Item {
 
   function requestRefresh(manual) {
     if (manual) refreshTimer.restart()
-    if (fetchProcess.running) {
+    if (fetchProcess.running || launchPending || pendingRefresh) {
       pendingRefresh = true
       return
     }
@@ -58,21 +64,35 @@ Item {
   }
 
   function refresh() { requestRefresh(true) }
+  function refreshForSettings() { requestRefresh(false) }
 
   function startFetch() {
+    if (fetchProcess.running || launchPending) return
+    launchPending = true
+    loading = true
     pendingRefresh = false
     lastAttemptAt = Date.now()
-    fetchProcess.command = [
+    var command = [
       "python3", scriptPath,
       "--providers", enabledProviderIds.join(","),
+      "--source", usageSource,
       "--timeout", "12"
     ]
+    if (usageSource === "cliproxy") {
+      if (cliproxyUrl.trim() !== "") command.push("--cliproxy-url", cliproxyUrl.trim())
+      if (cliproxyKeyFile.trim() !== "") command.push("--cliproxy-key-file", cliproxyKeyFile.trim())
+    }
+    fetchProcess.command = command
+    fetchProcess.connectionId = connectionId
     fetchProcess.running = true
   }
 
   function settle() {
+    launchPending = false
     loading = false
-    if (fetchProcess.outputTooLarge) {
+    if (fetchProcess.connectionId !== connectionId) {
+      pendingRefresh = true
+    } else if (fetchProcess.outputTooLarge) {
       fetchError = "Model usage backend returned too much data"
     } else if (fetchProcess.timedOut) {
       fetchError = "Model usage backend timed out"
@@ -90,7 +110,7 @@ Item {
         if (backendError !== "") {
           fetchError = backendError
         } else {
-          payload = parsed
+          payload = usageSource === "cliproxy" ? UsageLogic.preserveProxyReadings(payload, parsed) : parsed
           fetchError = ""
           var generated = new Date(String(parsed.generatedAt || "")).getTime()
           lastSuccessAt = isFinite(generated) ? generated : Date.now()
@@ -98,10 +118,19 @@ Item {
         }
       }
     }
-    if (pendingRefresh) Qt.callLater(function() { root.startFetch() })
+    if (pendingRefresh) Qt.callLater(function() {
+      if (root.pendingRefresh) root.startFetch()
+    })
   }
 
-  onEnabledProviderIdsChanged: requestRefresh(false)
+  // Let bindings consuming this list settle before changing loading state.
+  onEnabledProviderIdsChanged: Qt.callLater(refreshForSettings)
+  onConnectionIdChanged: {
+    payload = ({ schemaVersion: 1, generatedAt: "", providers: [] })
+    lastSuccessAt = 0
+    fetchError = ""
+    requestRefresh(false)
+  }
 
   Process {
     id: fetchProcess
@@ -111,6 +140,7 @@ Item {
     property int lastExit: 0
     property bool timedOut: false
     property bool outputTooLarge: false
+    property string connectionId: ""
     readonly property int maxBodyChars: 2 * 1024 * 1024
 
     function appendBody(data) {
@@ -137,6 +167,7 @@ Item {
     }
     onRunningChanged: {
       if (running) {
+        root.launchPending = false
         body = ""
         exitSeen = false
         lastExit = 0

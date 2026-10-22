@@ -26,15 +26,20 @@ Item {
   property double lastSuccessAt: 0
   property double lastAttemptAt: 0
   property bool pendingRefresh: false
+  property bool pendingPriceRefresh: false
+  property bool launchPending: false
   property bool requested: false
 
   readonly property var enabledProviderIds: normalizedProviderIds(setting(
-    "enabledProviders", ["claude", "codex", "kimi"]))
+    "costLocalProviders", ["claude", "codex"]))
   readonly property string scriptPath: localPath(Qt.resolvedUrl("scripts/cost-fetch.py"))
   readonly property int staleAfterMs: Math.max(60, Math.min(3600,
     Math.round(Number(setting("refreshIntervalSec", 900)) || 900))) * 1000
   readonly property var providers: payload ? UsageLogic.listOrEmpty(payload.providers) : []
   readonly property var periods: payload ? UsageLogic.listOrEmpty(payload.periods) : []
+  readonly property string priceOverrides: String(setting("costPriceOverrides", "{}"))
+  readonly property string t3Servers: String(setting("costT3Servers", "[]"))
+  readonly property string connectionId: JSON.stringify([enabledProviderIds, t3Servers])
 
   signal refreshed()
 
@@ -44,7 +49,7 @@ Item {
   }
 
   function normalizedProviderIds(value) {
-    var allowed = ["claude", "codex", "kimi"]
+    var allowed = ["claude", "codex"]
     var requestedProviders = UsageLogic.isListLike(value) ? value : allowed
     var result = []
     for (var i = 0; i < allowed.length; i++)
@@ -65,6 +70,9 @@ Item {
 
   function ensureLoaded() {
     requested = true
+    // Opening Costs notifies both the view and popup. They share one scan;
+    // explicit refreshes and settings changes still queue their own follow-up.
+    if (loading) return
     var payloadDays = payload && payload.period ? Number(payload.period.days) : 0
     if (lastSuccessAt <= 0 || payloadDays !== periodDays
         || Date.now() - lastSuccessAt >= staleAfterMs) requestRefresh()
@@ -80,11 +88,12 @@ Item {
 
   function refresh() {
     requested = true
-    requestRefresh()
+    requestRefresh(true)
   }
 
-  function requestRefresh() {
-    if (fetchProcess.running) {
+  function requestRefresh(forcePrices) {
+    pendingPriceRefresh = pendingPriceRefresh || forcePrices === true
+    if (fetchProcess.running || launchPending || pendingRefresh) {
       pendingRefresh = true
       return
     }
@@ -92,20 +101,33 @@ Item {
   }
 
   function startFetch() {
+    if (fetchProcess.running || launchPending) return
+    launchPending = true
+    loading = true
     pendingRefresh = false
     lastAttemptAt = Date.now()
-    fetchProcess.command = [
+    var command = [
       "python3", scriptPath,
       "--providers", enabledProviderIds.join(","),
       "--days", String(periodDays),
-      "--timeout", "10"
+      "--timeout", "10",
+      "--t3-servers", t3Servers,
+      "--price-overrides", priceOverrides
     ]
+    if (pendingPriceRefresh) command.push("--refresh-prices")
+    pendingPriceRefresh = false
+    fetchProcess.command = command
+    fetchProcess.connectionId = connectionId
     fetchProcess.running = true
   }
 
   function settle() {
+    launchPending = false
     loading = false
-    if (fetchProcess.outputTooLarge) {
+    if (fetchProcess.connectionId !== connectionId) {
+      // A response from an old source must never repopulate the new source.
+      pendingRefresh = requested
+    } else if (fetchProcess.outputTooLarge) {
       fetchError = "Estimated-cost backend returned too much data"
     } else if (fetchProcess.timedOut) {
       fetchError = "Estimated-cost scan timed out"
@@ -133,10 +155,19 @@ Item {
         }
       }
     }
-    if (pendingRefresh) Qt.callLater(function() { root.startFetch() })
+    if (pendingRefresh) Qt.callLater(function() {
+      if (root.pendingRefresh) root.startFetch()
+    })
   }
 
-  onEnabledProviderIdsChanged: if (requested) requestRefresh()
+  onPriceOverridesChanged: if (requested) requestRefresh()
+  onConnectionIdChanged: {
+    payload = ({ schemaVersion: 1, generatedAt: "", source: "transcripts",
+      pricing: {}, coverage: [], totals: {}, providers: [], models: [], periods: [] })
+    lastSuccessAt = 0
+    fetchError = ""
+    if (requested) requestRefresh()
+  }
 
   Process {
     id: fetchProcess
@@ -146,6 +177,7 @@ Item {
     property int lastExit: 0
     property bool timedOut: false
     property bool outputTooLarge: false
+    property string connectionId: ""
     readonly property int maxBodyChars: 4 * 1024 * 1024
 
     function appendBody(data) {
@@ -172,6 +204,7 @@ Item {
     }
     onRunningChanged: {
       if (running) {
+        root.launchPending = false
         body = ""
         exitSeen = false
         lastExit = 0

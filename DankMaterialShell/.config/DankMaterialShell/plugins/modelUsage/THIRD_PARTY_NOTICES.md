@@ -2,7 +2,7 @@
 
 ## DigitalPals Omarchy Model Usage
 
-The provider collectors, transcript scanner, normalized data contracts, and usage-history design are adapted from [DigitalPals/omarchy-modelusage](https://github.com/DigitalPals/omarchy-modelusage), distributed under the MIT license. This repository is a DankMaterialShell port and does not load Omarchy's runtime APIs.
+The provider collectors, transcript scanner, normalized data contracts, panel design, account workflows, settings forms, and regression tests are adapted from [DigitalPals/omarchy-modelusage](https://github.com/DigitalPals/omarchy-modelusage), distributed under the MIT license. The incorporated revision is recorded in [UPSTREAM.md](UPSTREAM.md). This repository is a DankMaterialShell port and does not load Omarchy's runtime APIs. The local theme and control adapters use DMS's public plugin and palette APIs.
 
 ## Omarchy assets
 

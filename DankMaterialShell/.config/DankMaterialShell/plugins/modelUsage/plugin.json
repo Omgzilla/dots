@@ -1,9 +1,9 @@
 {
     "id": "modelUsage",
     "name": "Model Usage",
-    "description": "Claude Code, OpenAI Codex, and Kimi Code limits, activity, and estimated API costs",
+    "description": "Local and proxy AI quotas, account activity, reset credits, and local/T3 API cost estimates with DMS styling",
     "version": "1.0.0",
-    "author": "DigitalPals / DMS port",
+    "author": "Omgzilla / DigitalPals",
     "license": "MIT",
     "icon": "data_usage",
     "type": "widget",

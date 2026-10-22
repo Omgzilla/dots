@@ -3,6 +3,46 @@
     "enabled": true,
     "enabledProviders": [
       "codex"
-    ]
+    ],
+    "barDisplayMode": "Icon",
+    "barProviders": [
+      "claude",
+      "codex",
+      "kimi"
+    ],
+    "cliproxyKeyFile": "",
+    "cliproxyUrl": "http://127.0.0.1:8317",
+    "costKeeperPasswordFile": "",
+    "costKeeperUrl": "",
+    "criticalThreshold": 10,
+    "hideAccountEmails": true,
+    "liveAccountActivity": true,
+    "refreshIntervalSec": 900,
+    "squareUsageCards": true,
+    "usageSource": "direct",
+    "warningThreshold": 25
+  },
+  "dankAIUsage": {
+    "enabled": false,
+    "barUsageColors": false,
+    "showClaude": false,
+    "showUsed": false
+  },
+  "aiQuotas": {
+    "enabled": false,
+    "claudeEnabled": false,
+    "openCodeEnabled": false,
+    "zaiEnabled": false,
+    "kimiEnabled": false,
+    "deepSeekEnabled": false,
+    "openRouterEnabled": false,
+    "grokEnabled": false,
+    "antigravityEnabled": false
+  },
+  "codexUsage": {
+    "enabled": true,
+    "alertsEnabled": false,
+    "detailsExpanded": false,
+    "refreshSeconds": "60"
   }
 }
