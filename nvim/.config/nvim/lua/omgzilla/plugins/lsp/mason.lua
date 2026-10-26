@@ -1,6 +1,6 @@
 return {
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     opts = {
       -- list of servers for mason to install
       ensure_installed = {
@@ -8,14 +8,23 @@ return {
         "emmet_ls",
         "eslint",
         "html",
+        "jsonls",
         "lua_ls",
         "pyright",
         "tailwindcss",
+        "taplo",
+        "yamlls",
+
+        -- Optional: uncomment here to install and enable the server.
+        -- Also enable the matching formatter/parser entries in conform.lua and nvim-treesitter.lua.
+        -- "gopls", -- Go
+        -- "astro", -- Astro
+        -- "ts_ls", -- JavaScript/TypeScript completion and navigation; ESLint handles linting
       },
     },
     dependencies = {
       {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         opts = {
            ui = {
             icons = {
@@ -27,6 +36,7 @@ return {
         },
       },
       "neovim/nvim-lspconfig",
+      "b0o/SchemaStore.nvim",
     },
   },
   {
@@ -36,13 +46,13 @@ return {
         "prettier", -- prettier formatter
         "stylua",  -- lua formatter
         "isort", -- python formatter
-        "black", -- python formatter
         "autopep8", -- python formatter
         "pylint", -- python linter
+        -- "goimports", -- enable with the optional Go formatter in conform.lua
       },
     },
     dependencies = {
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
     },
   },
 }

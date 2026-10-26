@@ -18,6 +18,14 @@ return {
       },
     })
 
+    -- MDX needs the same fenced-code and Enter rules as Markdown.
+    for _, pair in ipairs({ "```", "```.*$" }) do
+      for _, rule in ipairs(autopairs.get_rules(pair)) do
+        table.insert(rule.filetypes, "mdx")
+      end
+    end
+    autopairs.force_attach()
+
     -- import nvim-autopairs completion functionality
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 

@@ -29,7 +29,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
     opts.desc = "Show buffer diagnostics"
-    keymap.set("n", "D", function()
+    keymap.set("n", "<leader>D", function()
       builtin.diagnostics({ bufnr = 0 })
     end, opts) -- show  diagnostics for file
 
@@ -51,7 +51,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     opts.desc = "Restart LSP"
     keymap.set("n", "rs", function()
-      vim.cmd("LspRestart")
+      vim.cmd("lsp restart")
     end, opts) -- mapping to restart lsp if necessary
   end,
 })
