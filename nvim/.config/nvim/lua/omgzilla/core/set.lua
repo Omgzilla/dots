@@ -55,8 +55,7 @@ local set = {
   signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
 
   cmdheight = 1, -- Give more space for displaying messages.
-  updatetime = 50, -- Having longer updatetime (default is 4000ms = 4s) leads to longer noticable delays and poor user experience
-  lazyredraw = true, -- Don't redraw while executing macros (good performance config)
+  updatetime = 250, -- idle time before CursorHold callbacks
   colorcolumn = "80",
 }
 
