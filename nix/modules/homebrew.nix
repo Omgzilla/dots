@@ -21,8 +21,6 @@
 
     casks = [
       "alt-tab"
-      "android-platform-tools"
-      "android-studio"
       "appcleaner"
       "balenaetcher"
       "brave-browser"
@@ -40,7 +38,6 @@
       "macpacker"
       "macshot"
       "obsidian"
-      "onyx"
       "pika"
       "qbittorrent"
       "signal"

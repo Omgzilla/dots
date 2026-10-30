@@ -8,11 +8,14 @@ in
 {
   environment.systemPackages = with pkgs; [
     # CLI
+    android-tools
+    codex
     fd
     fzf
+    gradle_8
     herdr
     htop
-    jdk17
+    jdk21
     juju
     neovim
     nixd
@@ -30,6 +33,9 @@ in
 
     (writeShellScriptBin "nix-rebuild" ''
       set -euo pipefail
+
+      # Increase file descriptor limit for Nix evaluation/builds.
+      ulimit -Sn 8192
 
       flake_dir="$HOME/.local/dots/nix"
       flake_ref="$flake_dir#omg-mac"
