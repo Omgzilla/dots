@@ -102,6 +102,16 @@
         "weather"
       ],
       "rightWidgets": [
+        {
+          "id": "privacyIndicator",
+          "enabled": true,
+          "privacyShowCameraIcon": false,
+          "overflowMode": "section"
+        },
+        {
+          "id": "camToggle",
+          "enabled": true
+        },
         "systemTray",
         {
           "id": "modelUsage",
