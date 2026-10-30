@@ -1,0 +1,27 @@
+{
+    "id": "camToggle",
+    "name": "Cam Toggle",
+    "description": "Block selected USB webcams, with automatic discovery and optional state restoration at boot and reconnect.",
+    "version": "1.0.0",
+    "author": "Omgzilla",
+    "type": "widget",
+    "capabilities": [
+        "dankbar-widget",
+        "control-center"
+    ],
+    "component": "./CamToggle.qml",
+    "icon": "videocam_off",
+    "requires_dms": ">=2.0.0",
+    "dependencies": [
+        "python3",
+        "sudo",
+        "udev",
+        "pkexec"
+    ],
+    "permissions": [
+        "settings_read",
+        "settings_write",
+        "process"
+    ],
+    "settings": "./CamToggleSettings.qml"
+}

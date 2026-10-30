@@ -44,5 +44,16 @@
     "alertsEnabled": false,
     "detailsExpanded": false,
     "refreshSeconds": "60"
+  },
+  "camToggle": {
+    "enabled": true,
+    "knownDevices": {
+      "148d82073785bfe2cb4c28920b3fdf2fd8da2f1caa34345b8a90f435ccfd3b51": {
+        "name": "Anker PowerConf C302"
+      }
+    },
+    "selectedDeviceIds": [
+      "148d82073785bfe2cb4c28920b3fdf2fd8da2f1caa34345b8a90f435ccfd3b51"
+    ]
   }
 }

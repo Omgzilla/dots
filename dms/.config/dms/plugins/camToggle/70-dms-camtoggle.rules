@@ -1,0 +1,3 @@
+# Restore saved states; managed by Cam Toggle.
+ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{bDeviceClass}!="09", RUN+="/usr/local/libexec/dms-camtoggle restore %k"
+ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_interface", RUN+="/usr/local/libexec/dms-camtoggle restore %k"
