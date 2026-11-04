@@ -12,6 +12,7 @@ in
     codex
     fd
     fzf
+    gh
     gradle_8
     herdr
     htop
