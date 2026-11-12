@@ -32,7 +32,7 @@
     }
   ],
   "clockDateFormat": "ddd MMM d",
-  "networkPreference": "ethernet",
+  "networkPreference": "auto",
   "cursorSettings": {
     "theme": "System Default",
     "size": 24,
@@ -212,6 +212,7 @@
       "showOnLastDisplay": true,
       "position": 1,
       "mode": "compact",
+      "middleClickAction": "close",
       "taskbarAlign": "center",
       "widgetExpansion": "popout",
       "iconSize": 40,
@@ -420,5 +421,7 @@
     "media": {
       "lyrics": false
     }
-  }
+  },
+  "calendarBackend": "dankcal",
+  "displayShowDisconnected": false
 }

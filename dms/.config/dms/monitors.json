@@ -75,10 +75,10 @@
         "DP-10": {
           "mode": "2560x1440@59.951",
           "position": {
-            "x": 3840,
-            "y": 112
+            "x": 5760,
+            "y": 240
           },
-          "scale": 1.25,
+          "scale": 1,
           "transform": "90",
           "vrr": false,
           "disabled": false
@@ -87,18 +87,18 @@
           "mode": "3840x2160@60.000",
           "position": {
             "x": 0,
-            "y": 0
+            "y": 240
           },
           "scale": 1,
           "transform": "Normal",
-          "vrr": true,
+          "vrr": false,
           "disabled": false
         },
         "eDP-1": {
           "mode": "1920x1200@60.001",
           "position": {
-            "x": 4992,
-            "y": 960
+            "x": 7200,
+            "y": 1600
           },
           "scale": 1,
           "transform": "Normal",
