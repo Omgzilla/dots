@@ -26,6 +26,7 @@
       "brave-browser"
       "chatgpt"
       "cheatsheet"
+      "discord"
       "firefox"
       "font-fontawesome"
       "foobar2000"
