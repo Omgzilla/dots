@@ -1,0 +1,248 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  {
+    printf "Usage: %s [OPTIONS] CONTROLLER 'key=value[,key2=value]' ...\n" "${0##*/}"
+
+    cat <<'EOF'
+
+Options:
+  --apply                               Make changes (default: preview)
+  --literal-settings                    Expect one key=value setting per argument
+  --only-cloud CLOUD                    Target only this cloud
+  --exclude-cloud CLOUD                 Skip this cloud (repeatable)
+  --exclude-model OWNER/MODEL           Skip this model (repeatable)
+  --exclude-controller-model            Skip controller models
+  --exclude-model-setting OWNER/MODEL KEY
+      Skip just this key on this existing model, if present (repeatable).
+      Cloud defaults are unaffected.
+
+Examples:
+  Frej: http://192.168.111.36:3142
+  Tor: http://192.168.211.111:3142
+  Lungmo: http://192.168.240.190:3142
+
+  settings='default-base=ubuntu@24.04,enable-os-refresh-update=false,enable-os-upgrade=false,apt-http-proxy=http://192.168.240.190:3142,apt-no-proxy=apt.grafana.com,download.docker.com'
+
+  # Preview all clouds and their models.
+  set-juju-config lungmo "$settings"
+
+  # Preview everything except two clouds.
+  set-juju-config --exclude-cloud cloud-a --exclude-cloud cloud-b lungmo "$settings"
+
+  # Preview one cloud and its models, then apply to the same targets.
+  set-juju-config --only-cloud cloud-a lungmo "$settings"
+  set-juju-config --apply --only-cloud cloud-a lungmo "$settings"
+
+  # Skip two existing models without changing which cloud defaults are targeted.
+  set-juju-config --exclude-model owner/model-a --exclude-model owner/model-b lungmo "$settings"
+
+  # Pass separate key=value arguments.
+  set-juju-config lungmo \
+    'enable-os-upgrade=false' \
+    'apt-no-proxy=apt.grafana.com,download.docker.com'
+EOF
+  } >&"${1:-2}"
+  exit "${2:-2}"
+}
+
+apply=false
+literal_settings=false
+exclude_controller_model=false
+only_cloud=
+excluded=()
+excluded_models=()
+excluded_setting_models=()
+excluded_setting_keys=()
+key='[a-zA-Z][a-zA-Z0-9_-]*'
+
+while (( $# )); do
+  case $1 in
+    -h|--help) usage 1 0 ;;
+    --apply)
+      apply=true
+      shift
+      ;;
+    --literal-settings)
+      literal_settings=true
+      shift
+      ;;
+    --only-cloud)
+      [[ -z $only_cloud && -n ${2:-} && $2 != -* ]] || usage
+      only_cloud=$2
+      shift 2
+      ;;
+    --exclude-cloud)
+      [[ -n ${2:-} && $2 != -* ]] || usage
+      excluded+=("$2")
+      shift 2
+      ;;
+    --exclude-model)
+      [[ -n ${2:-} && $2 != -* ]] || usage
+      excluded_models+=("$2")
+      shift 2
+      ;;
+    --exclude-controller-model)
+      exclude_controller_model=true
+      shift
+      ;;
+    --exclude-model-setting)
+      [[ ${2:-} == */* && $2 != -* && ${3:-} =~ ^${key}$ ]] || usage
+      excluded_setting_models+=("$2")
+      excluded_setting_keys+=("$3")
+      shift 3
+      ;;
+    -*) usage ;;
+    *) break ;;
+  esac
+done
+
+(( $# >= 2 )) || usage
+controller=$1
+shift
+
+# Split on commas followed by key=. Other commas stay in the value.
+separator=",(${key}=)"
+settings=()
+
+for arg in "$@"; do
+  [[ $arg =~ ^${key}= ]] || usage
+  while [[ $literal_settings == false && $arg =~ $separator ]]; do
+    delimiter=${BASH_REMATCH[0]}
+    next_key=${BASH_REMATCH[1]}
+    settings+=("${arg%%"$delimiter"*}")
+    arg=$next_key${arg#*"$delimiter"}
+  done
+  settings+=("$arg")
+done
+
+# Discover and validate targets before making any changes.
+clouds_json=$(juju clouds --controller "$controller" --format json)
+clouds=$(jq -er '
+  if type == "object" and length > 0 then keys[]
+  else error("no clouds found")
+  end
+' <<< "$clouds_json")
+
+for cloud in "$only_cloud" "${excluded[@]}"; do
+  [[ -n $cloud ]] || continue
+  if ! jq -e --arg cloud "$cloud" 'has($cloud)' <<< "$clouds_json" >/dev/null; then
+    printf 'Unknown cloud on %s: %s\n' "$controller" "$cloud" >&2
+    exit 1
+  fi
+done
+
+models_json=$(juju models --controller "$controller" --all --format json)
+models=$(jq -r --argjson exclude_controller "$exclude_controller_model" '
+    (.models // [])[]
+    | (.["is-controller"] == true or .name == "admin/controller") as $is_controller
+    | if $exclude_controller and $is_controller then
+        [(.name // "<unnamed controller model>"), true, ""] | @tsv
+      elif (.name | type) != "string" or .name == "" or
+           (.cloud | type) != "string" or .cloud == ""
+      then error("model is missing a name or cloud")
+      else [.name, $is_controller, .cloud] | @tsv
+      end
+  ' <<< "$models_json")
+
+for model in "${excluded_models[@]}"; do
+  if ! jq -e --arg model "$model" 'any(.models[]?; .name == $model)' <<< "$models_json" >/dev/null; then
+    printf 'Unknown model on %s: %s (use the exact owner/model name)\n' "$controller" "$model" >&2
+    exit 1
+  fi
+done
+
+selected() {
+  local cloud=$1 skip
+  [[ -z $only_cloud || $cloud == "$only_cloud" ]] || return 1
+  for skip in "${excluded[@]}"; do
+    [[ $cloud != "$skip" ]] || return 1
+  done
+  return 0
+}
+
+cloud_updates=0 model_updates=0
+skipped_clouds=0 out_of_scope_models=0 skipped_controllers=0
+excluded_model_count=0 no_settings_models=0 partial_models=0
+
+run() {
+  local target=$1 status
+  shift
+  printf '%q ' "$@"
+  printf '\n'
+  if [[ $apply == true ]]; then
+    if "$@"; then
+      return 0
+    else
+      status=$?
+      printf 'Stopped on %s (%s): Juju exited %d after %d successful update(s) in this run.\n' \
+        "$controller" "$target" "$status" "$((cloud_updates + model_updates))" >&2
+      return "$status"
+    fi
+  fi
+}
+
+while IFS= read -r cloud; do
+  if ! selected "$cloud"; then
+    skipped_clouds=$((skipped_clouds + 1))
+    printf 'Skipping cloud %s (outside cloud scope).\n' "$cloud" >&2
+    continue
+  fi
+  run "cloud defaults: $cloud" juju model-defaults --controller "$controller" --cloud "$cloud" "${settings[@]}"
+  cloud_updates=$((cloud_updates + 1))
+done <<< "$clouds"
+
+while IFS=$'\t' read -r model is_controller cloud; do
+  [[ -n $model ]] || continue
+  if [[ $exclude_controller_model == true && $is_controller == true ]]; then
+    skipped_controllers=$((skipped_controllers + 1))
+    printf 'Skipping %s (controller model).\n' "$model" >&2
+    continue
+  fi
+  if ! selected "$cloud"; then
+    out_of_scope_models=$((out_of_scope_models + 1))
+    continue
+  fi
+  for skip in "${excluded_models[@]}"; do
+    if [[ $model == "$skip" ]]; then
+      excluded_model_count=$((excluded_model_count + 1))
+      printf 'Skipping %s (excluded model).\n' "$model" >&2
+      continue 2
+    fi
+  done
+  model_settings=() skipped_keys=()
+  for setting in "${settings[@]}"; do
+    for i in "${!excluded_setting_models[@]}"; do
+      if [[ $model == "${excluded_setting_models[i]}" &&
+            ${setting%%=*} == "${excluded_setting_keys[i]}" ]]; then
+        skipped_keys+=("${setting%%=*}")
+        continue 2
+      fi
+    done
+    model_settings+=("$setting")
+  done
+  if (( ${#model_settings[@]} == 0 )); then
+    no_settings_models=$((no_settings_models + 1))
+    printf 'Skipping %s (all settings excluded).\n' "$model" >&2
+    continue
+  fi
+  if (( ${#skipped_keys[@]} > 0 )); then
+    partial_models=$((partial_models + 1))
+    printf 'Leaving settings unchanged on %s: %s\n' "$model" "${skipped_keys[*]}" >&2
+  fi
+  run "model: $model" juju model-config --model "$controller:$model" "${model_settings[@]}"
+  model_updates=$((model_updates + 1))
+done <<< "$models"
+
+mode=Preview
+if [[ $apply == true ]]; then mode=Applied; fi
+printf '%s on %s: %d cloud default update(s), %d model update(s); %d model(s) with some settings excluded.\n' \
+  "$mode" "$controller" "$cloud_updates" "$model_updates" "$partial_models" >&2
+printf 'Skipped: %d cloud(s), %d out-of-scope model(s), %d controller model(s), %d excluded model(s), %d model(s) with no settings left.\n' \
+  "$skipped_clouds" "$out_of_scope_models" "$skipped_controllers" "$excluded_model_count" "$no_settings_models" >&2
+
+if (( cloud_updates + model_updates == 0 )); then
+  echo "No targets matched on $controller." >&2
+  exit 1
+fi

@@ -1,0 +1,35 @@
+{
+  "defaults": {
+    "settings": {
+      "default-base": "ubuntu@24.04",
+      "enable-os-refresh-update": "false",
+      "enable-os-upgrade": "false",
+      "apt-no-proxy": "apt.grafana.com,download.docker.com"
+    },
+    "exclude_model_settings": {
+      "admin/lxd-hosts": ["apt-http-proxy", "apt-no-proxy"],
+      "omgzilla@external/apt-cacher": ["apt-http-proxy", "apt-no-proxy"]
+    }
+  },
+  "presets": {
+    "frej": {
+      "controller": "frej",
+      "settings": {"apt-http-proxy": "http://192.168.111.36:3142"}
+    },
+    "tor": {
+      "controller": "tor",
+      "settings": {"apt-http-proxy": "http://192.168.211.111:3142"}
+    },
+    "lungmo": {
+      "controller": "lungmo",
+      "settings": {"apt-http-proxy": "http://192.168.240.190:3142"},
+      "exclude_clouds": ["admin-latitude-jp-tky-1", "aws", "manual"],
+      "exclude_models": []
+    },
+    "lungmo-jp": {
+      "controller": "lungmo",
+      "only_cloud": "admin-latitude-jp-tky-1",
+      "settings": {"apt-http-proxy": ""}
+    }
+  }
+}

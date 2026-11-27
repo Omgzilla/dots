@@ -1,0 +1,2 @@
+# Repository-only tests; do not link them into $HOME.
+^\.tests$

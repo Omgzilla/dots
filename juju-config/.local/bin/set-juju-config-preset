@@ -1,0 +1,148 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+config=${SET_JUJU_CONFIG_PRESETS:-${XDG_CONFIG_HOME:-$HOME/.config}/set-juju-config/presets.json}
+
+usage() {
+  cat <<'EOF'
+Usage: set-juju-config-preset [OPTIONS] PRESET|all
+       set-juju-config-preset --list
+       set-juju-config-preset --check [PRESET]
+
+--list shows preset names and controllers. --check validates the entire
+file or one preset; neither command contacts Juju.
+
+Preview by default. Pass --apply to make changes.
+For a single preset, you can add --only-cloud CLOUD, --exclude-cloud CLOUD,
+or --exclude-model OWNER/MODEL. Exclusions are repeatable. Put options
+before the preset. Controller models are always skipped.
+EOF
+  printf '\nPreset file: %s\n' "$config"
+}
+
+fail_usage() {
+  usage >&2
+  exit 2
+}
+
+action=run
+options=()
+only_cloud=
+filtered=false
+while (( $# )); do
+  case $1 in
+    -h|--help) usage; exit 0 ;;
+    --list|--check)
+      [[ $action == run ]] || fail_usage
+      action=${1#--}
+      shift
+      ;;
+    --apply) options+=("$1"); shift ;;
+    --only-cloud)
+      [[ -z $only_cloud && -n ${2:-} && $2 != -* ]] || fail_usage
+      only_cloud=$2
+      filtered=true
+      shift 2
+      ;;
+    --exclude-cloud|--exclude-model)
+      [[ -n ${2:-} && $2 != -* ]] || fail_usage
+      options+=("$1" "$2")
+      filtered=true
+      shift 2
+      ;;
+    -*) fail_usage ;;
+    *) break ;;
+  esac
+done
+
+if [[ $action != run ]]; then
+  [[ $filtered == false && ${#options[@]} -eq 0 ]] || fail_usage
+fi
+case $action in
+  list) (( $# == 0 )) || fail_usage ;;
+  check) (( $# <= 1 )) || fail_usage ;;
+  run) (( $# == 1 )) || fail_usage ;;
+esac
+preset=${1:-all}
+if [[ $preset == all && $filtered == true ]]; then
+  echo 'Cloud and model filters require a single preset.' >&2
+  exit 2
+fi
+runner="$(dirname -- "${BASH_SOURCE[0]}")/set-juju-config"
+
+# Validate the selected presets and build their argument lists before invoking Juju.
+plan=$(jq -cs --arg requested "$preset" --arg scoped "$only_cloud" '
+  def fields($allowed):
+    if type != "object" then error("expected a JSON object")
+    else (keys - $allowed) as $unknown
+      | if $unknown == [] then . else error("unknown fields: \($unknown | join(", "))") end
+    end;
+  def optional($key; $fallback): if has($key) then .[$key] else $fallback end;
+  def text: type == "string" and (test("[[:cntrl:]]") | not);
+  def name: text and length > 0 and (startswith("-") | not);
+  def key: text and test("^[a-zA-Z][a-zA-Z0-9_-]*$");
+  def flags($flag):
+    if type == "array" and all(.[]; name) then [.[] | $flag, .]
+    else error("\($flag) requires an array of names") end;
+  def settings:
+    if type == "object" and all(to_entries[]; (.key | key) and (.value | text)) then .
+    else error("settings must be an object of key/value strings") end;
+  def setting_exclusions:
+    if type == "object" and all(to_entries[];
+         (.key | name and contains("/")) and (.value | type == "array" and all(.[]; key))) then
+      [to_entries[] | .key as $model | .value[] | "--exclude-model-setting", $model, .]
+    else error("exclude_model_settings must map owner/model names to arrays of setting keys") end;
+
+  if length != 1 then error("expected exactly one JSON document") else .[0] end
+  | fields(["defaults", "presets"])
+  | (optional("defaults"; {}) | fields(["settings", "exclude_model_settings"])) as $defaults
+  | ($defaults | optional("settings"; {}) | settings) as $default_settings
+  | ($defaults | optional("exclude_model_settings"; {}) | setting_exclusions) as $default_exclusions
+  | .presets
+  | if type != "object" or length == 0 or has("all") or (all(keys[]; name) | not) then
+      error("presets must be a non-empty object with valid names (all is reserved)")
+    elif $requested == "all" then to_entries[]
+    elif has($requested) then {key: $requested, value: .[$requested]}
+    else error("unknown preset: \($requested); available: \(keys_unsorted | join(", "))") end
+  | .key as $preset
+  | .value | fields(["controller", "settings", "only_cloud", "exclude_clouds", "exclude_models", "exclude_model_settings"])
+  | .controller as $controller
+  | if ($controller | name | not) then error("\($preset): invalid controller") else . end
+  | optional("only_cloud"; "") as $fixed
+  | if $scoped != "" and ($scoped | name | not) then error("invalid --only-cloud value")
+    elif $fixed != "" and ($fixed | name | not) then error("\($preset): invalid only_cloud")
+    elif $fixed != "" and $scoped != "" and $fixed != $scoped then error("\($preset) only targets \($fixed)")
+    else . end
+  | (if $fixed != "" then $fixed else $scoped end) as $scope
+  | (optional("settings"; {}) | settings) as $custom_settings
+  | [($default_settings + $custom_settings) | to_entries[] | "\(.key)=\(.value)"] as $settings
+  | if ($settings | length) == 0 then error("\($preset): no settings configured") else . end
+  | {name: $preset, controller: $controller, scope: $scope, args: (
+      (if $scope == "" then [] else ["--only-cloud", $scope] end)
+      + (optional("exclude_clouds"; []) | flags("--exclude-cloud"))
+      + (optional("exclude_models"; []) | flags("--exclude-model"))
+      + $default_exclusions
+      + (optional("exclude_model_settings"; {}) | setting_exclusions)
+      + [$controller] + $settings
+    )}
+' -- "$config")
+
+case $action in
+  list)
+    printf 'PRESET\tCONTROLLER\tONLY CLOUD\n'
+    jq -r '[.name, .controller, (if .scope == "" then "—" else .scope end)] | @tsv' <<< "$plan"
+    exit 0
+    ;;
+  check)
+    printf 'Valid preset configuration (%s): %s\n' "$preset" "$config"
+    exit 0
+    ;;
+esac
+
+while IFS= read -r entry; do
+  label=$(jq -r '.name' <<< "$entry")
+  args_text=$(jq -r '.args[]' <<< "$entry")
+  mapfile -t args <<< "$args_text"
+  printf '\n== %s ==\n' "$label"
+  "$runner" --exclude-controller-model --literal-settings "${options[@]}" "${args[@]}"
+done <<< "$plan"
