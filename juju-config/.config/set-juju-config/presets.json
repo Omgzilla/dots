@@ -4,7 +4,7 @@
       "default-base": "ubuntu@24.04",
       "enable-os-refresh-update": "false",
       "enable-os-upgrade": "false",
-      "apt-no-proxy": "apt.grafana.com,download.docker.com"
+      "apt-no-proxy": "apt.grafana.com,download.docker.com,deb.nodesource.com,pkgs.tailscale.com"
     },
     "exclude_model_settings": {
       "admin/lxd-hosts": ["apt-http-proxy", "apt-no-proxy"],

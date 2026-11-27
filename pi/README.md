@@ -3,10 +3,17 @@
 From the dotfiles checkout, install the personal Pi workflows with:
 
 ```sh
+mkdir -p "$HOME/.pi/agent/skills" "$HOME/.agents/skills"
 stow --dir="$PWD" --target="$HOME" pi
 ```
 
-This links `settings.json`, `skills/`, `themes/`, `charm-workflow/`, and `AGENTS.md` from `pi/.pi/agent/` into `~/.pi/agent/`. If Stow reports conflicts from existing local files, back them up and merge any changes before rerunning Stow. It does not install Pi or manage `~/.agents/skills/`. Keep credentials and session history outside this repository. Start Pi (or run `/reload`). The charm workflow uses `/skill:pi-charm-workflow` and still needs its own delegation runner.
+On a fresh machine, the `mkdir` step keeps the agent and shared skill directories as real directories. Stow can still link individual packaged skill directories and themes as a unit.
+
+This links `settings.json`, `skills/`, `themes/`, `charm-workflow/`, and `AGENTS.md` from `pi/.pi/agent/` into `~/.pi/agent/`. If Stow reports conflicts from existing local files, back them up and merge any changes before rerunning Stow. It also links the two Git skills into `~/.agents/skills/` without managing other skills there. It does not install Pi. Keep credentials and session history outside this repository. Start Pi (or run `/reload`). The charm workflow uses `/skill:pi-charm-workflow` and still needs its own delegation runner.
+
+## Git workflow
+
+The global instructions route Git work through `git-workflow`, which loads `better-commits` for commit review and drafting. If either skill already exists as a regular file on another machine, back it up and merge any local changes before Stowing this package.
 
 ## Dwellir investigations
 
